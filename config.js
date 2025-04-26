@@ -1,3 +1,3 @@
 export default {
-  allowedCommands: ["bun .github/scripts/update-config.ts"],
+  allowedCommands: ["bun ./scripts/update-config.ts"],
 };
