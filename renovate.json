@@ -28,13 +28,13 @@
         "pin",
         "digest"
       ],
-      "automerge": true
+      "automerge": false
     },
     {
       "matchDepTypes": [
         "devDependencies"
       ],
-      "automerge": true
+      "automerge": false
     },
     {
       "matchPackageNames": [
