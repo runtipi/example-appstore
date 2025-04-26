@@ -1,3 +1,3 @@
 export default {
-  allowedCommands: ["bun ./scripts/update-config.ts", "bun run test"],
+  allowedCommands: ["bun ./scripts/update-config.ts", "bun install && bun run test"],
 };
