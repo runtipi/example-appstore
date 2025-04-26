@@ -11,12 +11,15 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/bun": "^1.2.10",
+    "@types/bun": "latest",
     "@types/node": "^22.14.1"
   },
   "dependencies": {
     "@runtipi/common": "^0.8.0",
     "bun": "^1.2.10",
     "zod-validation-error": "^3.4.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
   }
 }
