@@ -7,8 +7,8 @@ import path from 'node:path'
 const getApps = async () => {
   const appsDir = await fs.promises.readdir(path.join(process.cwd(), 'apps'))
 
-  const appDirs = appsDir.filter(async (app) => {
-    const stat = await fs.promises.stat(path.join(process.cwd(), 'apps', app))
+  const appDirs = appsDir.filter((app) => {
+    const stat = fs.statSync(path.join(process.cwd(), 'apps', app))
     return stat.isDirectory()
   })
 

@@ -13,7 +13,7 @@ This repository serves as a template for creating your own custom app store for 
       - `description.md`: Markdown description of the app
       - `logo.jpg`: App logo image
 
-- ****tests**/**: Contains test files for the app store
+- **tests/**: Contains test files for the app store
 
   - `apps.test.ts`: Test suite for validating apps
 
