@@ -28,6 +28,9 @@ jobs:
       - name: Install Renovate
         run: bun install -g renovate re2
 
+      - name: Install dependencies
+        run: bun install
+
       - name: Echo repository
         run: echo ${{ github.repository }}
 

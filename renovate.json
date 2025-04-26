@@ -48,7 +48,8 @@
   ],
   "postUpgradeTasks": {
     "commands": [
-      "bun ./scripts/update-config.ts {{packageFile}} {{newVersion}}"
+      "bun ./scripts/update-config.ts {{packageFile}} {{newVersion}}",
+      "bun run test"
     ],
     "fileFilters": [
       "**/*"
