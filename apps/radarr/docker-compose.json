@@ -13,13 +13,8 @@
       },
       "volumes": [
         {
-          "hostPath": "/etc/localtime",
-          "containerPath": "/etc/localtime",
-          "readOnly": true
-        },
-        {
           "hostPath": "${APP_DATA_DIR}/data",
-          "containerPath": "/config"
+          "containerPath": "radarr/etc"
         },
         {
           "hostPath": "${ROOT_FOLDER_HOST}/media",
