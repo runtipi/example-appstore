@@ -1,5 +1,5 @@
 {
-  "name": "example-appstore",
+  "name": "jigsaw-tipi-store",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -12,12 +12,12 @@
   "license": "ISC",
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/node": "^22.14.1"
+    "@types/node": "^22.15.24"
   },
   "dependencies": {
-    "@runtipi/common": "^0.8.0",
-    "bun": "^1.2.10",
-    "zod-validation-error": "^3.4.0"
+    "@runtipi/common": "^0.8.1",
+    "bun": "^1.2.15",
+    "zod-validation-error": "^3.4.1"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
