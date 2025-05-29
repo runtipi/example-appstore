@@ -1,0 +1,34 @@
+{
+  "services": [
+    {
+      "name": "radarr",
+      "image": "ghcr.io/11notes/radarr:5.25.0",
+      "read_only": "true",
+      "isMain": true,
+      "internalPort": "7878:7878/tcp",
+      "environment": {
+        "PUID": "1000",
+        "PGID": "1000",
+        "TZ": "${TZ}"
+      },
+      "volumes": [
+        {
+          "hostPath": "/etc/localtime",
+          "containerPath": "/etc/localtime",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/config"
+        },
+        {
+          "hostPath": "${ROOT_FOLDER_HOST}/media",
+          "containerPath": "/media"
+        }
+      ],
+      "tmpfs": {
+        "/tmp:uid=1000,gid=1000"
+      }
+    }
+  ]
+}
