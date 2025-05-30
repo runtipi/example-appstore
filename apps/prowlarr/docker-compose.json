@@ -1,0 +1,29 @@
+{
+  "services": [
+    {
+      "name": "prowlarr",
+      "image": "ghcr.io/11notes/prowlarr:1.36.3",
+      "read_only": "true",
+      "isMain": true,
+      "internalPort": "9696",
+      "environment": {
+        "PUID": "1000",
+        "PGID": "1000",
+        "TZ": "${TZ}"
+      },
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/prowlarr/etc"
+        }
+      ],
+      "tmpfs": [
+        {
+          "dst": "/tmp",
+          "uid": "1000",
+          "gid": "1000"
+        }
+      ]
+    }
+  ]
+}
