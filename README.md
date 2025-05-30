@@ -17,8 +17,9 @@ It contains a variety of apps.
 >* These app's images are smaller than most other AppStore's images
 
 
-## Apps Available (1) 🏁
+## Apps Available (2) 🏁
 
 | Logo                                                                     | Name                                                         | Description                                  |
 | :----------------------------------------------------------------------: | ------------------------------------------------------------ | -------------------------------------------- |
 | <img src="apps/radarr/metadata/logo.jpg" width="64" height="64">       | [Radarr](https://github.com/Radarr/Radarr)           | Run Radarr smaller, lightweight and more secure (Eleven Notes ™️)      |
+| <img src="apps/sonarr/metadata/logo.jpg" width="64" height="64">       | [Sonarr](https://github.com/Radarr/Radarr)           | Run Radarr smaller, lightweight and more secure (Eleven Notes ™️)      |
