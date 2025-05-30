@@ -1,0 +1,14 @@
+{
+  "services": [
+    {
+      "name": "byparr",
+      "image": "ghcr.io/thephaseless/byparr:1.2.0",
+      "isMain": true,
+      "internalPort": "8191",
+      "environment": {
+        "LOG_LEVEL": "${BYPARR_LOG_LEVEL-info}",
+        "TZ": "${TZ}"
+      }
+    }
+  ]
+}
