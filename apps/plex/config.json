@@ -1,0 +1,27 @@
+{
+  "name": "Plex",
+  "id": "plex",
+  "available": true,
+  "short_desc": "Stream Movies & TV Shows",
+  "author": "Plex Inc.",
+  "port": 32400,
+  "categories": [
+    "media"
+  ],
+  "description": "",
+  "tipi_version": 1,
+  "version": "1.41.7",
+  "url_suffix": "/web",
+  "source": "https://docs.linuxserver.io/images/docker-plex/",
+  "exposable": true,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1748599504632,
+  "updated_at": 1748599504632,
+  "dynamic_config": true,
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": []
+}
