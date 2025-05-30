@@ -21,4 +21,4 @@ It contains a variety of apps.
 
 | Logo                                                                     | Name                                                         | Description                                  |
 | :----------------------------------------------------------------------: | ------------------------------------------------------------ | -------------------------------------------- |
-| <img src="apps/radarr/metadata/logo.jpg" width="64" height="64">       | [Radarr](https://github.com/docusealco/docuseal)           | Run Radarr smaller, lightweight and more secure (Eleven Notes ™️)      |
+| <img src="apps/radarr/metadata/logo.jpg" width="64" height="64">       | [Radarr](https://github.com/Radarr/Radarr)           | Run Radarr smaller, lightweight and more secure (Eleven Notes ™️)      |
