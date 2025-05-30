@@ -15,7 +15,7 @@ An alternative to [FlareSolverr](https://github.com/FlareSolverr/FlareSolverr) a
 | --- | --- | --- |
 | `TZ` | [Time Zone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) | |
 | `USE_HEADLESS`       | `SeleniumBase default` | Use headless  chromium.  
-| `PROXY`              | None                   | Proxy to use in format: `protocol://username:password@host:port`. [SOCKS5 with authentication is not supported by Chrome](https://stackoverflow.com/questions/75602916/connection-to-private-proxy-socks5-with-chrome-webrequest-onauthrequired-and), see `compose.yaml` file for a workaround |
+| `PROXY`              | None                   | Proxy to use in format: `protocol://username:password@host:port`. |
 
 # SOURCE 💾
 * [ThePhaseless/Byparr](https://github.com/ThePhaseless/Byparr)
