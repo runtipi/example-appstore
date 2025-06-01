@@ -1,5 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "automerge": false,
   "extends": [
     "config:recommended"
   ],
@@ -10,7 +11,7 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": [
+      "managerFilePatterns": [
         "^.*docker-compose\\.json$"
       ],
       "matchStrings": [
@@ -23,6 +24,7 @@
     {
       "matchUpdateTypes": [
         "minor",
+        "major",
         "patch",
         "pin",
         "digest"
