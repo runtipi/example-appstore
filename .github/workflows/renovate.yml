@@ -30,11 +30,16 @@ jobs:
       - name: Install bun
         uses: oven-sh/setup-bun@v2
 
+      - name: Cache Bun global packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/global
+          key: ${{ runner.os }}-bun-global-renovate-40
+          restore-keys: |
+            ${{ runner.os }}-bun-global-
+
       - name: Install Renovate
         run: bun install -g renovate@40
-
-      - name: Echo repository
-        run: echo ${{ github.repository }}
 
       - name: Run renovate
         run: LOG_LEVEL=${{ github.event.inputs.log_level || 'INFO' }} renovate --token ${{ secrets.GITHUB_TOKEN }} ${{ github.repository }}
