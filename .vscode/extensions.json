@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "biomejs.biome",
+        "github.vscode-github-actions",
+        "github.vscode-pull-request-github",
+        "bierner.github-markdown-preview",
+        "codeandstuff.package-json-upgrade"
+    ]
+}

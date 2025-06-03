@@ -26,3 +26,15 @@ It contains a variety of apps.
 | <img src="apps/sonarr/metadata/logo.jpg" width="64" height="64">       | [Sonarr](https://github.com/Sonarr/Sonarr)           | Run Sonarr smaller, lightweight and more secure (Eleven Notes ™️)      |
 | <img src="apps/plex/metadata/logo.jpg" width="64" height="64">       | [Plex](https://github.com/linuxserver/docker-plex)           | Run Plex smaller, lightweight and more secure (LinuxServer ™️)   
 | <img src="apps/prowlarr/metadata/logo.jpg" width="64" height="64">       | [Prowlarr](https://github.com/Prowlarr/Prowlarr)           | Run Prowlarr smaller, lightweight and more secure (Eleven Notes ™️)      |   |
+
+## Installation
+
+Using the appstore is simple.
+
+1. In the Runtipi dashboard, open settings and go to the "App Stores" tab.
+2. Click "Add App Store" and fill in the form with a nice name and the URL `https://github.com/JigSawFr/tipi-store`.
+3. Submit the form. You can now go to the App Store and select the one you just created from the dropdown.
+4. Choose an app and install it. Have fun!
+
+> [!WARNING]
+> If you use this appstore, please keep in mind that it is a hobby project and I have very limited spare time for it. I'll try my best to keep apps up to date and in a working configuration, but I can make no guarantees. I will not be constantly responding to user support requests. I may also delete or deprecate an app at any time.
