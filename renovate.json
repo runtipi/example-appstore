@@ -7,11 +7,12 @@
   "addLabels": [
     "renovate"
   ],
+  "enabledManagers": ["regex"],
   "automergeStrategy": "rebase",
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": [
+      "fileMatch": [
         "^.*docker-compose\\.json$"
       ],
       "matchStrings": [
