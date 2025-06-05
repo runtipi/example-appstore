@@ -1,11 +1,13 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "automerge": false,
   "extends": [
     "config:recommended"
   ],
   "addLabels": [
     "renovate"
   ],
+  "enabledManagers": ["regex"],
   "automergeStrategy": "rebase",
   "customManagers": [
     {
@@ -23,6 +25,7 @@
     {
       "matchUpdateTypes": [
         "minor",
+        "major",
         "patch",
         "pin",
         "digest"
