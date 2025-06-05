@@ -39,12 +39,16 @@
       "matchPackageNames": [
         "mariadb",
         "mysql",
-        "monogdb",
+        "mongodb",
         "postgres",
         "redis"
       ],
       "enabled": false
     }
+  ],
+  "allowedPostUpgradeCommands": [
+    "bun ./scripts/update-config.ts * *",
+    "bun install && bun run test"
   ],
   "postUpgradeTasks": {
     "commands": [

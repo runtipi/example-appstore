@@ -2,6 +2,7 @@
 
 # JigSaw ~ Runtipi.io Custom AppStore ⛺
 
+![CI](https://github.com/JigSawFr/tipi-store/actions/workflows/ci.yml/badge.svg)
 
 This is a custom repository for the Runtipi.io App Store.
 It contains a variety of apps.
