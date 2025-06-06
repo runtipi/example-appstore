@@ -21,31 +21,31 @@ jobs:
         with:
           files: apps/*/docker-compose.json
 
-      - name: Generate changelog for updated apps
-        if: steps.changed_apps.outputs.any_changed == 'true'
-        id: generate_changelog
-        shell: pwsh
-        env:
-          CHANGED_FILES: ${{ steps.changed_apps.outputs.all_changed_files }}
-        run: |
-          $files = $env:CHANGED_FILES -split ' '
-          $apps = $files | ForEach-Object { Split-Path $_ -Parent } | Select-Object -Unique
-          pwsh ./.github/scripts/generate-changelog.ps1 -ChangedApps $apps
-          $content = Get-Content .github/renovate-changelogs.md -Raw
-          # Write output for next step
-          echo "changelog_content<<EOF" >> $env:GITHUB_OUTPUT
-          echo "$content" >> $env:GITHUB_OUTPUT
-          echo "EOF" >> $env:GITHUB_OUTPUT
-          # Also write to a file for path input fallback
-          $content | Set-Content changelog-comment.txt
+      # - name: Generate changelog for updated apps
+      #   if: steps.changed_apps.outputs.any_changed == 'true'
+      #   id: generate_changelog
+      #   shell: pwsh
+      #   env:
+      #     CHANGED_FILES: ${{ steps.changed_apps.outputs.all_changed_files }}
+      #   run: |
+      #     $files = $env:CHANGED_FILES -split ' '
+      #     $apps = $files | ForEach-Object { Split-Path $_ -Parent } | Select-Object -Unique
+      #     pwsh ./.github/scripts/generate-changelog.ps1 -ChangedApps $apps
+      #     $content = Get-Content .github/renovate-changelogs.md -Raw
+      #     # Write output for next step
+      #     echo "changelog_content<<EOF" >> $env:GITHUB_OUTPUT
+      #     echo "$content" >> $env:GITHUB_OUTPUT
+      #     echo "EOF" >> $env:GITHUB_OUTPUT
+      #     # Also write to a file for path input fallback
+      #     $content | Set-Content changelog-comment.txt
 
-      - name: Post changelog as PR comment
-        if: steps.changed_apps.outputs.any_changed == 'true'
-        uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          path: changelog-comment.txt
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        id: post_changelog
+      # - name: Post changelog as PR comment
+      #   if: steps.changed_apps.outputs.any_changed == 'true'
+      #   uses: marocchino/sticky-pull-request-comment@v2
+      #   with:
+      #     path: changelog-comment.txt
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   id: post_changelog
 
       - name: Backup previous config.json tipi_version
         if: steps.changed_apps.outputs.any_changed == 'true'

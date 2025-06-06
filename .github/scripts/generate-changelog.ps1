@@ -7,7 +7,6 @@ param(
 
 $githubToken = $env:GITHUB_TOKEN
 
-$links = @()
 $changelogs = @()
 
 foreach ($appPath in $ChangedApps) {
@@ -21,7 +20,6 @@ foreach ($appPath in $ChangedApps) {
             # Clean the URL if needed (remove trailing slash)
             if ($repo.EndsWith('/')) { $repo = $repo.Substring(0, $repo.Length - 1) }
             $url = "$repo/releases/tag/$version"
-            $links += "- [$name]($url) ($version)"
 
             # Try to fetch the changelog via the GitHub API
             if ($repo -match "github.com/([^/]+)/([^/]+)") {
@@ -33,7 +31,8 @@ foreach ($appPath in $ChangedApps) {
                 try {
                     $response = Invoke-RestMethod -Uri $apiUrl -Headers $headers
                     if ($response.body) {
-                        $changelog = $response.body
+                        # Preserve original markdown formatting from GitHub release notes
+                        $changelog = $response.body -replace "\r\n", "`n"
                     }
                     elseif ($response.assets -and $response.assets.Count -gt 0) {
                         $changelog = "_No changelog found, but assets are present on the release._"
@@ -41,21 +40,21 @@ foreach ($appPath in $ChangedApps) {
                     else {
                         $changelog = "_Changelog not found via GitHub API._"
                     }
-                    $changelogs += "#### $name ($version)\n$url\n\n$changelog\n"
+                    $changelogs += "### $name ($version)\n[$url]($url)\n\n$changelog\n"
                 }
                 catch {
-                    $changelogs += "#### $name ($version)\n$url\n\n_Error while fetching changelog from GitHub API._\n"
+                    $changelogs += "### $name ($version)\n[$url]($url)\n\n❗ **Error while fetching changelog from GitHub API.**\n"
                 }
             }
             else {
-                $changelogs += "#### $name ($version)\n$url\n\n_Non-GitHub source, changelog not fetched automatically._\n"
+                $changelogs += "### $name ($version)\n[$url]($url)\n\n_Non-GitHub source, changelog not fetched automatically._\n"
             }
         }
     }
 }
 
-if ($links.Count -gt 0) {
-    $out = "### Changelogs for updated apps:`n" + ($links -join "`n") + "`n\n---\n" + ($changelogs -join "`n---\n")
+if ($changelogs.Count -gt 0) {
+    $out = "## Changelogs for updated apps\n\n" + ($changelogs -join "\n---\n")
     $out | Set-Content .github/renovate-changelogs.md
     Write-Host $out
 }
