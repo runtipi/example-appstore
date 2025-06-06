@@ -36,6 +36,18 @@ jobs:
         with:
           path: .github/renovate-changelogs.md
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          append: false
+          recreate: true
+          delete: false
+          only_create: false
+          only_update: false
+          hide_details: false
+          hide: false
+          hide_and_recreate: false
+          hide_classify: OUTDATED
+          ignore_empty: false
+          skip_unchanged: false
+          follow_symbolic_links: false
 
       - name: Backup previous config.json tipi_version
         if: steps.changed_apps.outputs.any_changed == 'true'
