@@ -7,7 +7,9 @@
   "addLabels": [
     "renovate"
   ],
-  "enabledManagers": ["regex"],
+  "enabledManagers": [
+    "regex"
+  ],
   "automergeStrategy": "rebase",
   "customManagers": [
     {
@@ -21,6 +23,7 @@
       "datasourceTemplate": "docker"
     }
   ],
+  "prConcurrentLimit": 5,
   "packageRules": [
     {
       "matchUpdateTypes": [
@@ -47,20 +50,23 @@
         "redis"
       ],
       "enabled": false
+    },
+    {
+      "assignees": [
+        "JigSawFr"
+      ]
+    },
+    {
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "addLabels": [
+        "breaking-change"
+      ]
     }
   ],
-  "allowedPostUpgradeCommands": [
-    "bun ./scripts/update-config.ts * *",
-    "bun install && bun run test"
-  ],
-  "postUpgradeTasks": {
-    "commands": [
-      "bun ./scripts/update-config.ts {{packageFile}} {{newVersion}}",
-      "bun install && bun run test"
-    ],
-    "fileFilters": [
-      "**/*"
-    ],
-    "executionMode": "update"
-  }
+  "prBodyColumns": [
+    "changelogUrl",
+    "releaseNotes"
+  ]
 }

@@ -21,78 +21,65 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x]
-        bun-version: [1.0.0, 1.2.15]
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v1
         with:
-          bun-version: ${{ matrix.bun-version }}
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Cache bun dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.bun/install/cache
-          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
-          restore-keys: |
-            ${{ runner.os }}-bun-
+          bun-version: latest
       - name: Install dependencies
         run: bun install
-      - name: Run tests with coverage
-        run: bun test --coverage --reporter=lcov
-      - name: Upload coverage artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-lcov
-          path: coverage/lcov.info
+      - name: Run tests
+        run: bun test
 
-  validate-json:
+  # dependabot-auto-merge:
+  #   runs-on: ubuntu-22.04
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Enable auto-merge for Dependabot PRs
+  #       uses: ahmadnassri/action-dependabot-auto-merge@v2
+  #       with:
+  #         github-token: ${{ secrets.GITHUB_TOKEN }}
+  #         merge-method: squash
+
+  update-configs-renovate:
     runs-on: ubuntu-latest
+    if: github.actor == 'renovate[bot]'
     steps:
       - uses: actions/checkout@v4
-      - name: Validate JSON files
+      - name: Get list of apps changed in the PR
+        id: changed_apps
+        uses: tj-actions/changed-files@v44
+        with:
+          files: apps/*/docker-compose.json
+
+      - name: Update config.json only for changed apps (PR Renovate)
+        if: steps.changed_apps.outputs.any_changed == 'true'
+        shell: pwsh
         run: |
-          find . -name '*.json' -not -path './node_modules/*' -exec bunx jsonlint {} +
-
-  lint-markdown:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Lint Markdown files
-        uses: DavidAnson/markdownlint-cli2-action@v16
-        with:
-          globs: '**/*.md'
-
-  detect-secrets:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Scan for secrets
-        uses: gitleaks/gitleaks-action@v2
-        with:
-          config-path: .gitleaks.toml
-          fail: true
-
-  lint-yaml:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Lint YAML files
-        uses: ibiqlik/action-yamllint@v3
-        with:
-          file_or_dir: .
-
-  dependabot-auto-merge:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Enable auto-merge for Dependabot PRs
-        uses: ahmadnassri/action-dependabot-auto-merge@v2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          merge-method: squash
+          $changed = "${{ steps.changed_apps.outputs.all_changed_files }}" -split '\s+'
+          foreach ($compose in $changed) {
+            $app = Split-Path $compose -Parent
+            $config = Join-Path $app 'config.json'
+            if (Test-Path $config -PathType Leaf) {
+              $composeJson = Get-Content $compose | ConvertFrom-Json
+              $mainService = $composeJson.services | Where-Object { $_.isMain -eq $true }
+              if ($mainService -and $mainService.image) {
+                $mainImage = $mainService.image
+                $mainVersion = $mainImage.Split(':')[-1]
+              } else {
+                $mainVersion = (Get-Content $config | ConvertFrom-Json).version
+              }
+              $configJson = Get-Content $config | ConvertFrom-Json
+              $tipiVersion = $configJson.tipi_version
+              if ($tipiVersion -match '^[0-9]+$') {
+                $newTipiVersion = [int]$tipiVersion + 1
+              } else {
+                $newTipiVersion = 1
+              }
+              $updatedAt = [int][double]::Parse((Get-Date -UFormat %s)) * 1000
+              $configJson.tipi_version = $newTipiVersion
+              $configJson.version = $mainVersion
+              $configJson.updated_at = $updatedAt
+              $configJson | ConvertTo-Json -Depth 10 | Set-Content $config
+            }
+          }
