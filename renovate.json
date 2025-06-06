@@ -11,6 +11,8 @@
     "regex"
   ],
   "automergeStrategy": "rebase",
+  "dependencyDashboard": true,
+  "rebaseWhen": "behind-base-branch",
   "customManagers": [
     {
       "customType": "regex",
