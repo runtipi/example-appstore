@@ -1,8 +1,7 @@
-name: Validate Configs Renovate
-
+name: Validate Metadata & Configs of Upgraded Apps
 on:
   workflow_run:
-    workflows: ["Update Configs Renovate"]
+    workflows: ["Update Metadata of Apps Upgraded"]
     types:
       - completed
 
