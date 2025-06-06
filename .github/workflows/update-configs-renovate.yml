@@ -1,0 +1,54 @@
+name: Update Configs Renovate
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  update-configs-renovate:
+    runs-on: ubuntu-latest
+    if: github.actor == 'renovate[bot]'
+    outputs:
+      changed_files: ${{ steps.changed_apps.outputs.all_changed_files }}
+      any_changed: ${{ steps.changed_apps.outputs.any_changed }}
+      run_id: ${{ github.run_id }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Get list of apps changed in the PR
+        id: changed_apps
+        uses: tj-actions/changed-files@v46
+        with:
+          files: apps/*/docker-compose.json
+
+      - name: Backup previous config.json tipi_version
+        if: steps.changed_apps.outputs.any_changed == 'true'
+        shell: pwsh
+        env:
+          CHANGED_FILES: ${{ steps.changed_apps.outputs.all_changed_files }}
+        run: |
+          pwsh ./.github/scripts/backup-config.ps1
+
+      - name: Update config.json only for changed apps (PR Renovate)
+        if: steps.changed_apps.outputs.any_changed == 'true'
+        shell: pwsh
+        env:
+          CHANGED_FILES: ${{ steps.changed_apps.outputs.all_changed_files }}
+        run: |
+          pwsh ./.github/scripts/update-config.ps1
+
+      - name: Save changed files as artifact
+        if: steps.changed_apps.outputs.any_changed == 'true'
+        run: |
+          echo "${{ steps.changed_apps.outputs.all_changed_files }}" > changed-files.txt
+        shell: bash
+      - uses: actions/upload-artifact@v4
+        if: steps.changed_apps.outputs.any_changed == 'true'
+        with:
+          name: changed-files-${{ github.run_id }}
+          path: changed-files.txt
+          retention-days: 1
