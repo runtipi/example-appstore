@@ -177,11 +177,14 @@ jobs:
 
       - name: Commit and push config.json updates
         if: steps.changed_apps.outputs.any_changed == 'true'
+        env:
+          GIT_COMMIT_USER: ${{ github.actor }}[bot]
+          GIT_COMMIT_EMAIL: ${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "$env:GIT_COMMIT_USER"
+          git config user.email "$env:GIT_COMMIT_EMAIL"
           git fetch origin ${{ github.head_ref }}:${{ github.head_ref }}
           git checkout ${{ github.head_ref }}
           git add apps/*/config.json
-          git commit -m "ci: update config.json after renovate docker-compose update" || echo "No changes to commit"
+          git commit -m "ci: update config.json after renovate docker-compose update" --signoff || echo "No changes to commit"
           git push origin HEAD:${{ github.head_ref }}
