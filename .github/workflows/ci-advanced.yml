@@ -98,7 +98,9 @@ jobs:
               $configJson.updated_at = $updatedAt
               $configJson | ConvertTo-Json -Depth 10 | Set-Content $config
             }
-          }      - name: Commit and push config.json updates
+          }
+
+      - name: Commit and push config.json updates
         if: steps.changed_apps.outputs.any_changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
