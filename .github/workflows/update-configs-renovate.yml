@@ -1,4 +1,4 @@
-name: Update Configs Renovate
+name: Update Metadata of Apps Upgraded.
 
 on:
   push:
