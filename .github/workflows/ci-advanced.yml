@@ -92,7 +92,8 @@ jobs:
               } else {
                 $newTipiVersion = 1
               }
-              $updatedAt = [int][double]::Parse((Get-Date -UFormat %s)) * 1000
+              # updatedAt doit être un entier sans décimales
+              $updatedAt = [int]([double]::Parse((Get-Date -UFormat %s)) * 1000)
               $configJson.tipi_version = $newTipiVersion
               $configJson.version = $mainVersion
               $configJson.updated_at = $updatedAt
