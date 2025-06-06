@@ -72,7 +72,7 @@ jobs:
         env:
           CHANGED_FILES: ${{ steps.changed_apps.outputs.all_changed_files }}
         run: |
-          pwsh ./github/scripts/backup-config.ps1
+          pwsh ./.github/scripts/backup-config.ps1
 
       - name: Update config.json only for changed apps (PR Renovate)
         if: steps.changed_apps.outputs.any_changed == 'true'
@@ -80,7 +80,7 @@ jobs:
         env:
           CHANGED_FILES: ${{ steps.changed_apps.outputs.all_changed_files }}
         run: |
-          pwsh ./github/scripts/update-config.ps1
+          pwsh ./.github/scripts/update-config.ps1
 
       - name: Check config.json update consistency
         if: steps.changed_apps.outputs.any_changed == 'true'
@@ -88,7 +88,7 @@ jobs:
         env:
           CHANGED_FILES: ${{ steps.changed_apps.outputs.all_changed_files }}
         run: |
-          pwsh ./github/scripts/validate-config.ps1
+          pwsh ./.github/scripts/validate-config.ps1
 
       - name: Commit and push config.json updates
         if: steps.changed_apps.outputs.any_changed == 'true'
