@@ -1,4 +1,4 @@
-name: Update Metadata of Apps Upgraded
+name: Update & Validate Metadata & Configs of Upgraded Apps
 
 on:
   push:
@@ -8,13 +8,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  update-configs-renovate:
+  update-and-validate-configs-renovate:
     runs-on: ubuntu-latest
     if: github.actor == 'renovate[bot]'
-    outputs:
-      changed_files: ${{ steps.changed_apps.outputs.all_changed_files }}
-      any_changed: ${{ steps.changed_apps.outputs.any_changed }}
-      run_id: ${{ github.run_id }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -41,14 +37,24 @@ jobs:
         run: |
           pwsh ./.github/scripts/update-config.ps1
 
-      - name: Save changed files as artifact
+      - name: Check config.json update consistency
         if: steps.changed_apps.outputs.any_changed == 'true'
+        shell: pwsh
+        env:
+          CHANGED_FILES: ${{ steps.changed_apps.outputs.all_changed_files }}
         run: |
-          echo "${{ steps.changed_apps.outputs.all_changed_files }}" > changed-files.txt
-        shell: bash
-      - uses: actions/upload-artifact@v4
+          pwsh ./.github/scripts/validate-config.ps1
+
+      - name: Commit and push config.json updates
         if: steps.changed_apps.outputs.any_changed == 'true'
-        with:
-          name: changed-files-${{ github.run_id }}
-          path: changed-files.txt
-          retention-days: 1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin ${{ github.head_ref }}:${{ github.head_ref }}
+          git checkout ${{ github.head_ref }}
+          git add apps/*/config.json
+          git commit -m "ci: update config.json after renovate docker-compose update" --signoff || echo "No changes to commit"
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
+          git push origin HEAD:${{ github.head_ref }}
