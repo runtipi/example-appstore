@@ -23,31 +23,25 @@ jobs:
 
       - name: Generate changelog for updated apps
         if: steps.changed_apps.outputs.any_changed == 'true'
+        id: generate_changelog
         shell: pwsh
         env:
           CHANGED_FILES: ${{ steps.changed_apps.outputs.all_changed_files }}
         run: |
           $apps = $env:CHANGED_FILES -split ' '
-          pwsh ./.github/scripts/generate-changelog.ps1 -ChangedApps $apps
+          $null = pwsh ./.github/scripts/generate-changelog.ps1 -ChangedApps $apps
+          $content = Get-Content .github/renovate-changelogs.md -Raw
+          echo "changelog_content<<EOF" >> $env:GITHUB_OUTPUT
+          echo "$content" >> $env:GITHUB_OUTPUT
+          echo "EOF" >> $env:GITHUB_OUTPUT
 
       - name: Post changelog as PR comment
         if: steps.changed_apps.outputs.any_changed == 'true'
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          path: .github/renovate-changelogs.md
+          message: ${{ steps.generate_changelog.outputs.changelog_content }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          append: false
-          recreate: true
-          delete: false
-          only_create: false
-          only_update: false
-          hide_details: false
-          hide: false
-          hide_and_recreate: false
-          hide_classify: OUTDATED
-          ignore_empty: false
-          skip_unchanged: false
-          follow_symbolic_links: false
+        id: post_changelog
 
       - name: Backup previous config.json tipi_version
         if: steps.changed_apps.outputs.any_changed == 'true'
