@@ -30,12 +30,29 @@
     {
       "matchUpdateTypes": [
         "minor",
-        "major",
-        "patch",
-        "pin",
-        "digest"
+        "patch"
       ],
-      "automerge": false
+      "addLabels": [
+        "automerge"
+      ],
+      "assignees": [
+        "JigSawFr"
+      ]
+    },
+    {
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "addLabels": [
+        "breaking-change",
+        "ready-to-review"
+      ],
+      "reviewers": [
+        "JigSawFr"
+      ],
+      "assignees": [
+        "JigSawFr"
+      ]
     },
     {
       "matchDepTypes": [
@@ -52,30 +69,6 @@
         "redis"
       ],
       "enabled": false
-    },
-    {
-      "matchUpdateTypes": [
-        "major"
-      ],
-      "addLabels": [
-        "breaking-change"
-      ]
-    },
-    {
-      "matchUpdateTypes": [
-        "minor",
-        "major",
-        "patch",
-        "pin",
-        "digest"
-      ],
-      "assignees": [
-        "JigSawFr"
-      ]
     }
-  ],
-  "prBodyColumns": [
-    "changelogUrl",
-    "releaseNotes"
   ]
 }
