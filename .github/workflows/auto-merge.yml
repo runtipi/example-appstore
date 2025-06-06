@@ -7,34 +7,26 @@ on:
 
 jobs:
   automerge:
-    if: |
-      github.actor == 'renovate[bot]' && contains(github.event.pull_request.labels.*.name, 'ready-to-merge')
+    if: contains(github.event.pull_request.labels.*.name, 'approved-to-merge') && contains(github.event.pull_request.labels.*.name, 'ready-to-merge')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Set PR_NUMBER env var
         run: echo "PR_NUMBER=${{ github.event.pull_request.number }}" >> $GITHUB_ENV
         shell: bash
-      - name: Get last commit author
-        id: last_author
-        run: |
-          AUTHOR=$(git log -1 --pretty=format:'%an')
-          echo "author=$AUTHOR" >> $GITHUB_OUTPUT
-        shell: bash
       - name: Enable Pull Request Automerge
-        if: steps.last_author.outputs.author == 'github-actions[bot]'
         run: gh pr merge --squash --auto "$PR_NUMBER"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
-      - name: Remove ready-for-merge label
-        if: steps.last_author.outputs.author == 'github-actions[bot]'
-        run: gh pr edit "$PR_NUMBER" --remove-label "ready-to-merge"
+      - name: Remove approved-to-merge and ready-to-merge labels
+        run: |
+          gh pr edit "$PR_NUMBER" --remove-label "approved-to-merge"
+          gh pr edit "$PR_NUMBER" --remove-label "ready-to-merge"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
       - name: Add auto-merged label
-        if: steps.last_author.outputs.author == 'github-actions[bot]'
         run: gh pr edit "$PR_NUMBER" --add-label "auto-merged"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

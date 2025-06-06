@@ -84,3 +84,11 @@ jobs:
           git commit -m "ci: update config.json after renovate docker-compose update" --signoff || echo "No changes to commit"
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
           git push origin HEAD:${{ github.head_ref }}
+
+      - name: Add approved-to-merge label to PR
+        if: steps.changed_apps.outputs.any_changed == 'true'
+        run: |
+          gh pr edit ${{ github.event.pull_request.number }} --add-label "approved-to-merge"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
