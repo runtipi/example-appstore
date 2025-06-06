@@ -8,9 +8,10 @@ on:
 jobs:
   automerge:
     if: |
-      github.actor == 'renovate[bot]' && contains(github.event.pull_request.labels.*.name, 'ready-to-merge')
+      github.actor == 'renovate[bot]' && contains(github.event.pull_request.labels.*.name, 'ready-to-merge') && startsWith(github.event.pull_request.head.sha, github.event.pull_request.head.repo.owner.login == 'github-actions[bot]')
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: Set PR_NUMBER env var
         run: echo "PR_NUMBER=${{ github.event.pull_request.number }}" >> $GITHUB_ENV
         shell: bash
