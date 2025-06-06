@@ -1,4 +1,4 @@
-name: Update Metadata of Apps Upgraded.
+name: Update Metadata of Apps Upgraded
 
 on:
   push:
