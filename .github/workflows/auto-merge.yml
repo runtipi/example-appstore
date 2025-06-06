@@ -1,4 +1,4 @@
-name: Auto-merge Patch/Minor PRs
+name: Auto-merge Renovate PRs
 
 on:
   pull_request:
@@ -8,11 +8,24 @@ on:
 jobs:
   automerge:
     if: |
-      github.actor == 'renovate[bot]' && contains(github.event.pull_request.labels.*.name, 'auto-merge')
+      github.actor == 'renovate[bot]' && contains(github.event.pull_request.labels.*.name, 'ready-to-merge')
     runs-on: ubuntu-latest
     steps:
-      - name: Enable auto-merge for Renovate PRs with auto-merge label
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          merge-method: squash
+      - name: Set PR_NUMBER env var
+        run: echo "PR_NUMBER=${{ github.event.pull_request.number }}" >> $GITHUB_ENV
+        shell: bash
+      - name: Enable Pull Request Automerge
+        run: gh pr merge --squash --auto "$PR_NUMBER"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+      - name: Remove ready-for-merge label
+        run: gh pr edit "$PR_NUMBER" --remove-label "ready-to-merge"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+      - name: Add auto-merged label
+        run: gh pr edit "$PR_NUMBER" --add-label "auto-merged"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash

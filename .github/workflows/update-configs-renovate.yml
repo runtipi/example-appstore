@@ -21,6 +21,22 @@ jobs:
         with:
           files: apps/*/docker-compose.json
 
+      - name: Generate changelog for updated apps
+        if: steps.changed_apps.outputs.any_changed == 'true'
+        shell: pwsh
+        env:
+          CHANGED_FILES: ${{ steps.changed_apps.outputs.all_changed_files }}
+        run: |
+          $apps = $env:CHANGED_FILES -split ' '
+          pwsh ./.github/scripts/generate-changelog.ps1 -ChangedApps $apps
+
+      - name: Post changelog as PR comment
+        if: steps.changed_apps.outputs.any_changed == 'true'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          path: .github/renovate-changelogs.md
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Backup previous config.json tipi_version
         if: steps.changed_apps.outputs.any_changed == 'true'
         shell: pwsh

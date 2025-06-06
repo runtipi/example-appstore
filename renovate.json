@@ -4,9 +4,6 @@
   "extends": [
     "config:recommended"
   ],
-  "addLabels": [
-    "renovate"
-  ],
   "enabledManagers": [
     "custom.regex"
   ],
@@ -33,7 +30,7 @@
         "patch"
       ],
       "addLabels": [
-        "automerge"
+        "ready-x-merge"
       ],
       "assignees": [
         "JigSawFr"
