@@ -28,7 +28,8 @@ jobs:
         env:
           CHANGED_FILES: ${{ steps.changed_apps.outputs.all_changed_files }}
         run: |
-          $apps = $env:CHANGED_FILES -split ' '
+          $files = $env:CHANGED_FILES -split ' '
+          $apps = $files | ForEach-Object { Split-Path $_ -Parent } | Select-Object -Unique
           pwsh ./.github/scripts/generate-changelog.ps1 -ChangedApps $apps
           $content = Get-Content .github/renovate-changelogs.md -Raw
           # Write output for next step
