@@ -52,16 +52,23 @@
       "enabled": false
     },
     {
-      "assignees": [
-        "JigSawFr"
-      ]
-    },
-    {
       "matchUpdateTypes": [
         "major"
       ],
       "addLabels": [
         "breaking-change"
+      ]
+    },
+    {
+      "matchUpdateTypes": [
+        "minor",
+        "major",
+        "patch",
+        "pin",
+        "digest"
+      ],
+      "assignees": [
+        "JigSawFr"
       ]
     }
   ],
