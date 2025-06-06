@@ -46,6 +46,8 @@ jobs:
     if: github.actor == 'renovate[bot]'
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Get list of apps changed in the PR
         id: changed_apps
         uses: tj-actions/changed-files@v46
@@ -96,16 +98,16 @@ jobs:
               $configJson.updated_at = $updatedAt
               $configJson | ConvertTo-Json -Depth 10 | Set-Content $config
             }
-          }
-
-      - name: Commit and push config.json updates
+          }      - name: Commit and push config.json updates
         if: steps.changed_apps.outputs.any_changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin ${{ github.head_ref }}:${{ github.head_ref }}
+          git checkout ${{ github.head_ref }}
           git add apps/*/config.json
           git commit -m "ci: update config.json after renovate docker-compose update" || echo "No changes to commit"
-          git push
+          git push origin HEAD:${{ github.head_ref }}
 
       - name: Check config.json update consistency
         if: steps.changed_apps.outputs.any_changed == 'true'
