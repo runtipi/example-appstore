@@ -9,7 +9,7 @@
     "media"
   ],
   "description": "",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "1.41.7",
   "url_suffix": "/web",
   "source": "https://docs.linuxserver.io/images/docker-plex/",

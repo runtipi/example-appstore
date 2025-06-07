@@ -37,6 +37,17 @@ Recyclarr automatically synchronizes release profiles, quality definitions, and 
 
 ---
 
+## 🐳 DOCKER IMAGE DETAILS
+- **Runs as non-root (1000:1000)** for improved security (rootless by default)
+- **Minimal image size** for fast deployment and low resource usage
+- **Based on [recyclarr/recyclarr](https://github.com/recyclarr/recyclarr))**
+- Built via a secure, pinned CI/CD process, immune to upstream attacks
+- Contains a proper health check to verify the app is actually working
+- Auto update feature: the latest version is automatically built and published
+- Special thanks to [recyclarr](https://github.com/recyclarr) for their original Docker image and their work!
+
+---
+
 ## 📁 VOLUMES
 | Host folder | Container folder | Comment |
 | ----------- | ---------------- | ------- |

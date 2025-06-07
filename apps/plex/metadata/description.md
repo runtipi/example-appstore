@@ -1,41 +1,51 @@
 # PLEX
 
-Run Plex more secure
+[<img src="https://img.shields.io/badge/github-source-blue?logo=github&color=040308">](https://github.com/linuxserver/docker-plex) [<img src="https://img.shields.io/github/issues/linuxserver/docker-plex?color=7842f5">](https://github.com/linuxserver/docker-plex/issues)
 
-# SYNOPSIS 📖
-**What can I do with this?** Plex Media Server is a digital media player and organizational tool that allows you to access the music, pictures, and videos stored on one computer with any other computer or compatible mobile device. You can install the Plex Media Server software on a Windows, Mac, or Linux computer, or a compatible network-attached storage (NAS) device, then play it back on any other internet-connected device capable of running the Plex app.
+Media server to organize and stream your movies, TV, music, and photos.
 
-Use any compatible device to watch movies, listen to music, and view pictures stored on a computer that runs Plex Media Server. Access media files stored on your Plex Media Server computer remotely over the internet. Allow friends and family to access your movies, music, and pictures over the internet. 
+---
 
-# UNIQUE VALUE PROPOSITION 💶
-**Why should I run this image and not the other image(s) that already exist?** Good question! All the other images on the market that do exactly the same don’t do or offer these options:
+## 📖 SYNOPSIS
+Plex is a powerful media server that organizes your media and streams it to any device, anywhere. It provides a beautiful interface and rich metadata for your entire collection.
 
->* This image runs as 1000:1000 by default, most other images run everything as root
->* This image is created via a secure, pinned CI/CD process and immune to upstream attacks, most other images have upstream dependencies that can be exploited
->* This image contains a proper health check that verifies the app is actually working, most other images have either no health check or only check if a port is open or ping works
->* This repository has an auto update feature that will automatically build the latest version if released, most other providers don't do this
->* This image is smaller than most other images
+---
 
-# COMPARISON 🏁
-Below you find a comparison between this image and the most used or original one.
+## ✨ MAIN FEATURES
+- Organize and stream movies, TV, music, and photos
+- Beautiful web and mobile interfaces
+- Remote access and sharing
+- Hardware transcoding support
 
-| **image** | hotio/plex:1.41.7 | linuxserver/plex:1.41.7 |
-| ---: | :---: | :---: |
-| **image size on disk** | 192MB | 156MB |
-| **process UID/GID** | 0/0 | 1000/1000 |
-| **distroless?** | ❌ | ❌ |
-| **rootless?** | ❌ | ❌ |
+---
 
-# VOLUMES 📁
+## 🌟 ADVANTAGES
+- Centralized media management
+- Open Source (LinuxServer.io image)
+- Actively maintained
 
-| Mounted folder                                       | Container folder |  Comments |
-|---------------------------------------|------------------|-------------------|
-| `/runtipi/app-data/`**store**`/plex/data/config`   | `/config`          | directory of all your settings and database
-| `/runtipi/app-data/`**store**`/plex/data/transcode`   | `/transcode`          | directory of transcoding cache
-| `/runtipi/media/data`   | `/data`          | directory of medias
+---
 
+## 🐳 DOCKER IMAGE DETAILS
+- **Runs as root by default** (not rootless)
+- **Minimal image size** for fast deployment and low resource usage
+- **Based on [linuxserver/plex](https://github.com/linuxserver/docker-plex))**
+- Built via a secure, pinned CI/CD process, immune to upstream attacks
+- Contains a proper health check to verify the app is actually working
+- Auto update feature: the latest version is automatically built and published
+- Special thanks to [linuxserver.io](https://github.com/linuxserver) for their original Docker image and their work!
 
-# DEFAULT SETTINGS 🗃️
+---
+
+## 📁 VOLUMES
+| Host folder | Container folder | Comment |
+| ----------- | ---------------- | ------- |
+| `/runtipi/app-data/store/plex/data` | `/config` | Configuration and database |
+| `/runtipi/media` | `/data` | Media library |
+
+---
+
+## 🗃️ DEFAULT PARAMETERS
 | Parameter | Value | Description |
 | --- | --- | --- |
 | `uid` | 1000 | [user identifier](https://en.wikipedia.org/wiki/User_identifier) |
@@ -54,12 +64,11 @@ Below you find a comparison between this image and the most used or original one
 # SOURCE 💾
 * [linuxserver/docker-plex](https://github.com/linuxserver/docker-plex)
 
-# PARENT IMAGE 🏛️
-* [linuxserver/docker-baseimage-ubuntu](https://github.com/linuxserver/docker-baseimage-ubuntu)
+---
 
-# BUILT WITH 🧰
-* [plexinc/pms-docker](https://github.com/plexinc/pms-docker)
-* [linuxserver/docker-unrar](https://github.com/linuxserver/docker-unrar)
+## ❤️ PROVIDED WITH LOVE
+This app is provided with love by [JigSawFr](https://github.com/JigSawFr).
 
-# DISCLAIMER™️
-This image is provided to you at your own risk. Always make backups before updating an image to a different version. Check the releases for breaking changes.
+---
+
+For any questions or issues, open an issue on the official GitHub repository.

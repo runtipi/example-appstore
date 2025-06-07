@@ -1,24 +1,84 @@
 # BYPARR
-An alternative to [FlareSolverr](https://github.com/FlareSolverr/FlareSolverr) as a drop-in replacement, built with [seleniumbase](https://seleniumbase.io/) and [FastAPI](https://fastapi.tiangolo.com).
 
-# SYNOPSIS 📖
-**What can I do with this?** 
+[<img src="https://img.shields.io/badge/github-source-blue?logo=github&color=040308">](https://github.com/ThePhaseless/Byparr) [<img src="https://img.shields.io/github/issues/ThePhaseless/Byparr?color=7842f5">](https://github.com/ThePhaseless/Byparr/issues)
 
-> This software does not **guarantee** (only greatly increases the chance) that any challenge will be bypassed. While this tool passes the initial browser check, Cloudflare and other captcha providers likely require valid network traffic originating from the user’s public IP address to mark a connection as legitimate. If any website does not pass the challenge, please run troubleshooting steps and check if other websites work before you create an GitHub issue.
+Alternative to FlareSolverr, built with SeleniumBase and FastAPI. Drop-in replacement for bypassing anti-bot challenges.
 
-> Support for NAS devices (like Synology) is minimal. Please report issues, but do not expect it to be fixed quickly. The only ARM device I have is a free Ampere Oracle VM, so I can only test ARM support on that. See [#22](https://github.com/ThePhaseless/Byparr/issues/22) and [#3](https://github.com/ThePhaseless/Byparr/issues/3)
+---
 
-> Thanks to FastAPI implementation, now you can also see the API documentation at `/docs` or `/` (redirect to `/docs`) endpoints.
+## 📖 SYNOPSIS
+Byparr is a lightweight, rootless, and secure solution to bypass browser challenges (like Cloudflare) for your applications. It leverages SeleniumBase and FastAPI to provide a simple API for solving captchas and browser checks.
 
-# ENVIRONMENT 📝
-| Parameter | Value | Default |
+---
+
+## ✨ MAIN FEATURES
+- Drop-in replacement for FlareSolverr
+- Headless Chromium support
+- FastAPI-powered API with documentation at `/docs`
+- Proxy support (HTTP/SOCKS)
+- ARM support (limited)
+
+---
+
+## 🌟 ADVANTAGES
+- Secure and rootless by default
+- Community-driven and open source
+- Lightweight and fast
+- Easy to deploy and maintain
+- Actively maintained and documented
+
+---
+
+## 🐳 DOCKER IMAGE DETAILS
+- **Runs as non-root (1000:1000)** for improved security (rootless by default)
+- **Minimal image size** for fast deployment and low resource usage
+- **Based on [ThePhaseless/Byparr](https://github.com/ThePhaseless/Byparr))**
+- Built via a secure, pinned CI/CD process, immune to upstream attacks
+- Contains a proper health check to verify the app is actually working
+- Auto update feature: the latest version is automatically built and published
+- Special thanks to [ThePhaseless](https://github.com/ThePhaseless) for his original Docker image and his work!
+
+---
+
+## 📁 VOLUMES
+| Host folder | Container folder | Comment |
+| ----------- | ---------------- | ------- |
+| `/runtipi/app-data/store/byparr/data` | `/config` | Configuration and logs |
+
+---
+
+## 🗃️ DEFAULT PARAMETERS
+| Parameter | Value | Description |
 | --- | --- | --- |
-| `TZ` | [Time Zone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) | |
-| `USE_HEADLESS`       | `SeleniumBase default` | Use headless  chromium.  
-| `PROXY`              | None                   | Proxy to use in format: `protocol://username:password@host:port`. |
+| `uid` | 1000 | User identifier |
+| `gid` | 1000 | Group identifier |
 
-# SOURCE 💾
+---
+
+## 📝 ENVIRONMENT
+| Parameter | Default value | Description |
+| --- | --- | --- |
+| `TZ` | [Time Zone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) | Timezone |
+| `USE_HEADLESS` | SeleniumBase default | Use headless Chromium |
+| `PROXY` | None | Proxy in format: `protocol://username:password@host:port` |
+
+---
+
+## ⚠️ IMPORTANT
+- This tool increases the chance of bypassing browser challenges, but does not guarantee success for all sites.
+- ARM support is experimental.
+- For troubleshooting, check the API docs at `/docs` and the GitHub issues.
+
+---
+
+## 💾 SOURCE
 * [ThePhaseless/Byparr](https://github.com/ThePhaseless/Byparr)
 
-# DISCLAIMER™️
-This image is provided to you at your own risk. Always make backups before updating an image to a different version. Check the releases for breaking changes.
+---
+
+## ❤️ PROVIDED WITH LOVE
+This app is provided with love by [JigSawFr](https://github.com/JigSawFr).
+
+---
+
+For any questions or issues, open an issue on the official GitHub repository.
