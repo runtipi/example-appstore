@@ -18,7 +18,7 @@ It contains a variety of apps.
 >* These app's images are smaller than most other AppStore's images
 
 
-## Apps Available (5) 🏁
+## Apps Available (6) 🏁
 
 | Logo                                                                     | Name                                                         | Description                                  |
 | :----------------------------------------------------------------------: | ------------------------------------------------------------ | -------------------------------------------- |
@@ -26,7 +26,8 @@ It contains a variety of apps.
 | <img src="apps/radarr/metadata/logo.jpg" width="64" height="64">       | [Radarr](https://github.com/Radarr/Radarr)           | Run Radarr smaller, lightweight and more secure (Eleven Notes ™️)      |
 | <img src="apps/sonarr/metadata/logo.jpg" width="64" height="64">       | [Sonarr](https://github.com/Sonarr/Sonarr)           | Run Sonarr smaller, lightweight and more secure (Eleven Notes ™️)      |
 | <img src="apps/plex/metadata/logo.jpg" width="64" height="64">       | [Plex](https://github.com/linuxserver/docker-plex)           | Run Plex smaller, lightweight and more secure (LinuxServer ™️)   
-| <img src="apps/prowlarr/metadata/logo.jpg" width="64" height="64">       | [Prowlarr](https://github.com/Prowlarr/Prowlarr)           | Run Prowlarr smaller, lightweight and more secure (Eleven Notes ™️)      |   |
+| <img src="apps/prowlarr/metadata/logo.jpg" width="64" height="64">       | [Prowlarr](https://github.com/Prowlarr/Prowlarr)           | Run Prowlarr smaller, lightweight and more secure (Eleven Notes ™️)      |
+| <img src="apps/recyclarr/metadata/logo.jpg" width="64" height="64">       | [Recyclarr](https://github.com/recyclarr/recyclarr)           | Automatically sync TRaSH guides with your Sonarr and Radarr instances |
 
 ## Installation
 
