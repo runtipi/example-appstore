@@ -18,6 +18,7 @@
 
 ## 🚀 Table of Contents
 - 📦 [Apps Available](#-apps-available-7-)
+- ⚠️ [Prerequisites](#-prerequisites)
 - ⚡ [Quick Start](#-quick-start)
 - ✨ [Features](#-features)
 - 🛠️ [Installation](#️-installation)
@@ -31,13 +32,29 @@
 
 |  | Name & Docs | Description | Docker Image |
 |:---:|:---|:---|:---|
-| <img src="apps/byparr/metadata/logo.jpg" width="48" height="48"> | [**Byparr**](https://github.com/ThePhaseless/Byparr)<br/><sub>[Description](apps/byparr/metadata/description.md)</sub> | 🦾 Alternative to Flaresolverr | [ghcr.io/thephaseless/byparr](https://github.com/ThePhaseless/Byparr/pkgs/container/byparr) |
-| <img src="apps/homebox/metadata/logo.jpg" width="48" height="48"> | [**HomeBox**](https://github.com/sysadminsmedia/homebox)<br/><sub>[Description](apps/homebox/metadata/description.md)</sub> | 📦 Inventory & organization for home users | [ghcr.io/sysadminsmedia/homebox](https://github.com/sysadminsmedia/homebox/pkgs/container/homebox) |
-| <img src="apps/plex/metadata/logo.jpg" width="48" height="48"> | [**Plex**](https://github.com/linuxserver/docker-plex)<br/><sub>[Description](apps/plex/metadata/description.md)</sub> | 🎞️ Media server, secure | [ghcr.io/linuxserver/plex](https://github.com/linuxserver/docker-plex) |
-| <img src="apps/prowlarr/metadata/logo.jpg" width="48" height="48"> | [**Prowlarr**](https://github.com/Prowlarr/Prowlarr)<br/><sub>[Description](apps/prowlarr/metadata/description.md)</sub> | 🔎 Indexer, lightweight & secure | [ghcr.io/linuxserver/prowlarr](https://github.com/linuxserver/docker-prowlarr) |
-| <img src="apps/radarr/metadata/logo.jpg" width="48" height="48"> | [**Radarr**](https://github.com/Radarr/Radarr)<br/><sub>[Description](apps/radarr/metadata/description.md)</sub> | 🎬 Movies, lightweight & secure | [ghcr.io/11notes/radarr](https://github.com/11notes/docker-radarr) |
-| <img src="apps/recyclarr/metadata/logo.jpg" width="48" height="48"> | [**Recyclarr**](https://github.com/recyclarr/recyclarr)<br/><sub>[Description](apps/recyclarr/metadata/description.md)</sub> | ♻️ Sync TRaSH guides | [ghcr.io/recyclarr/recyclarr](https://github.com/recyclarr/recyclarr/pkgs/container/recyclarr) |
-| <img src="apps/sonarr/metadata/logo.jpg" width="48" height="48"> | [**Sonarr**](https://github.com/Sonarr/Sonarr)<br/><sub>[Description](apps/sonarr/metadata/description.md)</sub> | 📺 Series, lightweight & secure | [ghcr.io/11notes/sonarr](https://github.com/11notes/docker-sonarr) |
+| <img src="apps/byparr/metadata/logo.jpg" width="48" height="48"> | [**Byparr**](https://github.com/ThePhaseless/Byparr)<br/><sub>[Description](apps/byparr/metadata/description.md)</sub> | 🦾 Bypass Cloudflare and DDoS-Guard | [ghcr.io/thephaseless/byparr](https://github.com/ThePhaseless/Byparr/pkgs/container/byparr) |
+| <img src="apps/homebox/metadata/logo.jpg" width="48" height="48"> | [**HomeBox**](https://github.com/sysadminsmedia/homebox)<br/><sub>[Description](apps/homebox/metadata/description.md)</sub> | 📦 Home inventory & organization | [ghcr.io/sysadminsmedia/homebox](https://github.com/sysadminsmedia/homebox/pkgs/container/homebox) |
+| <img src="apps/lubelogger/metadata/logo.jpg" width="48" height="48"> | [**LubeLogger**](https://github.com/hargata/lubelog)<br/><sub>[Description](apps/lubelogger/metadata/description.md)</sub> | 🚗 Track vehicle maintenance & fuel | [ghcr.io/hargata/lubelog](https://github.com/hargata/lubelog/pkgs/container/lubelog) |
+| <img src="apps/plex/metadata/logo.jpg" width="48" height="48"> | [**Plex**](https://github.com/linuxserver/docker-plex)<br/><sub>[Description](apps/plex/metadata/description.md)</sub> | 🎞️ Media server for your library | [ghcr.io/linuxserver/plex](https://github.com/linuxserver/docker-plex) |
+| <img src="apps/prowlarr/metadata/logo.jpg" width="48" height="48"> | [**Prowlarr**](https://github.com/Prowlarr/Prowlarr)<br/><sub>[Description](apps/prowlarr/metadata/description.md)</sub> | 🔎 Indexer manager for *arr apps | [ghcr.io/linuxserver/prowlarr](https://github.com/linuxserver/docker-prowlarr) |
+| <img src="apps/radarr/metadata/logo.jpg" width="48" height="48"> | [**Radarr**](https://github.com/Radarr/Radarr)<br/><sub>[Description](apps/radarr/metadata/description.md)</sub> | 🎬 Manage and download movies | [ghcr.io/11notes/radarr](https://github.com/11notes/docker-radarr) |
+| <img src="apps/recyclarr/metadata/logo.jpg" width="48" height="48"> | [**Recyclarr**](https://github.com/recyclarr/recyclarr)<br/><sub>[Description](apps/recyclarr/metadata/description.md)</sub> | ♻️ Sync TRaSH guides to *arr apps | [ghcr.io/recyclarr/recyclarr](https://github.com/recyclarr/recyclarr/pkgs/container/recyclarr) |
+| <img src="apps/sonarr/metadata/logo.jpg" width="48" height="48"> | [**Sonarr**](https://github.com/Sonarr/Sonarr)<br/><sub>[Description](apps/sonarr/metadata/description.md)</sub> | 📺 Manage and download TV series | [ghcr.io/11notes/sonarr](https://github.com/11notes/docker-sonarr) |
+
+---
+
+## ⚠️ Prerequisites
+
+This repository is a collection of third-party applications ("apps") designed exclusively for use with [Runtipi.io](https://runtipi.io/).
+
+> **What is Runtipi?**
+>
+> Runtipi is an open-source platform that lets you easily self-host and manage web applications on your own server, with a beautiful web UI and one-click app installation.
+
+> [!WARNING]
+> These apps are only compatible with Runtipi. You must have a working Runtipi instance to use this AppStore. They will not work as standalone Docker containers.
+
+- To get started with Runtipi, see the [official documentation](https://runtipi.io/docs/installation/) or visit the [main GitHub project](https://github.com/meienberger/runtipi).
 
 ---
 
@@ -93,7 +110,7 @@ A: See the [official website & documentation](https://runtipi.io/) and the [Runt
 
 ## 🙏 Acknowledgements
 
-- Thanks to [11notes](https://github.com/11notes), [LinuxServer.io](https://github.com/linuxserver), [ThePhaseless](https://github.com/ThePhaseless), and [recyclarr](https://github.com/recyclarr) for their Docker images and open source work.
+- Thanks to [11notes](https://github.com/11notes), [LinuxServer.io](https://github.com/linuxserver), [ThePhaseless](https://github.com/ThePhaseless), [recyclarr](https://github.com/recyclarr), [hay-kot](https://github.com/hay-kot), and [hargata](https://github.com/hargata) for their Docker images, open source work, and original projects.
 - Thanks to all contributors and users!
 
 ---
@@ -106,6 +123,7 @@ A: See the [official website & documentation](https://runtipi.io/) and the [Runt
   <a href="https://github.com/features/actions"><img src="https://img.shields.io/badge/GitHub%20Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white" alt="GitHub Actions" height="28"/></a>
   <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" height="28"/></a>
   <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" height="28"/></a>
+  <a href="https://learn.microsoft.com/powershell/"><img src="https://img.shields.io/badge/PowerShell-5391FE?style=for-the-badge&logo=powershell&logoColor=white" alt="PowerShell" height="28"/></a>
 </p>
 
 ---
