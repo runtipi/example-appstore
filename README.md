@@ -31,7 +31,7 @@
 
 ---
 
-## 📦 Apps Available (11)
+## 📦 Apps Available (12)
 
 |  | Name & Docs | Description | Docker Image |
 |:---:|:---|:---|:---|
@@ -40,6 +40,7 @@
 | <img src="apps/huntarr/metadata/logo.jpg" width="48" height="48"> | [**Huntarr**](https://github.com/plexguide/Huntarr)<br/><sub>[Description](apps/huntarr/metadata/description.md)</sub> | 🕵️‍♂️ Automated missing & upgrade search | [ghcr.io/plexguide/huntarr](https://github.com/plexguide/Huntarr/pkgs/container/huntarr) |
 | <img src="apps/kometa/metadata/logo.jpg" width="48" height="48"> | [**Kometa**](https://github.com/Kometa-Team/Kometa)<br/><sub>[Description](apps/kometa/metadata/description.md)</sub> | 🎨 Overlays, collections & playlists for Plex | [ghcr.io/linuxserver/kometa](https://github.com/linuxserver/kometa/pkgs/container/kometa) |
 | <img src="apps/lubelogger/metadata/logo.jpg" width="48" height="48"> | [**LubeLogger**](https://github.com/hargata/lubelog)<br/><sub>[Description](apps/lubelogger/metadata/description.md)</sub> | 🚗 Track vehicle maintenance & fuel | [ghcr.io/hargata/lubelog](https://github.com/hargata/lubelog/pkgs/container/lubelog) |
+| <img src="apps/overseerr/metadata/logo.jpg" width="48" height="48"> | [**Overseerr**](https://github.com/sct/overseerr)<br/><sub>[Description](apps/overseerr/metadata/description.md)</sub> | 📥 Media requests for Plex | [ghcr.io/linuxserver/overseerr](https://github.com/linuxserver/docker-overseerr) |
 | <img src="apps/plex/metadata/logo.jpg" width="48" height="48"> | [**Plex**](https://github.com/linuxserver/docker-plex)<br/><sub>[Description](apps/plex/metadata/description.md)</sub> | 🎞️ Media server for your library | [ghcr.io/linuxserver/plex](https://github.com/linuxserver/docker-plex) |
 | <img src="apps/prowlarr/metadata/logo.jpg" width="48" height="48"> | [**Prowlarr**](https://github.com/Prowlarr/Prowlarr)<br/><sub>[Description](apps/prowlarr/metadata/description.md)</sub> | 🔎 Indexer manager for *arr apps | [ghcr.io/linuxserver/prowlarr](https://github.com/linuxserver/docker-prowlarr) |
 | <img src="apps/radarr/metadata/logo.jpg" width="48" height="48"> | [**Radarr**](https://github.com/Radarr/Radarr)<br/><sub>[Description](apps/radarr/metadata/description.md)</sub> | 🎬 Manage and download movies | [ghcr.io/11notes/radarr](https://github.com/11notes/docker-radarr) |
