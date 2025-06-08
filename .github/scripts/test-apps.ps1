@@ -1,6 +1,6 @@
 # Check that each app has the required files and valid config/docker-compose
 
-# Détecter la racine du repo (présence de README.md)
+# Detect the repository root (presence of README.md)
 function Get-RepoRoot {
     $current = $PSScriptRoot
     while ($current -ne [System.IO.Path]::GetPathRoot($current)) {
@@ -9,7 +9,7 @@ function Get-RepoRoot {
         }
         $current = Split-Path $current -Parent
     }
-    throw 'Impossible de trouver la racine du repo (README.md manquant)'
+    throw 'Could not find repository root (README.md missing)'
 }
 
 $repoRoot = Get-RepoRoot
@@ -61,20 +61,35 @@ foreach ($app in $apps) {
     }
 }
 
+# Prepare local directory for schemas
+$schemasDir = Join-Path $repoRoot '.github/schemas'
+if (-not (Test-Path $schemasDir)) {
+    New-Item -ItemType Directory -Path $schemasDir | Out-Null
+}
+
+$schemas = @(
+    @{ file = 'config.json'; schema = 'https://schemas.runtipi.io/app-info.json'; local = (Join-Path $schemasDir 'app-info.json') },
+    @{ file = 'docker-compose.json'; schema = 'https://schemas.runtipi.io/dynamic-compose.json'; local = (Join-Path $schemasDir 'dynamic-compose.json') }
+)
+
+# Download schemas if needed
+foreach ($s in $schemas) {
+    if (-not (Test-Path $s.local)) {
+        Write-Host "Downloading schema $($s.schema) ..."
+        Invoke-WebRequest -Uri $s.schema -OutFile $s.local
+    }
+}
+
 Write-Host ""
 Write-Host "Validating JSON files against their schemas..."
 # Advanced JSON Schema validation (config.json and docker-compose.json)
 # Requires ajv-cli installed globally (npm install -g ajv-cli)
 $ajv = "ajv"
-$schemas = @(
-    @{ file = 'config.json'; schema = 'https://schemas.runtipi.io/app-info.json' },
-    @{ file = 'docker-compose.json'; schema = 'https://schemas.runtipi.io/dynamic-compose.json' }
-)
 foreach ($app in $apps) {
     foreach ($s in $schemas) {
         $filePath = Join-Path $appsPath $app $s.file
         if (Test-Path $filePath) {
-            $ajvArgs = @('validate', '-s', $s.schema, '-d', $filePath, '--strict=false')
+            $ajvArgs = @('validate', '-s', $s.local, '-d', $filePath, '--strict=false')
             & $ajv @ajvArgs | Out-Null
             if ($LASTEXITCODE -ne 0) {
                 Write-Host "❌ $app $($s.file) does not match schema" -ForegroundColor Red
