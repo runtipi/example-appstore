@@ -1,0 +1,26 @@
+{
+  "name": "Huntarr",
+  "id": "huntarr",
+  "available": true,
+  "short_desc": "This application continually searches your media libraries for missing content and items that need quality upgrades.",
+  "author": "plexguide",
+  "port": 9705,
+  "categories": [
+    "media",
+    "utilities"
+  ],
+  "description": "This application continually searches your media libraries for missing content and items that need quality upgrades. It automatically triggers searches for both missing items and those below your quality cutoff. It's designed to run continuously while being gentle on your indexers, helping you gradually complete your media collection with the best available quality.",
+  "tipi_version": 1,
+  "version": "v6.3.6",
+  "source": "https://github.com/plexguide/Huntarr.io",
+  "exposable": true,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1745082405284,
+  "updated_at": 1745674974072,
+  "dynamic_config": true,
+  "form_fields": [],
+  "website": "https://plexguide.github.io/Huntarr.io/"
+}

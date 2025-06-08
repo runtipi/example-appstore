@@ -31,12 +31,13 @@
 
 ---
 
-## 📦 Apps Available (9)
+## 📦 Apps Available (10)
 
 |  | Name & Docs | Description | Docker Image |
 |:---:|:---|:---|:---|
 | <img src="apps/byparr/metadata/logo.jpg" width="48" height="48"> | [**Byparr**](https://github.com/ThePhaseless/Byparr)<br/><sub>[Description](apps/byparr/metadata/description.md)</sub> | 🦾 Bypass Cloudflare and DDoS-Guard | [ghcr.io/thephaseless/byparr](https://github.com/ThePhaseless/Byparr/pkgs/container/byparr) |
 | <img src="apps/homebox/metadata/logo.jpg" width="48" height="48"> | [**HomeBox**](https://github.com/sysadminsmedia/homebox)<br/><sub>[Description](apps/homebox/metadata/description.md)</sub> | 📦 Home inventory & organization | [ghcr.io/sysadminsmedia/homebox](https://github.com/sysadminsmedia/homebox/pkgs/container/homebox) |
+| <img src="apps/huntarr/metadata/logo.jpg" width="48" height="48"> | [**Huntarr**](https://github.com/plexguide/Huntarr)<br/><sub>[Description](apps/huntarr/metadata/description.md)</sub> | 🕵️‍♂️ Find missing & upgradeable media | [ghcr.io/plexguide/huntarr](https://github.com/plexguide/Huntarr/pkgs/container/huntarr) |
 | <img src="apps/lubelogger/metadata/logo.jpg" width="48" height="48"> | [**LubeLogger**](https://github.com/hargata/lubelog)<br/><sub>[Description](apps/lubelogger/metadata/description.md)</sub> | 🚗 Track vehicle maintenance & fuel | [ghcr.io/hargata/lubelog](https://github.com/hargata/lubelog/pkgs/container/lubelog) |
 | <img src="apps/plex/metadata/logo.jpg" width="48" height="48"> | [**Plex**](https://github.com/linuxserver/docker-plex)<br/><sub>[Description](apps/plex/metadata/description.md)</sub> | 🎞️ Media server for your library | [ghcr.io/linuxserver/plex](https://github.com/linuxserver/docker-plex) |
 | <img src="apps/prowlarr/metadata/logo.jpg" width="48" height="48"> | [**Prowlarr**](https://github.com/Prowlarr/Prowlarr)<br/><sub>[Description](apps/prowlarr/metadata/description.md)</sub> | 🔎 Indexer manager for *arr apps | [ghcr.io/linuxserver/prowlarr](https://github.com/linuxserver/docker-prowlarr) |

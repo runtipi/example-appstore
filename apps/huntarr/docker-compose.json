@@ -1,0 +1,19 @@
+{
+  "services": [
+    {
+      "name": "huntarr",
+      "image": "ghcr.io/plexguide/huntarr:latest",
+      "isMain": true,
+      "internalPort": "9705",
+      "environment": {
+        "TZ": "${TZ}"
+      },
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/config"
+        }
+      ]
+    }
+  ]
+}
