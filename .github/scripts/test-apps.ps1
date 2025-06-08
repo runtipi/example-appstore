@@ -34,7 +34,8 @@ foreach ($app in $apps) {
     }
 }
 
-Write-Host "\nValidating config.json and docker-compose.json for each app..."
+Write-Host ""
+Write-Host "Validating config.json and docker-compose.json for each app..."
 foreach ($app in $apps) {
     $configPath = Join-Path $appsPath $app 'config.json'
     $composePath = Join-Path $appsPath $app 'docker-compose.json'
@@ -60,6 +61,8 @@ foreach ($app in $apps) {
     }
 }
 
+Write-Host ""
+Write-Host "Validating JSON files against their schemas..."
 # Advanced JSON Schema validation (config.json and docker-compose.json)
 # Requires ajv-cli installed globally (npm install -g ajv-cli)
 $ajv = "ajv"
@@ -67,13 +70,12 @@ $schemas = @(
     @{ file = 'config.json'; schema = 'https://schemas.runtipi.io/app-info.json' },
     @{ file = 'docker-compose.json'; schema = 'https://schemas.runtipi.io/dynamic-compose.json' }
 )
-Write-Host "\nValidating JSON files against their schemas..."
 foreach ($app in $apps) {
     foreach ($s in $schemas) {
         $filePath = Join-Path $appsPath $app $s.file
         if (Test-Path $filePath) {
-            $cmd = "$ajv validate -s $($s.schema) -d $filePath --strict=false"
-            Invoke-Expression $cmd | Out-Null
+            $ajvArgs = @('validate', '-s', $s.schema, '-d', $filePath, '--strict=false')
+            & $ajv @ajvArgs | Out-Null
             if ($LASTEXITCODE -ne 0) {
                 Write-Host "❌ $app $($s.file) does not match schema" -ForegroundColor Red
                 $errors++
@@ -85,7 +87,8 @@ foreach ($app in $apps) {
     }
 }
 
-Write-Host "\nChecking for forbidden/unexpected files or folders in each app..."
+Write-Host ""
+Write-Host "Checking for forbidden/unexpected files or folders in each app..."
 foreach ($app in $apps) {
     $appPath = Join-Path $appsPath $app
     $allFiles = Get-ChildItem -Path $appPath -Recurse -File -Force | Select-Object -ExpandProperty Name
@@ -99,10 +102,12 @@ foreach ($app in $apps) {
 }
 
 if ($errors -gt 0) {
-    Write-Host "\n$errors error(s) found." -ForegroundColor Red
+    Write-Host ""
+    Write-Host "$errors error(s) found." -ForegroundColor Red
     exit 1
 }
 else {
-    Write-Host "\nAll checks passed!" -ForegroundColor Green
+    Write-Host ""
+    Write-Host "All checks passed!" -ForegroundColor Green
     exit 0
 }
