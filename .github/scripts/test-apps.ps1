@@ -1,6 +1,19 @@
 # Check that each app has the required files and valid config/docker-compose
 
-$appsPath = Join-Path $PSScriptRoot '../apps'
+# Détecter la racine du repo (présence de README.md)
+function Get-RepoRoot {
+    $current = $PSScriptRoot
+    while ($current -ne [System.IO.Path]::GetPathRoot($current)) {
+        if (Test-Path (Join-Path $current 'README.md')) {
+            return $current
+        }
+        $current = Split-Path $current -Parent
+    }
+    throw 'Impossible de trouver la racine du repo (README.md manquant)'
+}
+
+$repoRoot = Get-RepoRoot
+$appsPath = Join-Path $repoRoot 'apps'
 $apps = Get-ChildItem -Path $appsPath -Directory | Select-Object -ExpandProperty Name
 
 $requiredFiles = @('config.json', 'docker-compose.json', 'metadata/logo.jpg', 'metadata/description.md')
@@ -27,7 +40,7 @@ foreach ($app in $apps) {
     $composePath = Join-Path $appsPath $app 'docker-compose.json'
     if (Test-Path $configPath) {
         try {
-            $config = Get-Content $configPath -Raw | ConvertFrom-Json
+            Get-Content $configPath -Raw | ConvertFrom-Json | Out-Null
             Write-Host "✔ $app config.json is valid JSON" -ForegroundColor Green
         }
         catch {
@@ -37,7 +50,7 @@ foreach ($app in $apps) {
     }
     if (Test-Path $composePath) {
         try {
-            $compose = Get-Content $composePath -Raw | ConvertFrom-Json
+            Get-Content $composePath -Raw | ConvertFrom-Json | Out-Null
             Write-Host "✔ $app docker-compose.json is valid JSON" -ForegroundColor Green
         }
         catch {
