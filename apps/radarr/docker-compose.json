@@ -3,7 +3,6 @@
     {
       "name": "radarr",
       "image": "ghcr.io/11notes/radarr:5.25.0",
-      "read_only": "true",
       "isMain": true,
       "internalPort": "7878",
       "environment": {
@@ -19,13 +18,6 @@
         {
           "hostPath": "${ROOT_FOLDER_HOST}/media",
           "containerPath": "/media"
-        }
-      ],
-      "tmpfs": [
-        {
-          "dst": "/tmp",
-          "uid": "1000",
-          "gid": "1000"
         }
       ]
     }

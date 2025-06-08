@@ -3,7 +3,6 @@
     {
       "name": "sonarr",
       "image": "ghcr.io/11notes/sonarr:4.0.14",
-      "read_only": "true",
       "isMain": true,
       "internalPort": "8989",
       "environment": {
@@ -19,13 +18,6 @@
         {
           "hostPath": "${ROOT_FOLDER_HOST}/media",
           "containerPath": "/media"
-        }
-      ],
-      "tmpfs": [
-        {
-          "dst": "/tmp",
-          "uid": "1000",
-          "gid": "1000"
         }
       ]
     }
