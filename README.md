@@ -20,7 +20,7 @@
 ---
 
 ## 🚀 Table of Contents
-- 📦 [Apps Available](#-apps-available-7-)
+- 📦 [Apps Available](#-apps-available-9-)
 - ⚠️ [Prerequisites](#-prerequisites)
 - ⚡ [Quick Start](#-quick-start)
 - ✨ [Features](#-features)
@@ -31,7 +31,7 @@
 
 ---
 
-## 📦 Apps Available (7)
+## 📦 Apps Available (9)
 
 |  | Name & Docs | Description | Docker Image |
 |:---:|:---|:---|:---|
@@ -43,6 +43,7 @@
 | <img src="apps/radarr/metadata/logo.jpg" width="48" height="48"> | [**Radarr**](https://github.com/Radarr/Radarr)<br/><sub>[Description](apps/radarr/metadata/description.md)</sub> | 🎬 Manage and download movies | [ghcr.io/11notes/radarr](https://github.com/11notes/docker-radarr) |
 | <img src="apps/recyclarr/metadata/logo.jpg" width="48" height="48"> | [**Recyclarr**](https://github.com/recyclarr/recyclarr)<br/><sub>[Description](apps/recyclarr/metadata/description.md)</sub> | ♻️ Sync TRaSH guides to *arr apps | [ghcr.io/recyclarr/recyclarr](https://github.com/recyclarr/recyclarr/pkgs/container/recyclarr) |
 | <img src="apps/sonarr/metadata/logo.jpg" width="48" height="48"> | [**Sonarr**](https://github.com/Sonarr/Sonarr)<br/><sub>[Description](apps/sonarr/metadata/description.md)</sub> | 📺 Manage and download TV series | [ghcr.io/11notes/sonarr](https://github.com/11notes/docker-sonarr) |
+| <img src="apps/transmission-vpn/metadata/logo.jpg" width="48" height="48"> | [**Transmission (VPN)**](https://github.com/haugene/docker-transmission-openvpn)<br/><sub>[Description](apps/transmission-vpn/metadata/description.md)</sub> | 🌐 BitTorrent client with VPN tunnel | [haugene/transmission-openvpn](https://github.com/haugene/docker-transmission-openvpn) |
 
 ---
 
@@ -113,7 +114,7 @@ A: See the [official website & documentation](https://runtipi.io/) and the [Runt
 
 ## 🙏 Acknowledgements
 
-- Thanks to [11notes](https://github.com/11notes), [LinuxServer.io](https://github.com/linuxserver), [ThePhaseless](https://github.com/ThePhaseless), [recyclarr](https://github.com/recyclarr), [hay-kot](https://github.com/hay-kot), and [hargata](https://github.com/hargata) for their Docker images, open source work, and original projects.
+- Special thanks to all upstream projects and Docker image authors referenced in each app's description.
 - Thanks to all contributors and users!
 
 ---
@@ -124,9 +125,10 @@ A: See the [official website & documentation](https://runtipi.io/) and the [Runt
   <a href="https://runtipi.io/"><img src="https://img.shields.io/badge/%E2%9B%BA%20runtipi.io-2C2C32?style=for-the-badge" alt="Runtipi" height="28"/></a>
   <a href="https://www.docker.com/"><img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" height="28"/></a>
   <a href="https://github.com/features/actions"><img src="https://img.shields.io/badge/GitHub%20Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white" alt="GitHub Actions" height="28"/></a>
-  <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" height="28"/></a>
-  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" height="28"/></a>
   <a href="https://learn.microsoft.com/powershell/"><img src="https://img.shields.io/badge/PowerShell-5391FE?style=for-the-badge&logo=powershell&logoColor=white" alt="PowerShell" height="28"/></a>
+  <a href="https://www.json.org/"><img src="https://img.shields.io/badge/JSON-000000?style=for-the-badge&logo=json&logoColor=white" alt="JSON" height="28"/></a>
+  <a href="https://daringfireball.net/projects/markdown/"><img src="https://img.shields.io/badge/Markdown-000000?style=for-the-badge&logo=markdown&logoColor=white" alt="Markdown" height="28"/></a>
+  <a href="https://github.com/renovatebot/renovate"><img src="https://img.shields.io/badge/Renovate-1A1F6C?style=for-the-badge&logo=renovatebot&logoColor=white" alt="Renovate" height="28"/></a>
 </p>
 
 ---
