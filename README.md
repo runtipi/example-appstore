@@ -4,6 +4,9 @@
 
 <p align="center">
   <a href="https://github.com/JigSawFr/tipi-store/actions/workflows/lint.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/JigSawFr/tipi-store/lint.yml?label=Lint%20CI&logo=githubactions&style=for-the-badge&color=4B8DF8"></a>
+  <a href="https://github.com/JigSawFr/tipi-store/actions/workflows/test.yml">
+    <img alt="Tests" src="https://img.shields.io/github/actions/workflow/status/JigSawFr/tipi-store/test.yml?label=Tests&logo=powershell&style=for-the-badge&color=5391FE">
+  </a>
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge"></a>
   <a href="https://github.com/JigSawFr/tipi-store/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/JigSawFr/tipi-store?style=for-the-badge&logo=star&color=FFD700"></a>
   <a href="https://github.com/JigSawFr/tipi-store/pulls"><img alt="Pull Requests" src="https://img.shields.io/github/issues-pr/JigSawFr/tipi-store?style=for-the-badge&logo=gitbook&color=purple"></a>

@@ -13,15 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/cache@v4
-        with:
-          path: ~/.bun/install/cache
-          key: bun-${{ runner.os }}-${{ hashFiles('bun.lockb') }}
-          restore-keys: |
-            bun-${{ runner.os }}-
-      - uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: latest
       - name: Lint (biome)
         run: |
-          if [ -f biome.json ]; then bunx biome check .; else echo 'No biome config'; fi
+          if [ -f biome.json ]; then npx biome check .; else echo 'No biome config'; fi

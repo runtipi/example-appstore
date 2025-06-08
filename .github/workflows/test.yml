@@ -10,18 +10,12 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/cache@v4
-        with:
-          path: ~/.bun/install/cache
-          key: bun-${{ runner.os }}-${{ hashFiles('bun.lockb') }}
-          restore-keys: |
-            bun-${{ runner.os }}-
-      - uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: latest
-      - name: Install dependencies
-        run: bun install
-      - name: Run tests
-        run: bun test
+      - name: Install ajv-cli
+        run: npm install -g ajv-cli
+      - name: Run PowerShell app checks
+        shell: pwsh
+        run: pwsh .github/scripts/test-apps.ps1
