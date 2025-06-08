@@ -74,7 +74,8 @@ foreach ($app in $apps) {
     foreach ($s in $schemas) {
         $filePath = Join-Path $appsPath $app $s.file
         if (Test-Path $filePath) {
-            $ajvArgs = @('validate', '-s', $s.schema, '-d', $filePath, '--strict=false')
+            $schemaUrl = '"' + $s.schema + '"'
+            $ajvArgs = @('validate', '-s', $schemaUrl, '-d', $filePath, '--strict=false')
             & $ajv @ajvArgs | Out-Null
             if ($LASTEXITCODE -ne 0) {
                 Write-Host "❌ $app $($s.file) does not match schema" -ForegroundColor Red
