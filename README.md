@@ -31,7 +31,7 @@
 
 ---
 
-## 📦 Apps Available (12)
+## 📦 Apps Available (13)
 
 |  | Name & Docs | Description | Docker Image |
 |:---:|:---|:---|:---|
@@ -46,6 +46,7 @@
 | <img src="apps/radarr/metadata/logo.jpg" width="48" height="48"> | [**Radarr**](https://github.com/Radarr/Radarr)<br/><sub>[Description](apps/radarr/metadata/description.md)</sub> | 🎬 Manage and download movies | [ghcr.io/11notes/radarr](https://github.com/11notes/docker-radarr) |
 | <img src="apps/recyclarr/metadata/logo.jpg" width="48" height="48"> | [**Recyclarr**](https://github.com/recyclarr/recyclarr)<br/><sub>[Description](apps/recyclarr/metadata/description.md)</sub> | ♻️ Sync TRaSH guides to *arr apps | [ghcr.io/recyclarr/recyclarr](https://github.com/recyclarr/recyclarr/pkgs/container/recyclarr) |
 | <img src="apps/sonarr/metadata/logo.jpg" width="48" height="48"> | [**Sonarr**](https://github.com/Sonarr/Sonarr)<br/><sub>[Description](apps/sonarr/metadata/description.md)</sub> | 📺 Manage and download TV series | [ghcr.io/11notes/sonarr](https://github.com/11notes/docker-sonarr) |
+| <img src="apps/tautulli/metadata/logo.jpg" width="48" height="48"> | [**Tautulli**](https://github.com/Tautulli/Tautulli)<br/><sub>[Description](apps/tautulli/metadata/description.md)</sub> | 📊 Plex monitoring & statistics | [lscr.io/linuxserver/tautulli](https://github.com/linuxserver/docker-tautulli) |
 | <img src="apps/transmission-vpn/metadata/logo.jpg" width="48" height="48"> | [**Transmission (VPN)**](https://github.com/haugene/docker-transmission-openvpn)<br/><sub>[Description](apps/transmission-vpn/metadata/description.md)</sub> | 🌐 BitTorrent client with VPN tunnel | [haugene/transmission-openvpn](https://github.com/haugene/docker-transmission-openvpn) |
 
 ---
