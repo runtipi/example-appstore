@@ -31,10 +31,12 @@
 
 ---
 
-## 📦 Apps Available (13)
+## 📦 Apps Available (15)
 
 |  | Name & Docs | Description | Docker Image |
 |:---:|:---|:---|:---|
+| <img src="apps/beszel/metadata/logo.jpg" width="48" height="48"> | [**Beszel**](https://github.com/henrygd/beszel)<br/><sub>[Description](apps/beszel/metadata/description.md)</sub> | 📊 Server monitoring hub | [henrygd/beszel](https://github.com/henrygd/beszel) |
+| <img src="apps/beszel-agent/metadata/logo.jpg" width="48" height="48"> | [**Beszel Agent**](https://github.com/henrygd/beszel)<br/><sub>[Description](apps/beszel-agent/metadata/description.md)</sub> | 🔍 Beszel monitoring agent | [henrygd/beszel-agent](https://github.com/henrygd/beszel) |
 | <img src="apps/byparr/metadata/logo.jpg" width="48" height="48"> | [**Byparr**](https://github.com/ThePhaseless/Byparr)<br/><sub>[Description](apps/byparr/metadata/description.md)</sub> | 🦾 Bypass Cloudflare and DDoS-Guard | [ghcr.io/thephaseless/byparr](https://github.com/ThePhaseless/Byparr/pkgs/container/byparr) |
 | <img src="apps/homebox/metadata/logo.jpg" width="48" height="48"> | [**HomeBox**](https://github.com/sysadminsmedia/homebox)<br/><sub>[Description](apps/homebox/metadata/description.md)</sub> | 📦 Home inventory & organization | [ghcr.io/sysadminsmedia/homebox](https://github.com/sysadminsmedia/homebox/pkgs/container/homebox) |
 | <img src="apps/huntarr/metadata/logo.jpg" width="48" height="48"> | [**Huntarr**](https://github.com/plexguide/Huntarr)<br/><sub>[Description](apps/huntarr/metadata/description.md)</sub> | 🕵️‍♂️ Automated missing & upgrade search | [ghcr.io/plexguide/huntarr](https://github.com/plexguide/Huntarr/pkgs/container/huntarr) |
