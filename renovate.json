@@ -7,7 +7,7 @@
     "custom.regex"
   ],
   "schedule": [
-    "0 * * * *"
+    "* */1 * * *"
   ],
   "timezone": "Europe/Paris",
   "automergeStrategy": "rebase",
