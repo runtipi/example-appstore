@@ -68,6 +68,13 @@
       "automerge": false
     },
     {
+      "matchPackagePatterns": [
+        "^lscr\\.io/linuxserver/.*"
+      ],
+      "versioning": "semver",
+      "allowedVersions": "/^\\d+\\.\\d+\\.\\d+(-ls\\d+)?$/"
+    },
+    {
       "matchPackageNames": [
         "mariadb",
         "mysql",
