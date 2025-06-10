@@ -76,14 +76,7 @@
         "ghcr.io/linuxserver/kometa"
       ],
       "versioning": "semver",
-      "allowedVersions": "!/^20\\d{2}\\./",
-      "ignoreVersions": [
-        "/^20\\d{2}\\./",
-        "/^v20\\d{2}/",
-        "latest",
-        "nightly",
-        "develop"
-      ]
+      "allowedVersions": "!/^20\\d{2}\\."
     },
     {
       "matchPackageNames": [
