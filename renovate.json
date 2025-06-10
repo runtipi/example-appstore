@@ -6,6 +6,10 @@
   "enabledManagers": [
     "custom.regex"
   ],
+  "schedule": [
+    "every hour"
+  ],
+  "timezone": "Europe/Paris",
   "automergeStrategy": "rebase",
   "dependencyDashboard": true,
   "rebaseWhen": "behind-base-branch",
