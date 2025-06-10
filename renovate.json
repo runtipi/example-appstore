@@ -7,7 +7,7 @@
     "custom.regex"
   ],
   "schedule": [
-    "every hour"
+    "0 * * * *"
   ],
   "timezone": "Europe/Paris",
   "automergeStrategy": "rebase",
