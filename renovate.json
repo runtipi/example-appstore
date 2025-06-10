@@ -69,7 +69,8 @@
     },
     {
       "matchPackagePatterns": [
-        "^lscr\\.io/linuxserver/.*"
+        "^lscr\\.io/linuxserver/.*",
+        "^ghcr\\.io/linuxserver/.*"
       ],
       "versioning": "semver",
       "allowedVersions": "/^\\d+\\.\\d+\\.\\d+(-ls\\d+)?$/"
