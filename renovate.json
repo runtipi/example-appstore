@@ -68,12 +68,14 @@
       "automerge": false
     },
     {
-      "versioning": "semver",
-      "allowedVersions": "/^\\d+\\.\\d+\\.\\d+(-ls\\d+)?$/",
       "matchPackageNames": [
-        "/^lscr\\.io/linuxserver/.*/",
-        "/^ghcr\\.io/linuxserver/.*/"
-      ]
+        "ghcr.io/linuxserver/overseerr",
+        "ghcr.io/linuxserver/plex",
+        "ghcr.io/linuxserver/tautulli",
+        "ghcr.io/linuxserver/kometa"
+      ],
+      "versioning": "semver",
+      "allowedVersions": "/^\\d+\\.\\d+\\.\\d+(-ls\\d+)?$/"
     },
     {
       "matchPackageNames": [
