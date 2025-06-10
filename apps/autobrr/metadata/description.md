@@ -34,7 +34,7 @@ Autobrr is the modern download automation tool for torrents. With inspiration fr
 ## 🐳 DOCKER IMAGE DETAILS
 - Based on [ghcr.io/s0up4200/autobrr-distroless](https://github.com/autobrr/autobrr)
 - Distroless, secure and lightweight
-- Runs as nobody user
+- Runs as non-root (1000:1000)
 - Web UI accessible on port 7474
 
 ---
@@ -49,7 +49,7 @@ Autobrr is the modern download automation tool for torrents. With inspiration fr
 ## 🗃️ DEFAULT PARAMETERS
 | Parameter | Value | Description |
 | --- | --- | --- |
-| `user` | nobody | User identifier |
+| `user` | 1000:1000 | User and group identifier |
 | `port` | 7474 | Web UI port |
 
 ---

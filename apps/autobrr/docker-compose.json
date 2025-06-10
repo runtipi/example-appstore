@@ -14,7 +14,7 @@
       "environment": {
         "TZ": "${TZ}"
       },
-      "user": "nobody"
+      "user": "1000:1000"
     }
   ]
 }
