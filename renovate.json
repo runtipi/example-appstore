@@ -66,8 +66,7 @@
         "devDependencies"
       ],
       "automerge": false
-    },
-    {
+    },    {
       "matchPackageNames": [
         "ghcr.io/linuxserver/overseerr",
         "ghcr.io/linuxserver/plex",
@@ -75,7 +74,19 @@
         "ghcr.io/linuxserver/kometa"
       ],
       "versioning": "semver",
-      "allowedVersions": "/^\\d+\\.\\d+\\.\\d+(-ls\\d+)?$/"
+      "allowedVersions": "/^\\d+\\.\\d+\\.\\d+(-ls\\d+)?$/",
+      "ignoredVersions": [
+        "/^v\\d{4}/",
+        "/^\\d{4}/",
+        "latest",
+        "nightly",
+        "develop",
+        "dev",
+        "beta",
+        "alpha",
+        "edge",
+        "testing"
+      ]
     },
     {
       "matchPackageNames": [
