@@ -1,4 +1,4 @@
-![banner](store.png?raw=true)
+![banner](.github/assets/store.png?raw=true)
 
 # JigSaw ⛺ Runtipi.io Custom AppStore
 

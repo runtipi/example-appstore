@@ -40,9 +40,6 @@
         "minor",
         "patch"
       ],
-      "addLabels": [
-        "ready-to-merge"
-      ],
       "assignees": [
         "JigSawFr"
       ]

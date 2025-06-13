@@ -66,55 +66,23 @@ jobs:
         shell: pwsh
         run: |
           $isMajor = $false
-          $prBody = @"
-          ${{ github.event.pull_request.body }}
-          "@
+          $prTitle = "${{ github.event.pull_request.title }}"
           
-          Write-Output "=== PR Body Analysis ==="
-          Write-Output $prBody
-          Write-Output "========================="
-          
-          # Pattern 1: Check for "major" keyword in update type column
-          if ($prBody -match "\|\s*major\s*\|" -or $prBody -match "Type.*major") {
+          # Check if PR title contains "major" update indication
+          if ($prTitle -match "major") {
             $isMajor = $true
-            Write-Output "✓ Major version detected: 'major' keyword found in table"
-          }          # Pattern 2: Check for version jump pattern (e.g., 1.x.x -> 2.x.x)
-          # Look for version numbers with arrow between them, but be more careful about context
-          if ($prBody -match '(\d+)\.\d+\.\d+.*→.*(\d+)\.\d+\.\d+') {
-            $fromMajor = [int]$matches[1]
-            $toMajor = [int]$matches[2]
-            # Only consider it major if it's a significant jump and in right context
-            if ($toMajor -gt $fromMajor -and $fromMajor -lt 10 -and $toMajor -lt 10) {
-              $isMajor = $true
-              Write-Output "✓ Major version detected: version jump from $fromMajor.x.x to $toMajor.x.x"
-            }
+            Write-Output "Major version update detected in PR title"
           }
           
-          # Pattern 3: Check for Renovate update table format
-          if ($prBody -match "Update.*Change.*Notes" -and $prBody -match "major") {
+          # Check branch name for major update indication
+          $branchName = "${{ github.head_ref }}"
+          if ($branchName -match "major") {
             $isMajor = $true
-            Write-Output "✓ Major version detected: found in Renovate update table"
-          }
-          
-          # Pattern 4: Check for semver major bump indicators
-          if ($prBody -match "BREAKING.*CHANGE" -or $prBody -match "breaking.*change") {
-            $isMajor = $true
-            Write-Output "✓ Major version detected: breaking change mentioned"
-          }
-          
-          # Pattern 5: Check for specific Renovate table format with arrows
-          if ($prBody -match "\d+\.\d+\.\d+.*→.*\d+\.\d+\.\d+" -and $prBody -match "major") {
-            $isMajor = $true
-            Write-Output "✓ Major version detected: Renovate update table with major change"
+            Write-Output "Major version update detected in branch name"
           }
           
           Write-Output "is_major=$isMajor" >> $env:GITHUB_OUTPUT
-          
-          if ($isMajor) {
-            Write-Output "🚫 MAJOR UPDATE DETECTED - Automerge will be SKIPPED"
-          } else {
-            Write-Output "✅ Minor/Patch update - Automerge will proceed"
-          }
+          Write-Output "Is major update: $isMajor"
 
       - name: Add approved-to-merge label to PR
         if: steps.changed_apps.outputs.any_changed == 'true' && steps.check_major.outputs.is_major == 'false' && success()
@@ -122,6 +90,7 @@ jobs:
           gh pr edit ${{ github.event.pull_request.number }} --add-label "approved-to-merge"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
 
       - name: Enable automerge for approved PR
         if: steps.changed_apps.outputs.any_changed == 'true' && steps.check_major.outputs.is_major == 'false' && success()
@@ -129,12 +98,4 @@ jobs:
           gh pr merge --squash --auto ${{ github.event.pull_request.number }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Skip automerge for major updates
-        if: steps.changed_apps.outputs.any_changed == 'true' && steps.check_major.outputs.is_major == 'true'
-        run: |
-          echo "🚫 Major version update detected - manual review required"
-          echo "::warning::This PR contains a major version update and requires manual review before merging"
-          gh pr edit ${{ github.event.pull_request.number }} --add-label "major-update" --add-label "needs-review"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
