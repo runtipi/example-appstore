@@ -8,9 +8,29 @@ on:
   workflow_dispatch:
 
 jobs:
+  # Debug job to log workflow context for troubleshooting
+  debug-context:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Debug workflow context
+        run: |
+          echo "🔍 Debugging workflow execution context"
+          echo "Event name: ${{ github.event_name }}"
+          echo "Actor: ${{ github.actor }}"
+          echo "Repository: ${{ github.repository }}"
+          echo "PR number: ${{ github.event.pull_request.number }}"
+          echo "PR title: ${{ github.event.pull_request.title }}"
+          echo "PR author: ${{ github.event.pull_request.user.login }}"
+          echo "Base ref: ${{ github.base_ref }}"
+          echo "Head ref: ${{ github.head_ref }}"
+          echo "Is Renovate bot: ${{ github.actor == 'renovate[bot]' }}"
+
+  # Job for Renovate PRs - handles automatic updates and merging
   update-and-validate-configs-renovate:
     runs-on: ubuntu-latest
-    if: github.actor == 'renovate[bot]'
+    if: github.event_name == 'pull_request' && (github.actor == 'renovate[bot]' || contains(github.event.pull_request.user.login, 'renovate'))
+    needs: debug-context
     steps:
       - uses: actions/checkout@v4
         with:
@@ -138,3 +158,133 @@ jobs:
           gh pr edit ${{ github.event.pull_request.number }} --add-label "major-update" --add-label "needs-review"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  # Job for manual contributions - validates configurations only
+  validate-manual-changes:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && !(github.actor == 'renovate[bot]' || contains(github.event.pull_request.user.login, 'renovate'))
+    needs: debug-context
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Get list of apps changed in the PR
+        id: changed_apps
+        uses: tj-actions/changed-files@v46
+        with:
+          files: |
+            apps/*/docker-compose.json
+            apps/*/config.json
+            apps/*/metadata/**
+
+      - name: Validate JSON syntax
+        if: steps.changed_apps.outputs.any_changed == 'true'
+        shell: pwsh
+        env:
+          CHANGED_FILES: ${{ steps.changed_apps.outputs.all_changed_files }}
+        run: |
+          $hasErrors = $false
+          $changedFiles = $env:CHANGED_FILES -split ' '
+          
+          Write-Output "📋 Validating JSON files for manual contribution..."
+          
+          foreach ($file in $changedFiles) {
+            if ($file -match '\.(json)$') {
+              Write-Output "🔍 Validating JSON syntax: $file"
+              try {
+                $content = Get-Content $file -Raw | ConvertFrom-Json
+                Write-Output "✅ Valid JSON: $file"
+              }
+              catch {
+                Write-Output "❌ Invalid JSON: $file"
+                Write-Output "Error: $($_.Exception.Message)"
+                $hasErrors = $true
+              }
+            }
+          }
+          
+          if ($hasErrors) {
+            Write-Output "❌ JSON validation failed"
+            exit 1
+          } else {
+            Write-Output "✅ All JSON files are valid"
+          }
+
+      - name: Validate config.json structure
+        if: steps.changed_apps.outputs.any_changed == 'true'
+        shell: pwsh
+        env:
+          CHANGED_FILES: ${{ steps.changed_apps.outputs.all_changed_files }}
+        run: |
+          $hasErrors = $false
+          $changedFiles = $env:CHANGED_FILES -split ' '
+          
+          foreach ($file in $changedFiles) {
+            if ($file -match 'config\.json$') {
+              Write-Output "🔍 Validating config structure: $file"
+              $config = Get-Content $file -Raw | ConvertFrom-Json
+              
+              # Check required fields
+              $requiredFields = @('id', 'available', 'port', 'name', 'description', 'tipi_version')
+              foreach ($field in $requiredFields) {
+                if (-not $config.PSObject.Properties.Name.Contains($field)) {
+                  Write-Output "❌ Missing required field '$field' in $file"
+                  $hasErrors = $true
+                }
+              }
+              
+              # Check port is numeric
+              if ($config.port -and $config.port -notmatch '^\d+$') {
+                Write-Output "❌ Port must be numeric in $file"
+                $hasErrors = $true
+              }
+              
+              if (-not $hasErrors) {
+                Write-Output "✅ Valid config structure: $file"
+              }
+            }
+          }
+          
+          if ($hasErrors) {
+            Write-Output "❌ Config validation failed"
+            exit 1
+          } else {
+            Write-Output "✅ All config files are valid"
+          }
+
+      - name: Test Docker Compose validity
+        if: steps.changed_apps.outputs.any_changed == 'true'
+        shell: bash
+        env:
+          CHANGED_FILES: ${{ steps.changed_apps.outputs.all_changed_files }}
+        run: |
+          hasErrors=false
+          
+          echo "🔍 Testing Docker Compose configurations..."
+          
+          for file in $CHANGED_FILES; do
+            if [[ $file == *"docker-compose.json" ]]; then
+              echo "🔍 Testing Docker Compose: $file"
+              if docker-compose -f "$file" config > /dev/null 2>&1; then
+                echo "✅ Valid Docker Compose: $file"
+              else
+                echo "❌ Invalid Docker Compose: $file"
+                docker-compose -f "$file" config
+                hasErrors=true
+              fi
+            fi
+          done
+          
+          if [ "$hasErrors" = true ]; then
+            echo "❌ Docker Compose validation failed"
+            exit 1
+          else
+            echo "✅ All Docker Compose files are valid"
+          fi
+
+      - name: Validation Summary
+        if: always()
+        run: |
+          echo "📋 Configuration validation completed for PR #${{ github.event.pull_request.number }}"
+          echo "🔍 Changed files: ${{ steps.changed_apps.outputs.all_changed_files }}"
+          echo "ℹ️  This PR requires manual review as it's not from Renovate Bot"
