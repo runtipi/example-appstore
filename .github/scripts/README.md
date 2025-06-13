@@ -85,6 +85,37 @@ $env:CHANGED_FILES = "apps/plex/docker-compose.json apps/tautulli/docker-compose
 
 ---
 
+### `validate-metadata.ps1` *(New)*
+**Purpose**: Validates that all required metadata files are present for changed applications.
+
+#### Functionality
+- Extracts application names from changed file paths
+- Checks for required metadata files for each application
+- Validates JSON syntax in config and docker-compose files
+- Provides detailed reporting on missing or invalid files
+- Includes file size warnings for logos and content length checks for descriptions
+
+#### Required Files per Application
+- `config.json` (application configuration)
+- `docker-compose.json` (Docker Compose setup)
+- `metadata/description.md` (application description)
+- `metadata/logo.jpg` (application logo)
+
+#### Usage
+```powershell
+# Environment variable required: CHANGED_FILES
+$env:CHANGED_FILES = "apps/plex/config.json apps/tautulli/metadata/description.md"
+.\validate-metadata.ps1
+```
+
+#### Output
+- Validation status for each application
+- Detailed error messages for missing files
+- Warnings for potential issues (large logos, short descriptions)
+- Exit code 0 for success, 1 for validation errors
+
+---
+
 ### `test-major-detection.ps1` *(Development/Testing)*
 **Purpose**: Tests the major version detection logic used in workflows.
 
@@ -110,6 +141,30 @@ $env:CHANGED_FILES = "apps/plex/docker-compose.json apps/tautulli/docker-compose
 - Test results with pass/fail status
 - Pattern matching details
 - Performance metrics for detection logic
+
+---
+
+### `test-validate-workflow.ps1` *(Development/Testing)*
+**Purpose**: Tests the validate-configs workflow components and scripts.
+
+#### Functionality
+- Verifies all required validation scripts exist
+- Tests JSON validation with real config files
+- Tests config structure validation
+- Tests metadata validation logic
+- Validates workflow YAML syntax and structure
+- Provides comprehensive testing summary
+
+#### Usage
+```powershell
+.\test-validate-workflow.ps1
+```
+
+#### Output
+- Component availability status
+- Validation test results
+- Script reuse matrix
+- Overall migration success summary
 
 ## 🔄 Integration with Workflows
 

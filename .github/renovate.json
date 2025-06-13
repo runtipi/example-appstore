@@ -10,7 +10,7 @@
     "* */1 * * *"
   ],
   "timezone": "Europe/Paris",
-  "automergeStrategy": "rebase",
+  "automerge": false,
   "dependencyDashboard": true,
   "rebaseWhen": "behind-base-branch",
   "customManagers": [

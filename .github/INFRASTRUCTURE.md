@@ -6,19 +6,35 @@ This directory contains the CI/CD infrastructure and automation tools for the ti
 
 ```
 .github/
-├── workflows/              # GitHub Actions workflows
-│   └── update-configs-renovate.yml
-├── scripts/               # PowerShell automation scripts
-│   ├── backup-config.ps1
-│   ├── update-config.ps1
-│   └── validate-config.ps1
-└── RENOVATE_CONFIG_SUMMARY.md  # Detailed configuration documentation
+├── workflows/                          # GitHub Actions workflows
+│   ├── update-configs-renovate.yml    # Renovate automation (major version detection)
+│   ├── validate-configs.yml           # Manual contribution validation
+│   ├── test.yml                       # Application testing
+│   ├── lint.yml                       # Code linting
+│   └── README.md                      # Workflow documentation
+├── scripts/                           # PowerShell automation scripts
+│   ├── backup-config.ps1              # Config backup utility
+│   ├── update-config.ps1              # Version synchronization
+│   ├── validate-config.ps1            # Config consistency check
+│   ├── commit-and-push-configs.ps1    # Git operations
+│   ├── check-major-version.ps1        # Major update detection
+│   ├── validate-json-syntax.ps1       # JSON validation
+│   ├── validate-config-structure.ps1  # Config structure validation
+│   ├── validate-metadata.ps1          # Metadata completeness check
+│   ├── validate-docker-compose.sh     # Docker Compose validation
+│   ├── test-major-detection.ps1       # Testing utility
+│   ├── test-validate-workflow.ps1     # Workflow testing
+│   ├── test-apps.ps1                  # Application testing
+│   ├── generate-changelog.ps1         # Changelog generation
+│   └── README.md                      # Script documentation
+├── RENOVATE_CONFIG_SUMMARY.md         # Renovate configuration details
+└── INFRASTRUCTURE.md                  # This file
 ```
 
 ## 🔄 Automated Workflows
 
 ### `workflows/update-configs-renovate.yml`
-**Purpose**: Automated handling of Renovate dependency updates
+**Purpose**: Automated handling of Renovate dependency updates with intelligent major version detection
 
 **Features**:
 - Detects changes in `apps/*/docker-compose.json`
@@ -30,6 +46,23 @@ This directory contains the CI/CD infrastructure and automation tools for the ti
 **Triggers**:
 - Pull requests from `renovate[bot]`
 - Manual workflow dispatch
+
+### `workflows/validate-configs.yml`
+**Purpose**: Comprehensive validation of application configurations for manual contributions
+
+**Features**:
+- Validates JSON syntax for all configuration files
+- Checks config.json structure and required fields
+- Ensures metadata completeness (description.md, logo.jpg)
+- Validates Docker Compose configuration syntax
+- Excludes Renovate bot PRs (handled by separate workflow)
+
+**Triggers**:
+- Pull requests modifying app configurations (non-Renovate)
+- Manual workflow dispatch
+
+### `workflows/test.yml` & `workflows/lint.yml`
+**Purpose**: Code quality assurance and application testing
 
 ## 🔧 PowerShell Scripts
 

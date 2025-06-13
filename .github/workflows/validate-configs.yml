@@ -1,0 +1,88 @@
+name: Validate App Configurations
+
+on:
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'apps/*/config.json'
+      - 'apps/*/docker-compose.json'
+      - 'apps/*/metadata/**'
+  workflow_dispatch:
+
+jobs:
+  # Debug job to log workflow context for troubleshooting
+  debug-context:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Debug workflow context
+        run: |
+          echo "🔍 Debugging validation workflow execution context"
+          echo "Event name: ${{ github.event_name }}"
+          echo "Actor: ${{ github.actor }}"
+          echo "Repository: ${{ github.repository }}"
+          echo "PR number: ${{ github.event.pull_request.number }}"
+          echo "PR title: ${{ github.event.pull_request.title }}"
+          echo "PR author: ${{ github.event.pull_request.user.login }}"
+          echo "Base ref: ${{ github.base_ref }}"
+          echo "Head ref: ${{ github.head_ref }}"
+          echo "Is Renovate bot: ${{ github.actor == 'renovate[bot]' }}"
+          echo "Should run validation: ${{ github.actor != 'renovate[bot]' }}"
+
+  # Main validation job for manual contributions (excludes Renovate PRs)
+  validate-configs:
+    runs-on: ubuntu-latest
+    if: github.actor != 'renovate[bot]'
+    needs: debug-context
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Get list of apps changed in the PR
+        id: changed_apps
+        uses: tj-actions/changed-files@v46
+        with:
+          files: |
+            apps/*/docker-compose.json
+            apps/*/config.json
+            apps/*/metadata/**
+
+      - name: Validate JSON syntax
+        if: steps.changed_apps.outputs.any_changed == 'true'
+        shell: pwsh
+        env:
+          CHANGED_FILES: ${{ steps.changed_apps.outputs.all_changed_files }}
+        run: |
+          pwsh ./.github/scripts/validate-json-syntax.ps1
+
+      - name: Validate config.json structure
+        if: steps.changed_apps.outputs.any_changed == 'true'
+        shell: pwsh
+        env:
+          CHANGED_FILES: ${{ steps.changed_apps.outputs.all_changed_files }}
+        run: |
+          pwsh ./.github/scripts/validate-config-structure.ps1
+
+      - name: Check for required metadata files
+        if: steps.changed_apps.outputs.any_changed == 'true'
+        shell: pwsh
+        env:
+          CHANGED_FILES: ${{ steps.changed_apps.outputs.all_changed_files }}
+        run: |
+          pwsh ./.github/scripts/validate-metadata.ps1
+
+      - name: Test Docker Compose validity
+        if: steps.changed_apps.outputs.any_changed == 'true'
+        shell: bash
+        env:
+          CHANGED_FILES: ${{ steps.changed_apps.outputs.all_changed_files }}
+        run: |
+          bash ./.github/scripts/validate-docker-compose.sh
+
+      - name: Validation Summary
+        if: always()
+        run: |
+          echo "📋 Configuration validation completed for PR #${{ github.event.pull_request.number }}"
+          echo "🔍 Changed files: ${{ steps.changed_apps.outputs.all_changed_files }}"
+          echo "ℹ️  This PR requires manual review as it's not from Renovate Bot"

@@ -96,3 +96,47 @@ The workflow provides detailed logs for:
 - [`../scripts/`](../scripts/): PowerShell scripts used by this workflow
 - [`../RENOVATE_CONFIG_SUMMARY.md`](../RENOVATE_CONFIG_SUMMARY.md): Complete configuration documentation
 - [`../../renovate.json`](../../renovate.json): Renovate configuration file
+
+---
+
+### `validate-configs.yml`
+**Purpose**: Comprehensive validation of application configurations for manual contributions (non-Renovate PRs).
+
+#### Triggers
+- **Pull Requests**: Runs on PRs that modify app configurations (excludes Renovate bot)
+- **File Filters**: Monitors changes to:
+  - `apps/*/config.json`
+  - `apps/*/docker-compose.json`
+  - `apps/*/metadata/**`
+- **Manual Dispatch**: Can be triggered manually from GitHub Actions UI
+
+#### Workflow Jobs
+
+1. **🔍 Debug Context**: Logs workflow execution context for troubleshooting
+2. **🛡️ Validation**: Runs comprehensive validation suite using dedicated scripts
+
+#### Validation Steps
+
+1. **📄 JSON Syntax**: Validates all JSON files have correct syntax
+2. **🏗️ Config Structure**: Checks `config.json` files have required fields and valid data types
+3. **📋 Metadata Completeness**: Ensures all required metadata files are present
+4. **🐳 Docker Compose**: Validates Docker Compose configuration syntax and structure
+
+#### Required Application Structure
+Each application must have:
+- `config.json` with required fields (`id`, `name`, `description`, `port`, `available`, `tipi_version`)
+- `docker-compose.json` with valid Docker Compose syntax
+- `metadata/description.md` with application description
+- `metadata/logo.jpg` with application logo
+
+#### Security Features
+- **🚫 Renovate Exclusion**: Specifically excludes Renovate bot PRs (handled by separate workflow)
+- **✅ Manual Review**: Ensures all manual contributions are properly validated
+- **📊 Detailed Reporting**: Provides comprehensive validation results and error messages
+
+#### Script Integration
+Uses dedicated PowerShell scripts for modularity:
+- `validate-json-syntax.ps1`
+- `validate-config-structure.ps1`
+- `validate-metadata.ps1`
+- `validate-docker-compose.sh`

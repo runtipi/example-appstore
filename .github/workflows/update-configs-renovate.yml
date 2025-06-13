@@ -68,73 +68,22 @@ jobs:
 
       - name: Commit and push config.json updates
         if: steps.changed_apps.outputs.any_changed == 'true'
+        shell: pwsh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_HEAD_REF: ${{ github.head_ref }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git fetch origin ${{ github.head_ref }}:${{ github.head_ref }}
-          git checkout ${{ github.head_ref }}
-          git add apps/*/config.json
-          git commit -m "ci: update config.json after renovate docker-compose update" --signoff || echo "No changes to commit"
-          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
-          git push origin HEAD:${{ github.head_ref }}
+          pwsh ./.github/scripts/commit-and-push-configs.ps1
 
       - name: Check if update is major version
         if: steps.changed_apps.outputs.any_changed == 'true'
         id: check_major
         shell: pwsh
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
         run: |
-          $isMajor = $false
-          $prBody = @"
-          ${{ github.event.pull_request.body }}
-          "@
-          
-          Write-Output "=== PR Body Analysis ==="
-          Write-Output $prBody
-          Write-Output "========================="
-          
-          # Pattern 1: Check for "major" keyword in update type column
-          if ($prBody -match "\|\s*major\s*\|" -or $prBody -match "Type.*major") {
-            $isMajor = $true
-            Write-Output "✓ Major version detected: 'major' keyword found in table"
-          }          # Pattern 2: Check for version jump pattern (e.g., 1.x.x -> 2.x.x)
-          # Look for version numbers with arrow between them, but be more careful about context
-          if ($prBody -match '(\d+)\.\d+\.\d+.*→.*(\d+)\.\d+\.\d+') {
-            $fromMajor = [int]$matches[1]
-            $toMajor = [int]$matches[2]
-            # Only consider it major if it's a significant jump and in right context
-            if ($toMajor -gt $fromMajor -and $fromMajor -lt 10 -and $toMajor -lt 10) {
-              $isMajor = $true
-              Write-Output "✓ Major version detected: version jump from $fromMajor.x.x to $toMajor.x.x"
-            }
-          }
-          
-          # Pattern 3: Check for Renovate update table format
-          if ($prBody -match "Update.*Change.*Notes" -and $prBody -match "major") {
-            $isMajor = $true
-            Write-Output "✓ Major version detected: found in Renovate update table"
-          }
-          
-          # Pattern 4: Check for semver major bump indicators
-          if ($prBody -match "BREAKING.*CHANGE" -or $prBody -match "breaking.*change") {
-            $isMajor = $true
-            Write-Output "✓ Major version detected: breaking change mentioned"
-          }
-          
-          # Pattern 5: Check for specific Renovate table format with arrows
-          if ($prBody -match "\d+\.\d+\.\d+.*→.*\d+\.\d+\.\d+" -and $prBody -match "major") {
-            $isMajor = $true
-            Write-Output "✓ Major version detected: Renovate update table with major change"
-          }
-          
-          Write-Output "is_major=$isMajor" >> $env:GITHUB_OUTPUT
-          
-          if ($isMajor) {
-            Write-Output "🚫 MAJOR UPDATE DETECTED - Automerge will be SKIPPED"
-          } else {
-            Write-Output "✅ Minor/Patch update - Automerge will proceed"
-          }
+          pwsh ./.github/scripts/check-major-version.ps1 -PrBody $env:PR_BODY
 
       - name: Add approved-to-merge label to PR
         if: steps.changed_apps.outputs.any_changed == 'true' && steps.check_major.outputs.is_major == 'false' && success()
@@ -158,6 +107,7 @@ jobs:
           gh pr edit ${{ github.event.pull_request.number }} --add-label "major-update" --add-label "needs-review"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   # Job for manual contributions - validates configurations only
   validate-manual-changes:
     runs-on: ubuntu-latest
@@ -183,32 +133,7 @@ jobs:
         env:
           CHANGED_FILES: ${{ steps.changed_apps.outputs.all_changed_files }}
         run: |
-          $hasErrors = $false
-          $changedFiles = $env:CHANGED_FILES -split ' '
-          
-          Write-Output "📋 Validating JSON files for manual contribution..."
-          
-          foreach ($file in $changedFiles) {
-            if ($file -match '\.(json)$') {
-              Write-Output "🔍 Validating JSON syntax: $file"
-              try {
-                $content = Get-Content $file -Raw | ConvertFrom-Json
-                Write-Output "✅ Valid JSON: $file"
-              }
-              catch {
-                Write-Output "❌ Invalid JSON: $file"
-                Write-Output "Error: $($_.Exception.Message)"
-                $hasErrors = $true
-              }
-            }
-          }
-          
-          if ($hasErrors) {
-            Write-Output "❌ JSON validation failed"
-            exit 1
-          } else {
-            Write-Output "✅ All JSON files are valid"
-          }
+          pwsh ./.github/scripts/validate-json-syntax.ps1
 
       - name: Validate config.json structure
         if: steps.changed_apps.outputs.any_changed == 'true'
@@ -216,41 +141,7 @@ jobs:
         env:
           CHANGED_FILES: ${{ steps.changed_apps.outputs.all_changed_files }}
         run: |
-          $hasErrors = $false
-          $changedFiles = $env:CHANGED_FILES -split ' '
-          
-          foreach ($file in $changedFiles) {
-            if ($file -match 'config\.json$') {
-              Write-Output "🔍 Validating config structure: $file"
-              $config = Get-Content $file -Raw | ConvertFrom-Json
-              
-              # Check required fields
-              $requiredFields = @('id', 'available', 'port', 'name', 'description', 'tipi_version')
-              foreach ($field in $requiredFields) {
-                if (-not $config.PSObject.Properties.Name.Contains($field)) {
-                  Write-Output "❌ Missing required field '$field' in $file"
-                  $hasErrors = $true
-                }
-              }
-              
-              # Check port is numeric
-              if ($config.port -and $config.port -notmatch '^\d+$') {
-                Write-Output "❌ Port must be numeric in $file"
-                $hasErrors = $true
-              }
-              
-              if (-not $hasErrors) {
-                Write-Output "✅ Valid config structure: $file"
-              }
-            }
-          }
-          
-          if ($hasErrors) {
-            Write-Output "❌ Config validation failed"
-            exit 1
-          } else {
-            Write-Output "✅ All config files are valid"
-          }
+          pwsh ./.github/scripts/validate-config-structure.ps1
 
       - name: Test Docker Compose validity
         if: steps.changed_apps.outputs.any_changed == 'true'
@@ -258,29 +149,7 @@ jobs:
         env:
           CHANGED_FILES: ${{ steps.changed_apps.outputs.all_changed_files }}
         run: |
-          hasErrors=false
-          
-          echo "🔍 Testing Docker Compose configurations..."
-          
-          for file in $CHANGED_FILES; do
-            if [[ $file == *"docker-compose.json" ]]; then
-              echo "🔍 Testing Docker Compose: $file"
-              if docker-compose -f "$file" config > /dev/null 2>&1; then
-                echo "✅ Valid Docker Compose: $file"
-              else
-                echo "❌ Invalid Docker Compose: $file"
-                docker-compose -f "$file" config
-                hasErrors=true
-              fi
-            fi
-          done
-          
-          if [ "$hasErrors" = true ]; then
-            echo "❌ Docker Compose validation failed"
-            exit 1
-          else
-            echo "✅ All Docker Compose files are valid"
-          fi
+          bash ./.github/scripts/validate-docker-compose.sh
 
       - name: Validation Summary
         if: always()
