@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
+      matrix:
+        node-version: [18.x]
     steps:
       - uses: actions/checkout@v4
       - name: Install ajv-cli
