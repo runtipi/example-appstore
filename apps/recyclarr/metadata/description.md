@@ -76,6 +76,46 @@ Recyclarr automatically synchronizes release profiles, quality definitions, and 
 
 ---
 
+## ⚖️ COMPARISON WITH ALTERNATIVES
+
+| Feature | Recyclarr | Configarr | Notifiarr | Profilarr |
+| --- | :---: | :---: | :---: | :---: |
+| **Web GUI** | ❌ | ❌ | ✅ | ✅ |
+| **TRaSH-Guide Custom Formats** | ✅ | ✅ | ✅ | ✅ |
+| **TRaSH-Guide CF Groups** | ✅ | ✅ | ❌ | ❌ |
+| **TRaSH-Guide Quality Profiles** | ✅ | ✅ | ❌ | ❌ |
+| **TRaSH-Guide Quality Sizes** | ✅ | ✅ | ✅ | ✅ |
+| **TRaSH-Guide Naming** | ✅ | ✅ | ✅ | ✅ |
+| **Custom Custom Formats** | ❌ | ✅ | ❌ | ✅ |
+| **Custom Quality Profiles** | 📝 *templates* | ✅ | ✅ | ✅ |
+| **Custom Quality Sizes** | ❌ | ✅ | ❌ | ❌ |
+| **Custom Naming** | ❌ | ✅ | ❌ | ❌ |
+| **Clear all Custom Formats** | ✅ | ✅ | ✅ | ✅ |
+| **Modify Scores** | ✅ | ✅ | ✅ | ✅ |
+| **Profile Renaming** | ✅ | ✅ | ❌ | ❌ |
+| **Profile Cloning** | ❌ | ✅ | ❌ | ❌ |
+| **Sonarr v4** | ✅ | ✅ | ✅ | ✅ |
+| **Radarr v5** | ✅ | ✅ | ✅ | ✅ |
+| **Whisparr Support** | ❌ | ✅ | ✅ | ❌ |
+| **Readarr Support** | ❌ | ✅ | ✅ | ❌ |
+| **Lidarr Support** | ❌ | ✅ | ✅ | ❌ |
+| **Real-time Notifications** | ❌ | ❌ | ✅ | ❌ |
+| **Discord Integration** | ❌ | ❌ | ✅ | ❌ |
+| **Battle-tested** | ✅ | ❌ | ✅ | ❌ |
+| **Original TRaSH Tool** | ✅ | ❌ | ❌ | ❌ |
+| **Open Source** | ✅ | ✅ | ❌ | ✅ |
+| **Docker/Kubernetes** | ✅ | ✅ | ✅ | ✅ |
+
+**Choose Recyclarr if:** You want the original, battle-tested solution with excellent TRaSH-Guides integration and proven reliability for Sonarr/Radarr.
+
+**Choose Configarr if:** You need maximum customizability, support for all *arr applications, custom formats/profiles creation, and advanced configuration options.
+
+**Choose Notifiarr if:** You prioritize real-time notifications, Discord integration, and web-based management over custom format flexibility.
+
+**Choose Profilarr if:** You want a web-based interface for profile management with custom format support and bulk operations.
+
+---
+
 ## 💾 SOURCE
 * [recyclarr/recyclarr](https://github.com/recyclarr/recyclarr)
 

@@ -1,0 +1,32 @@
+{
+  "services": [
+    {
+      "name": "configarr",
+      "image": "ghcr.io/raydak-labs/configarr:1.13.5",
+      "isMain": true,
+      "user": "1000:1000",
+      "internalPort": "3000",
+      "environment": {
+        "TZ": "${TZ}"
+      },
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config",
+          "containerPath": "/app/config"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/repos",
+          "containerPath": "/app/repos"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/cfs",
+          "containerPath": "/app/cfs"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/templates",
+          "containerPath": "/app/templates"
+        }
+      ]
+    }
+  ]
+}

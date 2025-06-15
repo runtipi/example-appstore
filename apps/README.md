@@ -32,6 +32,7 @@ apps/
 - **[autobrr](./autobrr/)** - Modern autodl-irssi replacement for IRC and RSS
 
 ### 🛠️ Utilities & Tools
+- **[Configarr](./configarr/)** - Configuration automation for Sonarr, Radarr and other *arr apps
 - **[Recyclarr](./recyclarr/)** - Automatically sync TRaSH guides to Sonarr/Radarr
 - **[Kometa](./kometa/)** - Python tool for managing Plex libraries and metadata
 - **[Homebox](./homebox/)** - Inventory and organization system for the home
@@ -42,7 +43,7 @@ apps/
 - **[Beszel Agent](./beszel-agent/)** - Data collection agent for Beszel monitoring
 
 ### 🔍 Search & Discovery
-- **[Huntarr](./huntarr/)** - Subtitle downloader for Sonarr and Radarr
+- **[Huntarr](./huntarr/)** - Automated missing & upgrade search for *arr applications
 - **[Byparr](./byparr/)** - Bypass manager for *arr applications
 
 ## 📝 File Specifications

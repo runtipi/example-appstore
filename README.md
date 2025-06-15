@@ -31,7 +31,7 @@
 
 ---
 
-## 📦 Apps Available (16)
+## 📦 Apps Available (17)
 
 |  | Name & Docs | Description | Docker Image |
 |:---:|:---|:---|:---|
@@ -39,6 +39,7 @@
 | <img src="apps/beszel/metadata/logo.jpg" width="48" height="48" style="min-width: 32px; min-height: 32px;"> | [**Beszel**](https://github.com/henrygd/beszel)<br/><sub>[Description](apps/beszel/metadata/description.md)</sub> | 📊 Server monitoring hub | [henrygd/beszel](https://github.com/henrygd/beszel) |
 | <img src="apps/beszel-agent/metadata/logo.jpg" width="48" height="48" style="min-width: 32px; min-height: 32px;"> | [**Beszel Agent**](https://github.com/henrygd/beszel)<br/><sub>[Description](apps/beszel-agent/metadata/description.md)</sub> | 🔍 Beszel monitoring agent | [henrygd/beszel-agent](https://github.com/henrygd/beszel) |
 | <img src="apps/byparr/metadata/logo.jpg" width="48" height="48" style="min-width: 32px; min-height: 32px;"> | [**Byparr**](https://github.com/ThePhaseless/Byparr)<br/><sub>[Description](apps/byparr/metadata/description.md)</sub> | 🦾 Bypass Cloudflare and DDoS-Guard | [ghcr.io/thephaseless/byparr](https://github.com/ThePhaseless/Byparr/pkgs/container/byparr) |
+| <img src="apps/configarr/metadata/logo.jpg" width="48" height="48" style="min-width: 32px; min-height: 32px;"> | [**Configarr**](https://github.com/raydak-labs/configarr)<br/><sub>[Description](apps/configarr/metadata/description.md)</sub> | ⚙️ Configuration automation for *arr apps | [ghcr.io/raydak-labs/configarr](https://github.com/raydak-labs/configarr/pkgs/container/configarr) |
 | <img src="apps/homebox/metadata/logo.jpg" width="48" height="48" style="min-width: 32px; min-height: 32px;"> | [**HomeBox**](https://github.com/sysadminsmedia/homebox)<br/><sub>[Description](apps/homebox/metadata/description.md)</sub> | 📦 Home inventory & organization | [ghcr.io/sysadminsmedia/homebox](https://github.com/sysadminsmedia/homebox/pkgs/container/homebox) |
 | <img src="apps/huntarr/metadata/logo.jpg" width="48" height="48" style="min-width: 32px; min-height: 32px;"> | [**Huntarr**](https://github.com/plexguide/Huntarr)<br/><sub>[Description](apps/huntarr/metadata/description.md)</sub> | 🕵️‍♂️ Automated missing & upgrade search | [ghcr.io/plexguide/huntarr](https://github.com/plexguide/Huntarr/pkgs/container/huntarr) |
 | <img src="apps/kometa/metadata/logo.jpg" width="48" height="48" style="min-width: 32px; min-height: 32px;"> | [**Kometa**](https://github.com/Kometa-Team/Kometa)<br/><sub>[Description](apps/kometa/metadata/description.md)</sub> | 🎨 Overlays, collections & playlists for Plex | [ghcr.io/linuxserver/kometa](https://github.com/linuxserver/kometa/pkgs/container/kometa) |
