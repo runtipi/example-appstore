@@ -1,0 +1,19 @@
+{
+  "services": [
+    {
+      "name": "profilarr",
+      "image": "santiagosayshey/profilarr:1.0.1",
+      "isMain": true,
+      "internalPort": "6868",
+      "environment": {
+        "TZ": "${TZ}"
+      },
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config",
+          "containerPath": "/config"
+        }
+      ]
+    }
+  ]
+}

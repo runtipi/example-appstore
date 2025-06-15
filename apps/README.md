@@ -33,6 +33,7 @@ apps/
 
 ### 🛠️ Utilities & Tools
 - **[Configarr](./configarr/)** - Configuration automation for Sonarr, Radarr and other *arr apps
+- **[Profilarr](./profilarr/)** - Configuration management with web UI and Git version control for *arr apps
 - **[Recyclarr](./recyclarr/)** - Automatically sync TRaSH guides to Sonarr/Radarr
 - **[Kometa](./kometa/)** - Python tool for managing Plex libraries and metadata
 - **[Homebox](./homebox/)** - Inventory and organization system for the home
