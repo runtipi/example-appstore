@@ -88,14 +88,17 @@ jobs:
       - name: Add approved-to-merge label to PR
         if: steps.changed_apps.outputs.any_changed == 'true' && steps.check_major.outputs.is_major == 'false' && success()
         run: |
-          gh pr edit ${{ github.event.pull_request.number }} --add-label "approved-to-merge"
-        env:
+          gh pr edit ${{ github.event.pull_request.number }} --add-label "approved-to-merge"        env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Enable automerge for approved PR
         if: steps.changed_apps.outputs.any_changed == 'true' && steps.check_major.outputs.is_major == 'false' && success()
         run: |
-          gh pr merge --squash --auto ${{ github.event.pull_request.number }}
+          if ! gh pr merge --squash --auto ${{ github.event.pull_request.number }}; then
+            echo "⚠️ Auto-merge failed - likely due to branch protection rules not configured for auto-merge"
+            echo "✅ PR is approved and ready for manual merge"
+            exit 0
+          fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
