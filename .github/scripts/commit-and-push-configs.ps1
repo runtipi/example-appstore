@@ -84,14 +84,28 @@ try {
         Write-Error "❌ Failed to set remote URL"
         exit 1
     }
+      # Pull latest changes from remote branch to avoid non-fast-forward errors
+    Write-Output "🔄 Pulling latest changes from remote branch..."
+    git pull origin $env:GITHUB_HEAD_REF --rebase
+    
+    if ($LASTEXITCODE -ne 0) {
+        Write-Warning "⚠️ Pull failed, attempting to push without rebase..."
+    }
     
     # Push changes
     Write-Output "📤 Pushing changes to branch $env:GITHUB_HEAD_REF..."
     git push origin HEAD:$env:GITHUB_HEAD_REF
     
     if ($LASTEXITCODE -ne 0) {
-        Write-Error "❌ Failed to push changes"
-        exit 1
+        Write-Output "⚠️ Direct push failed, trying force push..."
+        git push origin HEAD:$env:GITHUB_HEAD_REF --force-with-lease
+        
+        if ($LASTEXITCODE -ne 0) {
+            Write-Error "❌ Failed to push changes even with force-with-lease"
+            exit 1
+        }
+        
+        Write-Output "✅ Force push successful"
     }
     
     Write-Output "✅ Successfully committed and pushed config.json updates"
