@@ -84,7 +84,7 @@ try {
         Write-Error "❌ Failed to set remote URL"
         exit 1
     }
-      # Pull latest changes from remote branch to avoid non-fast-forward errors
+    # Pull latest changes from remote branch to avoid non-fast-forward errors
     Write-Output "🔄 Pulling latest changes from remote branch..."
     git pull origin $env:GITHUB_HEAD_REF --rebase
     
