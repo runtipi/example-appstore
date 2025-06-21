@@ -1,0 +1,24 @@
+# Access token policy for GitHub Actions
+# This file defines what permissions can be granted to GitHub Actions workflows
+
+version: 1
+
+workflows:
+  # Grant permissions to Renovate workflows
+  - name: "Update & Validate Metadata & Configs of Upgraded Apps"
+    permissions:
+      contents: write
+      pull-requests: write
+      metadata: read
+    
+  # Grant permissions to manual workflows
+  - name: "*"
+    permissions:
+      contents: read
+      metadata: read
+
+# Repository-level permissions that can be granted
+allowed-repository-permissions:
+  - contents
+  - pull-requests
+  - metadata

@@ -25,7 +25,6 @@ jobs:
           echo "Base ref: ${{ github.base_ref }}"
           echo "Head ref: ${{ github.head_ref }}"
           echo "Is Renovate bot: ${{ github.actor == 'renovate[bot]' }}"
-
   # Job for Renovate PRs - handles automatic updates and merging
   update-and-validate-configs-renovate:
     runs-on: ubuntu-latest
@@ -35,6 +34,15 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      
+      - name: Get access token for commits
+        id: access_token
+        uses: qoomon/actions--access-token@v3
+        with:
+          permissions: |
+            contents: write
+            pull-requests: write
+            metadata: read
       
       - name: Get list of apps changed in the PR
         id: changed_apps
@@ -70,7 +78,7 @@ jobs:
         if: steps.changed_apps.outputs.any_changed == 'true'
         shell: pwsh
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.access_token.outputs.token }}
           GITHUB_HEAD_REF: ${{ github.head_ref }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
@@ -88,9 +96,8 @@ jobs:
       - name: Add approved-to-merge label to PR
         if: steps.changed_apps.outputs.any_changed == 'true' && steps.check_major.outputs.is_major == 'false' && success()
         run: |
-          gh pr edit ${{ github.event.pull_request.number }} --add-label "approved-to-merge"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          gh pr edit ${{ github.event.pull_request.number }} --add-label "approved-to-merge"        env:
+          GH_TOKEN: ${{ steps.access_token.outputs.token }}
 
       - name: Enable automerge for approved PR
         if: steps.changed_apps.outputs.any_changed == 'true' && steps.check_major.outputs.is_major == 'false' && success()
@@ -99,18 +106,16 @@ jobs:
             echo "⚠️ Auto-merge failed - likely due to branch protection rules not configured for auto-merge"
             echo "✅ PR is approved and ready for manual merge"
             exit 0
-          fi
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          fi        env:
+          GH_TOKEN: ${{ steps.access_token.outputs.token }}
 
       - name: Skip automerge for major updates
         if: steps.changed_apps.outputs.any_changed == 'true' && steps.check_major.outputs.is_major == 'true'
         run: |
           echo "🚫 Major version update detected - manual review required"
           echo "::warning::This PR contains a major version update and requires manual review before merging"
-          gh pr edit ${{ github.event.pull_request.number }} --add-label "major-update" --add-label "needs-review"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          gh pr edit ${{ github.event.pull_request.number }} --add-label "major-update" --add-label "needs-review"        env:
+          GH_TOKEN: ${{ steps.access_token.outputs.token }}
 
   # Job for manual contributions - validates configurations only
   validate-manual-changes:
