@@ -51,7 +51,6 @@
         "PAPERLESS_EMPTY_TRASH_DELAY": "${PAPERLESS_EMPTY_TRASH_DELAY:-30}",
         "PAPERLESS_ENABLE_UPDATE_CHECK": "${PAPERLESS_ENABLE_UPDATE_CHECK:-true}",
         "PAPERLESS_FILENAME_FORMAT_REMOVE_NONE": "${PAPERLESS_FILENAME_FORMAT_REMOVE_NONE:-true}",
-        "PAPERLESS_EMPTY_TRASH_DIR": "../trash/",
         "PAPERLESS_SECRET_KEY": "${PAPERLESS_SECRET_KEY:-}",
         "PAPERLESS_CSRF_TRUSTED_ORIGINS": "https://${APP_ID}.${LOCAL_DOMAIN},https://${APP_DOMAIN},http://${INTERNAL_IP}:${APP_PORT}",
         "PAPERLESS_ALLOWED_HOSTS": "${APP_ID}.${LOCAL_DOMAIN},${APP_DOMAIN},${INTERNAL_IP}"
@@ -85,10 +84,6 @@
         {
           "hostPath": "${APP_DATA_DIR}/data/paperless/consume",
           "containerPath": "/usr/src/paperless/consume"
-        },
-        {
-          "hostPath": "${APP_DATA_DIR}/data/paperless/trash",
-          "containerPath": "/usr/src/paperless/trash"
         },
         {
           "hostPath": "${APP_DATA_DIR}/data/paperless/postprocessor",
