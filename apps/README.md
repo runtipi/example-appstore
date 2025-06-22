@@ -47,6 +47,9 @@ apps/
 - **[Huntarr](./huntarr/)** - Automated missing & upgrade search for *arr applications
 - **[Byparr](./byparr/)** - Bypass manager for *arr applications
 
+### 🧹 Cleanup & Maintenance
+- **[Swaparr](./swaparr/)** - Stalled download cleanup utility for *arr applications
+
 ## 📝 File Specifications
 
 ### `config.json`

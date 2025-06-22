@@ -31,7 +31,7 @@
 
 ---
 
-## 📦 Apps Available (18)
+## 📦 Apps Available (19)
 
 |  | Name & Docs | Description | Docker Image |
 |:---:|:---|:---|:---|
@@ -51,6 +51,7 @@
 | <img src="apps/radarr/metadata/logo.jpg" width="48" height="48" style="min-width: 32px; min-height: 32px;"> | [**Radarr**](https://github.com/Radarr/Radarr)<br/><sub>[Description](apps/radarr/metadata/description.md)</sub> | 🎬 Manage and download movies | [ghcr.io/11notes/radarr](https://github.com/11notes/docker-radarr) |
 | <img src="apps/recyclarr/metadata/logo.jpg" width="48" height="48" style="min-width: 32px; min-height: 32px;"> | [**Recyclarr**](https://github.com/recyclarr/recyclarr)<br/><sub>[Description](apps/recyclarr/metadata/description.md)</sub> | ♻️ Sync TRaSH guides to *arr apps | [ghcr.io/recyclarr/recyclarr](https://github.com/recyclarr/recyclarr/pkgs/container/recyclarr) |
 | <img src="apps/sonarr/metadata/logo.jpg" width="48" height="48" style="min-width: 32px; min-height: 32px;"> | [**Sonarr**](https://github.com/Sonarr/Sonarr)<br/><sub>[Description](apps/sonarr/metadata/description.md)</sub> | 📺 Manage and download TV series | [ghcr.io/11notes/sonarr](https://github.com/11notes/docker-sonarr) |
+| <img src="apps/swaparr/metadata/logo.jpg" width="48" height="48" style="min-width: 32px; min-height: 32px;"> | [**Swaparr**](https://github.com/ThijmenGThN/swaparr)<br/><sub>[Description](apps/swaparr/metadata/description.md)</sub> | 🧹 Stalled download cleanup utility for *arr apps | [ghcr.io/thijmengthn/swaparr](https://github.com/ThijmenGThN/swaparr/pkgs/container/swaparr) |
 | <img src="apps/tautulli/metadata/logo.jpg" width="48" height="48" style="min-width: 32px; min-height: 32px;"> | [**Tautulli**](https://github.com/Tautulli/Tautulli)<br/><sub>[Description](apps/tautulli/metadata/description.md)</sub> | 📊 Plex monitoring & statistics | [lscr.io/linuxserver/tautulli](https://github.com/linuxserver/docker-tautulli) |
 | <img src="apps/transmission-vpn/metadata/logo.jpg" width="48" height="48" style="min-width: 32px; min-height: 32px;"> | [**Transmission (VPN)**](https://github.com/haugene/docker-transmission-openvpn)<br/><sub>[Description](apps/transmission-vpn/metadata/description.md)</sub> | 🌐 BitTorrent client with VPN tunnel | [haugene/transmission-openvpn](https://github.com/haugene/docker-transmission-openvpn) |
 
