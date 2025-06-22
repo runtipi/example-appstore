@@ -7,8 +7,8 @@
       "internalPort": 8000,
       "environment": {
         "COMPOSE_PROJECT_NAME": "${APP_ID}",
-        "USERMAP_UID": "1000",
-        "USERMAP_GID": "1000",
+        "USERMAP_UID": 1000,
+        "USERMAP_GID": 1000,
         "PAPERLESS_REDIS": "redis://paperless-ngx-broker:6379",
         "PAPERLESS_DBHOST": "paperless-ngx-db",
         "PAPERLESS_ADMIN_USER": "${PAPERLESS_ADMIN_USERNAME}",
@@ -56,31 +56,31 @@
       },
       "volumes": [
         {
-          "hostPath": "${APP_DATA_DIR}/data/paperless_data",
+          "hostPath": "${APP_DATA_DIR}/data/paperless/data",
           "containerPath": "/usr/src/paperless/data"
         },
         {
-          "hostPath": "${APP_DATA_DIR}/data/paperless_media",
+          "hostPath": "${APP_DATA_DIR}/data/paperless/media",
           "containerPath": "/usr/src/paperless/media"
         },
         {
-          "hostPath": "${APP_DATA_DIR}/data/paperless_export",
+          "hostPath": "${APP_DATA_DIR}/data/paperless/export",
           "containerPath": "/usr/src/paperless/export"
         },
         {
-          "hostPath": "${APP_DATA_DIR}/data/paperless_consume",
+          "hostPath": "${APP_DATA_DIR}/data/paperless/consume",
           "containerPath": "/usr/src/paperless/consume"
         },
         {
-          "hostPath": "${APP_DATA_DIR}/data/paperless_trash",
+          "hostPath": "${APP_DATA_DIR}/data/paperless/trash",
           "containerPath": "/usr/src/paperless/trash"
         },
         {
-          "hostPath": "${APP_DATA_DIR}/data/paperless_postprocessor",
+          "hostPath": "${APP_DATA_DIR}/data/paperless/postprocessor",
           "containerPath": "/usr/src/paperless/postprocessor"
         },
         {
-          "hostPath": "${APP_DATA_DIR}/data/paperless_scripts",
+          "hostPath": "${APP_DATA_DIR}/data/paperless/scripts",
           "containerPath": "/custom-cont-init.d",
           "readOnly": true
         }
@@ -103,7 +103,7 @@
       },
       "volumes": [
         {
-          "hostPath": "${APP_DATA_DIR}/data/redis",
+          "hostPath": "${APP_DATA_DIR}/data/broker",
           "containerPath": "/data"
         }
       ]
@@ -125,7 +125,7 @@
       },
       "volumes": [
         {
-          "hostPath": "${APP_DATA_DIR}/data/postgres",
+          "hostPath": "${APP_DATA_DIR}/data/db",
           "containerPath": "/var/lib/postgresql/data"
         }
       ]
