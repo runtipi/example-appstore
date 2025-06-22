@@ -2,13 +2,18 @@
     "services": [
         {
             "name": "paperless-redis",
-            "image": "11notes/redis:7.4.0",
+            "image": "11notes/redis:7.4.2",
             "environment": {
+                "REDIS_PASSWORD": "${REDIS_PASSWORD-paperless_redis}",
                 "TZ": "${TZ}"
             },
             "volumes": [
                 {
-                    "hostPath": "${APP_DATA_DIR}/data/redis",
+                    "hostPath": "${APP_DATA_DIR}/data/redis-etc",
+                    "containerPath": "/redis/etc"
+                },
+                {
+                    "hostPath": "${APP_DATA_DIR}/data/redis-var",
                     "containerPath": "/redis/var"
                 }
             ],
@@ -46,7 +51,7 @@
             "internalPort": "8000",
             "environment": {
                 "TZ": "${TZ}",
-                "PAPERLESS_REDIS": "redis://paperless-redis:6379",
+                "PAPERLESS_REDIS": "redis://:${REDIS_PASSWORD-paperless_redis}@paperless-redis:6379",
                 "PAPERLESS_DBHOST": "paperless-db",
                 "PAPERLESS_DBNAME": "postgres",
                 "PAPERLESS_DBUSER": "postgres",
@@ -85,20 +90,28 @@
             ],
             "volumes": [
                 {
-                    "hostPath": "${APP_DATA_DIR}/data/data",
-                    "containerPath": "/usr/src/paperless/data"
+                    "hostPath": "${APP_DATA_DIR}/data/consume",
+                    "containerPath": "/usr/src/paperless/consume"
                 },
                 {
-                    "hostPath": "${APP_DATA_DIR}/data/media",
-                    "containerPath": "/usr/src/paperless/media"
+                    "hostPath": "${APP_DATA_DIR}/data/originals",
+                    "containerPath": "/usr/src/paperless/media/documents/originals"
+                },
+                {
+                    "hostPath": "${APP_DATA_DIR}/data/archive",
+                    "containerPath": "/usr/src/paperless/media/documents/archive"
+                },
+                {
+                    "hostPath": "${APP_DATA_DIR}/data/data",
+                    "containerPath": "/usr/src/paperless/data"
                 },
                 {
                     "hostPath": "${APP_DATA_DIR}/data/export",
                     "containerPath": "/usr/src/paperless/export"
                 },
                 {
-                    "hostPath": "${APP_DATA_DIR}/data/consume",
-                    "containerPath": "/usr/src/paperless/consume"
+                    "hostPath": "${APP_DATA_DIR}/data/thumbnails",
+                    "containerPath": "/usr/src/paperless/media/documents/thumbnails"
                 }
             ],
             "healthCheck": {

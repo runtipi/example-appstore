@@ -44,6 +44,13 @@
             "env_variable": "PAPERLESS_ADMIN_MAIL"
         },
         {
+            "type": "password",
+            "label": "Database > Redis Password",
+            "hint": "Password for Redis cache database (auto-generated if empty)",
+            "env_variable": "REDIS_PASSWORD",
+            "default": "paperless_redis"
+        },
+        {
             "type": "text",
             "label": "Security > Secret Key",
             "hint": "Django secret key for encryption (leave empty for auto-generation)",

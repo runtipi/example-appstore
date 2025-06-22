@@ -51,12 +51,15 @@ Paperless-ngx is a document management system that transforms your physical docu
 ## 📁 VOLUMES
 | Host folder | Container folder | Comment |
 | ----------- | ---------------- | ------- |
-| `/runtipi/app-data/paperless-ngx/data/data` | `/usr/src/paperless/data` | Application data and configurations |
-| `/runtipi/app-data/paperless-ngx/data/media` | `/usr/src/paperless/media` | Processed documents and thumbnails |
-| `/runtipi/app-data/paperless-ngx/data/export` | `/usr/src/paperless/export` | Document exports |
 | `/runtipi/app-data/paperless-ngx/data/consume` | `/usr/src/paperless/consume` | Drop folder for new documents |
-| `/runtipi/app-data/paperless-ngx/data/redis` | `/data` | Redis cache data |
-| `/runtipi/app-data/paperless-ngx/data/postgres` | `/var/lib/postgresql/data` | PostgreSQL database |
+| `/runtipi/app-data/paperless-ngx/data/originals` | `/usr/src/paperless/media/documents/originals` | Original uploaded documents |
+| `/runtipi/app-data/paperless-ngx/data/archive` | `/usr/src/paperless/media/documents/archive` | Processed/archived documents |
+| `/runtipi/app-data/paperless-ngx/data/data` | `/usr/src/paperless/data` | Application data and search index |
+| `/runtipi/app-data/paperless-ngx/data/export` | `/usr/src/paperless/export` | Document exports |
+| `/runtipi/app-data/paperless-ngx/data/thumbnails` | `/usr/src/paperless/media/documents/thumbnails` | Document thumbnails |
+| `/runtipi/app-data/paperless-ngx/data/redis-etc` | `/redis/etc` | Redis configuration |
+| `/runtipi/app-data/paperless-ngx/data/redis-var` | `/redis/var` | Redis data |
+| `/runtipi/app-data/paperless-ngx/data/postgres` | `/postgres/var` | PostgreSQL database |
 
 ---
 
@@ -74,10 +77,11 @@ Paperless-ngx is a document management system that transforms your physical docu
 | Parameter | Default value | Description |
 | --- | --- | --- |
 | `TZ` | Europe/Paris | Timezone |
-| `PAPERLESS_REDIS` | redis://paperless-redis:6379 | Redis connection string |
+| `REDIS_PASSWORD` | paperless_redis | Redis authentication password |
+| `PAPERLESS_REDIS` | redis://:password@paperless-redis:6379 | Redis connection string with authentication |
 | `PAPERLESS_DBHOST` | paperless-db | Database host |
-| `PAPERLESS_DBNAME` | paperless | Database name |
-| `PAPERLESS_DBUSER` | paperless | Database user |
+| `PAPERLESS_DBNAME` | postgres | Database name |
+| `PAPERLESS_DBUSER` | postgres | Database user |
 | `PAPERLESS_DBPASS` | paperless | Database password |
 | `PAPERLESS_ADMIN_USER` |  | Admin username (optional) |
 | `PAPERLESS_ADMIN_PASSWORD` |  | Admin password (optional) |
