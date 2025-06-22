@@ -1,219 +1,241 @@
 {
-    "name": "Paperless-ngx",
-    "id": "paperless-ngx",
-    "available": true,
-    "short_desc": "A community-supported supercharged version of paperless with Active Directory support",
-    "author": "Paperless-ngx Team",
-    "port": 8000,
-    "categories": [
-        "utilities",
-        "data",
-        "featured"
-    ],
-    "description": "Paperless-ngx is a document management system that transforms your physical documents into a searchable online archive so you can keep, well, less paper. This enhanced version includes Active Directory authentication support via LDAP, making it perfect for enterprise environments. It features automatic OCR processing, full-text search, tags and metadata organization, machine learning powered suggestions, and a modern web interface. Perfect for digitizing and organizing invoices, receipts, contracts, and any paper documents with enterprise-grade authentication.",
-    "tipi_version": 3,
-    "version": "2.13",
-    "source": "https://github.com/11notes/docker-paperless-ngx",
-    "exposable": true,
-    "supported_architectures": [
-        "arm64",
-        "amd64"
-    ],
-    "created_at": 1750584909618,
-    "updated_at": 1750584909618,
-    "dynamic_config": true,
-    "uid": 1000,
-    "gid": 1000,
-    "form_fields": [
+  "name": "Paperless-ngx",
+  "id": "paperless-ngx",
+  "available": true,
+  "short_desc": "Document Management System (DMS)",
+  "author": "Daniel Quinn, Jonas Winkler, and the Paperless-ngx team",
+  "port": 8012,
+  "categories": [
+    "utilities"
+  ],
+  "description": "Paperless-ngx is a community-supported open-source document management system that transforms your physical documents into a searchable online archive so you can keep, well, less paper.",
+  "tipi_version": 1,
+  "version": "2.16.2",
+  "source": "https://github.com/paperless-ngx/paperless-ngx",
+  "website": "https://docs.paperless-ngx.com",
+  "exposable": true,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1750582018046,
+  "updated_at": 1750582018046,
+  "dynamic_config": true,
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Administrator Username",
+      "required": true,
+      "min": 5,
+      "max": 20,
+      "hint": "Username for the paperless-ngx admin user",
+      "env_variable": "PAPERLESS_ADMIN_USERNAME"
+    },
+    {
+      "type": "password",
+      "label": "Administrator Password",
+      "required": true,
+      "min": 8,
+      "max": 64,
+      "hint": "Password for the paperless-ngx admin user",
+      "env_variable": "PAPERLESS_ADMIN_PASSWORD"
+    },
+    {
+      "type": "boolean",
+      "label": "Enable Tika Server",
+      "hint": "Enable Tika server for parsing and converting Office documents (.doc, .xlsx, .odt). Requires more resources.",
+      "required": true,
+      "default": false,
+      "env_variable": "PAPERLESS_TIKA_ENABLED"
+    },
+    {
+      "type": "text",
+      "label": "Application Timezone",
+      "hint": "Timezone for the application (e.g., Europe/Paris, America/New_York)",
+      "required": false,
+      "default": "UTC",
+      "env_variable": "PAPERLESS_TIME_ZONE"
+    },
+    {
+      "type": "text",
+      "label": "OCR Languages",
+      "hint": "Available OCR languages (e.g., fra+eng+deu for French, English and German)",
+      "required": false,
+      "default": "eng",
+      "env_variable": "PAPERLESS_OCR_LANGUAGES"
+    },
+    {
+      "type": "text",
+      "label": "Primary OCR Language",
+      "hint": "Primary language for OCR processing",
+      "required": false,
+      "options": [
         {
-            "type": "text",
-            "label": "Authentication > Admin Username",
-            "hint": "Username for the admin account (leave empty to create via web interface)",
-            "placeholder": "admin",
-            "env_variable": "PAPERLESS_ADMIN_USER"
+          "label": "English",
+          "value": "eng"
         },
         {
-            "type": "password",
-            "label": "Authentication > Admin Password",
-            "hint": "Password for the admin account (leave empty to create via web interface)",
-            "env_variable": "PAPERLESS_ADMIN_PASSWORD"
+          "label": "French",
+          "value": "fra"
         },
         {
-            "type": "email",
-            "label": "Authentication > Admin Email",
-            "hint": "Email address for the admin account",
-            "placeholder": "admin@example.com",
-            "env_variable": "PAPERLESS_ADMIN_MAIL"
+          "label": "German",
+          "value": "deu"
         },
         {
-            "type": "password",
-            "label": "Database > Redis Password",
-            "hint": "Password for Redis cache database (auto-generated if empty)",
-            "env_variable": "REDIS_PASSWORD",
-            "default": "paperless_redis"
+          "label": "Spanish",
+          "value": "spa"
         },
         {
-            "type": "text",
-            "label": "Security > Secret Key",
-            "hint": "Django secret key for encryption (leave empty for auto-generation)",
-            "env_variable": "PAPERLESS_SECRET_KEY"
+          "label": "Italian",
+          "value": "ita"
         },
         {
-            "type": "url",
-            "label": "Web Interface > Application URL",
-            "hint": "Full URL where Paperless-ngx will be accessible (e.g., https://paperless.domain.com)",
-            "placeholder": "https://paperless.example.com",
-            "env_variable": "PAPERLESS_URL"
-        },
-        {
-            "type": "text",
-            "label": "OCR > OCR Language",
-            "hint": "Primary language for OCR processing (3-letter ISO code)",
-            "placeholder": "eng",
-            "env_variable": "PAPERLESS_OCR_LANGUAGE",
-            "default": "eng"
-        },
-        {
-            "type": "text",
-            "label": "OCR > Additional Languages",
-            "hint": "Additional OCR languages separated by spaces (e.g., 'eng fra deu')",
-            "placeholder": "eng fra deu",
-            "env_variable": "PAPERLESS_OCR_LANGUAGES",
-            "default": "eng"
-        },
-        {
-            "type": "text",
-            "label": "OCR > Skip Archive File",
-            "hint": "When to skip creating archived PDF files",
-            "options": [
-                {
-                    "label": "Never skip",
-                    "value": "never"
-                },
-                {
-                    "label": "Skip if already archived",
-                    "value": "with_archive"
-                },
-                {
-                    "label": "Always skip",
-                    "value": "always"
-                }
-            ],
-            "required": true,
-            "env_variable": "PAPERLESS_OCR_SKIP_ARCHIVE_FILE",
-            "default": "never"
-        },
-        {
-            "type": "number",
-            "label": "Consumer > Polling Interval (seconds)",
-            "hint": "How often to check for new documents in consume folder",
-            "min": 10,
-            "max": 3600,
-            "env_variable": "PAPERLESS_CONSUMER_POLLING",
-            "default": 60
-        },
-        {
-            "type": "number",
-            "label": "Consumer > Polling Delay (seconds)",
-            "hint": "Delay before processing a new document",
-            "min": 5,
-            "max": 300,
-            "env_variable": "PAPERLESS_CONSUMER_POLLING_DELAY",
-            "default": 30
-        },
-        {
-            "type": "number",
-            "label": "Consumer > Retry Count",
-            "hint": "Number of retry attempts for failed documents",
-            "min": 1,
-            "max": 10,
-            "env_variable": "PAPERLESS_CONSUMER_POLLING_RETRY_COUNT",
-            "default": 3
-        },
-        {
-            "type": "boolean",
-            "label": "Consumer > Recursive Processing",
-            "hint": "Process documents in subdirectories of consume folder",
-            "env_variable": "PAPERLESS_CONSUMER_RECURSIVE",
-            "default": false
-        },
-        {
-            "type": "boolean",
-            "label": "Security > Enable Audit Log",
-            "hint": "Log all user actions for security auditing",
-            "env_variable": "PAPERLESS_AUDIT_LOG_ENABLED",
-            "default": true
-        },
-        {
-            "type": "number",
-            "label": "Interface > Documents per Page",
-            "hint": "Number of documents to display per page",
-            "min": 10,
-            "max": 100,
-            "env_variable": "PAPERLESS_DOCUMENTS_PER_PAGE",
-            "default": 25
-        },
-        {
-            "type": "boolean",
-            "label": "Features > Enable Flower Monitoring",
-            "hint": "Enable Celery monitoring interface (advanced users)",
-            "env_variable": "PAPERLESS_ENABLE_FLOWER",
-            "default": false
-        },
-        {
-            "type": "text",
-            "label": "Active Directory > LDAP URL",
-            "hint": "LDAP/LDAPS URL for Active Directory authentication (e.g., ldaps://ad.domain.com:636)",
-            "placeholder": "ldaps://ad.domain.com:636",
-            "env_variable": "PAPERLESS_AD_AUTH_URL"
-        },
-        {
-            "type": "text",
-            "label": "Active Directory > Domain (FQDN)",
-            "hint": "Fully qualified domain name for Active Directory",
-            "placeholder": "ad.domain.com",
-            "env_variable": "PAPERLESS_AD_DOMAIN"
-        },
-        {
-            "type": "text",
-            "label": "Active Directory > UPN Domain",
-            "hint": "UPN domain suffix for user login (fallback if user omits domain)",
-            "placeholder": "domain.com",
-            "env_variable": "PAPERLESS_AD_UPN_DOMAIN"
-        },
-        {
-            "type": "text",
-            "label": "Active Directory > Search Base",
-            "hint": "LDAP search base DN for user lookups",
-            "placeholder": "DC=ad,DC=domain,DC=com",
-            "env_variable": "PAPERLESS_AD_AUTH_SEARCH_BASE"
-        },
-        {
-            "type": "text",
-            "label": "Active Directory > Service User",
-            "hint": "Username for LDAP bind operations (with read permissions)",
-            "placeholder": "ldap.paperless",
-            "env_variable": "PAPERLESS_AD_AUTH_USER"
-        },
-        {
-            "type": "password",
-            "label": "Active Directory > Service Password",
-            "hint": "Password for the LDAP service user",
-            "env_variable": "PAPERLESS_AD_AUTH_PASSWORD"
-        },
-        {
-            "type": "text",
-            "label": "Active Directory > User Group CN",
-            "hint": "Common Name of group whose members can login to Paperless",
-            "placeholder": "CN=paperless,DC=ad,DC=domain,DC=com",
-            "env_variable": "PAPERLESS_AD_USER_GROUP_CN"
-        },
-        {
-            "type": "text",
-            "label": "Active Directory > Admin Group CN",
-            "hint": "Common Name of group whose members are Paperless administrators",
-            "placeholder": "CN=paperless-admins,DC=ad,DC=domain,DC=com",
-            "env_variable": "PAPERLESS_AD_ADMIN_GROUP_CN"
+          "label": "Luxembourgish",
+          "value": "ltz"
         }
-    ]
+      ],
+      "default": "eng",
+      "env_variable": "PAPERLESS_OCR_LANGUAGE"
+    },
+    {
+      "type": "boolean",
+      "label": "OCR Deskew",
+      "hint": "Enable automatic deskewing of scanned documents",
+      "required": false,
+      "default": true,
+      "env_variable": "PAPERLESS_OCR_DESKEW"
+    },
+    {
+      "type": "text",
+      "label": "OCR Clean Mode",
+      "hint": "OCR preprocessing mode for better text recognition",
+      "required": false,
+      "options": [
+        {
+          "label": "Clean",
+          "value": "clean"
+        },
+        {
+          "label": "None",
+          "value": "none"
+        }
+      ],
+      "default": "clean",
+      "env_variable": "PAPERLESS_OCR_CLEAN"
+    },
+    {
+      "type": "boolean",
+      "label": "Enable Barcodes",
+      "hint": "Allow document processing using barcodes",
+      "required": false,
+      "default": false,
+      "env_variable": "PAPERLESS_CONSUMER_ENABLE_BARCODES"
+    },
+    {
+      "type": "boolean",
+      "label": "Enable ASN Barcodes",
+      "hint": "Enable Archive Serial Number (ASN) barcode processing",
+      "required": false,
+      "default": false,
+      "env_variable": "PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE"
+    },
+    {
+      "type": "text",
+      "label": "ASN Barcode Prefix",
+      "hint": "Prefix for Archive Serial Number barcodes",
+      "required": false,
+      "default": "ASN",
+      "env_variable": "PAPERLESS_CONSUMER_ASN_BARCODE_PREFIX"
+    },
+    {
+      "type": "text",
+      "label": "Barcode String",
+      "hint": "String to identify documents for barcode processing",
+      "required": false,
+      "default": "PATCHT",
+      "env_variable": "PAPERLESS_CONSUMER_BARCODE_STRING"
+    },
+    {
+      "type": "number",
+      "label": "Consumer Polling Interval",
+      "hint": "Polling interval in seconds for document consumption",
+      "required": false,
+      "min": 1,
+      "max": 300,
+      "default": 5,
+      "env_variable": "PAPERLESS_CONSUMER_POLLING"
+    },
+    {
+      "type": "boolean",
+      "label": "Delete Duplicates",
+      "hint": "Automatically delete duplicate documents during consumption",
+      "required": false,
+      "default": true,
+      "env_variable": "PAPERLESS_CONSUMER_DELETE_DUPLICATES"
+    },
+    {
+      "type": "boolean",
+      "label": "Recursive Consumption",
+      "hint": "Process documents in subdirectories recursively",
+      "required": false,
+      "default": true,
+      "env_variable": "PAPERLESS_CONSUMER_RECURSIVE"
+    },
+    {
+      "type": "boolean",
+      "label": "Subdirs as Tags",
+      "hint": "Use subdirectory names as document tags",
+      "required": false,
+      "default": false,
+      "env_variable": "PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS"
+    },
+    {
+      "type": "number",
+      "label": "Task Workers",
+      "hint": "Number of parallel workers for document processing",
+      "required": false,
+      "min": 1,
+      "max": 8,
+      "default": 2,
+      "env_variable": "PAPERLESS_TASK_WORKERS"
+    },
+    {
+      "type": "number",
+      "label": "Threads per Worker",
+      "hint": "Number of threads per worker for document processing",
+      "required": false,
+      "min": 1,
+      "max": 8,
+      "default": 4,
+      "env_variable": "PAPERLESS_THREADS_PER_WORKER"
+    },
+    {
+      "type": "boolean",
+      "label": "Enable Update Check",
+      "hint": "Allow Paperless to check for updates",
+      "required": false,
+      "default": true,
+      "env_variable": "PAPERLESS_ENABLE_UPDATE_CHECK"
+    },
+    {
+      "type": "boolean",
+      "label": "Remove None from Filename",
+      "hint": "Remove 'None' values from generated filenames",
+      "required": false,
+      "default": true,
+      "env_variable": "PAPERLESS_FILENAME_FORMAT_REMOVE_NONE"
+    },
+    {
+      "type": "password",
+      "label": "Secret Key",
+      "hint": "Django secret key for encryption (leave empty for auto-generation)",
+      "required": false,
+      "min": 0,
+      "max": 128,
+      "env_variable": "PAPERLESS_SECRET_KEY"
+    }
+  ]
 }

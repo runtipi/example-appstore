@@ -1,131 +1,154 @@
-# PAPERLESS-NGX
+# 📄 PAPERLESS-NGX
 
-[<img src="https://img.shields.io/badge/github-source-blue?logo=github&color=040308">](https://github.com/11notes/docker-paperless-ngx) [<img src="https://img.shields.io/github/issues/paperless-ngx/paperless-ngx?color=7842f5">](https://github.com/paperless-ngx/paperless-ngx/issues) [<img src="https://img.shields.io/docker/v/11notes/paperless-ngx/latest?label=version&color=green">](https://hub.docker.com/r/11notes/paperless-ngx)
+[![GitHub Stars](https://img.shields.io/github/stars/paperless-ngx/paperless-ngx?style=flat-square&logo=github)](https://github.com/paperless-ngx/paperless-ngx)
+[![Docker Pulls](https://img.shields.io/docker/pulls/paperlessngx/paperless-ngx?style=flat-square&logo=docker)](https://hub.docker.com/r/paperlessngx/paperless-ngx)
+[![License](https://img.shields.io/github/license/paperless-ngx/paperless-ngx?style=flat-square)](https://github.com/paperless-ngx/paperless-ngx/blob/main/LICENSE)
 
-A community-supported supercharged version of paperless: scan, index and archive all your physical documents with Active Directory authentication support.
+Paperless-ngx is a community-supported open-source document management system that transforms your physical documents into a searchable online archive so you can keep, well, less paper.
 
 ---
 
 ## 📖 SYNOPSIS
-Paperless-ngx is a document management system that transforms your physical documents into a searchable online archive so you can keep, well, less paper. It's the official successor to the original Paperless and Paperless-ng projects, featuring automatic OCR processing, machine learning powered suggestions, full-text search capabilities, and a modern Angular-based web interface. Perfect for digitizing invoices, receipts, contracts, tax documents, and any paper-based information.
 
----
+Paperless-ngx is a powerful document management system designed to help you organize, store, and search your documents digitally. It performs OCR on scanned documents, automatically extracts metadata, and provides a modern web interface for managing your paperless office.
 
-## ✨ MAIN FEATURES  
-- **Automatic OCR processing** - Extract text from scanned documents and images
-- **Machine learning suggestions** - AI-powered document categorization and tagging
-- **Full-text search** - Search through document content, not just titles
-- **Advanced filtering** - Filter by tags, correspondents, document types, dates
-- **Modern web interface** - Clean, responsive Angular-based UI
-- **Multiple file formats** - Support for PDF, images, Office documents
-- **Email import** - Import documents directly from email
-- **API access** - REST API for automation and integrations
-- **Multi-user support** - User accounts with permission management
-- **Audit logging** - Track all document operations for compliance
+## ✨ MAIN FEATURES
 
----
+- **🔍 Full-text search** with auto-completion and relevance sorting
+- **🤖 OCR processing** for image-based documents with selectable text
+- **🏷️ Smart organization** with tags, correspondents, and document types
+- **📧 Email integration** to automatically process documents from email
+- **🔍 Barcode processing** with ASN (Archive Serial Number) support
+- **🧠 Machine learning** powered document matching and auto-tagging
+- **📱 Modern web interface** with responsive design and dashboard
+- **📁 Multiple file formats** support (PDF, images, Office documents)
+- **🔒 Multi-user support** with permission management
+- **🔄 API access** for automation and integrations
+- **📊 Statistics and reporting** dashboard
+- **🗑️ Trash management** with document recovery options
+- **📝 Post-processing scripts** for custom workflows
 
 ## 🌟 ADVANTAGES
-- **Zero vendor lock-in** - Open source with data export capabilities
-- **Privacy focused** - Self-hosted solution, your documents stay private
-- **Highly configurable** - Extensive customization options
-- **Active community** - Regular updates and community support
-- **Enterprise ready** - Suitable for personal and business use
-- **Multiple language support** - OCR in 100+ languages
-- **Workflow automation** - Rules for automatic document processing
 
----
+- **Open Source**: Community-driven development with active support
+- **Self-hosted**: Complete control over your data and privacy
+- **Scalable**: Optimized for multi-core systems and large document collections
+- **Flexible**: Customizable workflows and document processing rules
+- **Reliable**: Built-in sanity checker ensures document archive integrity
+- **Modern**: Single-page application with intuitive user interface
 
 ## 🐳 DOCKER IMAGE DETAILS
-- **Enhanced with Active Directory support** - LDAP authentication via django-python3-ldap
-- **Coordinated 11notes ecosystem** - Redis and PostgreSQL from same maintainer
-- **Security optimized** - Enhanced with enterprise authentication features
-- **Based on [11notes/paperless-ngx](https://github.com/11notes/docker-paperless-ngx)**
-- **Built on official Paperless-ngx** - Latest stable version with AD enhancements
-- Built via a secure, pinned CI/CD process, immune to upstream attacks
-- Auto update feature: the latest version is automatically built and published
-- Special thanks to [11notes](https://github.com/11notes) for the optimized containers with AD support!
 
----
+- **Image**: `ghcr.io/paperless-ngx/paperless-ngx:2.16.2`
+- **Architecture**: AMD64, ARM64
+- **Base**: Official Paperless-ngx image
+- **Size**: ~1.2GB (includes OCR dependencies)
+- **Security**: Regular updates and security patches
+
+### 📦 Additional Services
+
+- **PostgreSQL 16.6**: Primary database for metadata storage
+- **Redis 7**: Message broker for background tasks
+- **Gotenberg 8**: PDF conversion and document processing
+- **Tika**: Office document parsing (optional)
 
 ## 📁 VOLUMES
-| Host folder | Container folder | Comment |
-| ----------- | ---------------- | ------- |
-| `/runtipi/app-data/paperless-ngx/data/consume` | `/usr/src/paperless/consume` | Drop folder for new documents |
-| `/runtipi/app-data/paperless-ngx/data/originals` | `/usr/src/paperless/media/documents/originals` | Original uploaded documents |
-| `/runtipi/app-data/paperless-ngx/data/archive` | `/usr/src/paperless/media/documents/archive` | Processed/archived documents |
-| `/runtipi/app-data/paperless-ngx/data/data` | `/usr/src/paperless/data` | Application data and search index |
-| `/runtipi/app-data/paperless-ngx/data/export` | `/usr/src/paperless/export` | Document exports |
-| `/runtipi/app-data/paperless-ngx/data/thumbnails` | `/usr/src/paperless/media/documents/thumbnails` | Document thumbnails |
-| `/runtipi/app-data/paperless-ngx/data/redis-etc` | `/redis/etc` | Redis configuration |
-| `/runtipi/app-data/paperless-ngx/data/redis-var` | `/redis/var` | Redis data |
-| `/runtipi/app-data/paperless-ngx/data/postgres` | `/postgres/var` | PostgreSQL database |
 
----
+| Path | Container Path | Description |
+|------|----------------|-------------|
+| `${APP_DATA_DIR}/data/paperless_data` | `/usr/src/paperless/data` | Application data and configuration |
+| `${APP_DATA_DIR}/data/paperless_media` | `/usr/src/paperless/media` | Processed documents storage |
+| `${APP_DATA_DIR}/data/paperless_export` | `/usr/src/paperless/export` | Document export directory |
+| `${APP_DATA_DIR}/data/paperless_consume` | `/usr/src/paperless/consume` | Watch folder for new documents |
+| `${APP_DATA_DIR}/data/paperless_trash` | `/usr/src/paperless/trash` | Deleted documents recovery |
+| `${APP_DATA_DIR}/data/paperless_postprocessor` | `/usr/src/paperless/postprocessor` | Post-processing scripts |
+| `${APP_DATA_DIR}/data/paperless_scripts` | `/custom-cont-init.d` | Custom initialization scripts |
+| `${APP_DATA_DIR}/data/postgres` | `/var/lib/postgresql/data` | PostgreSQL database files |
+| `${APP_DATA_DIR}/data/redis` | `/data` | Redis persistence data |
 
 ## 🗃️ DEFAULT PARAMETERS
-| Parameter | Value | Description |
-| --- | --- | --- |
-| `user` | docker | User name |
-| `uid` | 1000 | User identifier |
-| `gid` | 1000 | Group identifier |
-| `home` | /usr/src/paperless | Home directory of user docker |
 
----
+- **Port**: 8012 (Main app)
+- **Primary OCR Language**: English
+- **OCR Languages**: English (configurable)
+- **Timezone**: UTC
+- **Tika Server**: Disabled (for performance)
+- **Barcode Processing**: Disabled
+- **Database**: PostgreSQL 16.6
+- **Cache**: Redis 7
+- **Task Workers**: 2
+- **Threads per Worker**: 4
+- **Consumer Polling**: 5 seconds
+- **Update Checks**: Enabled
 
 ## 📝 ENVIRONMENT
-| Parameter | Default value | Description |
-| --- | --- | --- |
-| `TZ` | Europe/Paris | Timezone |
-| `REDIS_PASSWORD` | paperless_redis | Redis authentication password |
-| `PAPERLESS_REDIS` | redis://:password@paperless-redis:6379 | Redis connection string with authentication |
-| `PAPERLESS_DBHOST` | paperless-db | Database host |
-| `PAPERLESS_DBNAME` | postgres | Database name |
-| `PAPERLESS_DBUSER` | postgres | Database user |
-| `PAPERLESS_DBPASS` | paperless | Database password |
-| `PAPERLESS_ADMIN_USER` |  | Admin username (optional) |
-| `PAPERLESS_ADMIN_PASSWORD` |  | Admin password (optional) |
-| `PAPERLESS_ADMIN_MAIL` |  | Admin email address |
-| `PAPERLESS_SECRET_KEY` |  | Django secret key (auto-generated if empty) |
-| `PAPERLESS_URL` |  | Application URL |
-| `PAPERLESS_OCR_LANGUAGE` | eng | Primary OCR language |
-| `PAPERLESS_OCR_LANGUAGES` | eng | Available OCR languages |
-| `PAPERLESS_CONSUMER_POLLING` | 60 | Polling interval in seconds |
-| `PAPERLESS_CONSUMER_POLLING_DELAY` | 30 | Processing delay in seconds |
-| `PAPERLESS_CONSUMER_POLLING_RETRY_COUNT` | 3 | Retry attempts for failed documents |
-| `PAPERLESS_CONSUMER_RECURSIVE` | false | Process subdirectories |
-| `PAPERLESS_AUDIT_LOG_ENABLED` | true | Enable audit logging |
-| `PAPERLESS_DOCUMENTS_PER_PAGE` | 25 | Documents per page in UI |
 
----
+### 🔧 Required Configuration
+
+- **Administrator Username**: Main admin user account
+- **Administrator Password**: Secure password (min 8 characters)
+
+### ⚙️ Optional Settings
+
+- **Tika Server**: Enable for Office document support (.doc, .xlsx, .odt)
+- **Timezone**: Application timezone (e.g., Europe/Paris)
+- **OCR Languages**: Multiple language support (e.g., fra+eng+deu)
+- **OCR Settings**: Deskewing, cleaning, and advanced options
+- **Barcode Processing**: Enable document processing via barcodes
+- **ASN Barcodes**: Archive Serial Number barcode support
+- **Performance**: Task workers, threads, and polling intervals
+- **Consumer Settings**: Recursive processing, duplicate deletion
+- **Security**: Custom secret key for enhanced security
+
+### 🌐 Language Support
+
+Available OCR languages:
+- English (eng) - Default
+- French (fra)
+- German (deu)
+- Spanish (spa)
+- Italian (ita)
+- Luxembourgish (ltz)
+- Multiple languages can be combined (e.g., fra+eng+deu)
 
 ## ⚠️ IMPORTANT
-- **Document Security**: Documents are stored in plain text without encryption. Run only on trusted networks.
-- **Admin Account**: Create admin credentials via the web interface or environment variables
-- **OCR Languages**: Install additional language packs if needed for your documents
-- **Consume Folder**: Drop new documents in the consume folder for automatic processing
-- **Backup Strategy**: Regular backups are essential - documents and database should be backed up
-- **Resource Usage**: OCR processing can be CPU intensive, ensure adequate resources
-- **File Permissions**: Ensure proper permissions on mounted volumes (uid/gid 1000)
 
-### Getting Started:
-1. Access Paperless-ngx at `http://your-tipi-ip:8000`
-2. Create admin account if not set via environment variables
-3. Configure OCR languages and document types
-4. Drop documents in the consume folder or upload via web interface
-5. Review and tag processed documents
+### 🕐 Installation Notes
 
----
+- **Be patient** during installation - it may take several minutes to download all dependencies
+- **Wait after installation** - Paperless-ngx needs time to initialize the database
+- **First access** may take 30-60 seconds to load completely
+
+### 🔧 Tika Configuration
+
+- **Performance Impact**: Tika server requires additional resources (CPU/Memory)
+- **Office Documents**: Required for .doc, .xlsx, .odt file processing
+- **Recommendation**: Disable if you don't need Office document support
+
+### 🔒 Security Considerations
+
+- Use strong passwords for the administrator account
+- Configure proper firewall rules if exposing externally
+- Regular backups of the `${APP_DATA_DIR}` directory
+- Keep the application updated for security patches
+
+### 📂 Document Consumption
+
+- Place documents in the `consume` folder for automatic processing
+- Supported formats: PDF, PNG, JPG, TIFF, GIF, WebP
+- Office documents require Tika server to be enabled
+- Barcode processing for automated document routing
+- Recursive subdirectory processing available
+- Automatic duplicate detection and removal
 
 ## 💾 SOURCE
-* [Paperless-ngx Team/paperless-ngx](https://github.com/paperless-ngx/paperless-ngx) - Original Paperless-ngx
-* [11notes/docker-paperless-ngx](https://github.com/11notes/docker-paperless-ngx) - Optimized Docker image
 
----
+- **Official Website**: https://docs.paperless-ngx.com
+- **GitHub Repository**: https://github.com/paperless-ngx/paperless-ngx
+- **Documentation**: https://docs.paperless-ngx.com
+- **Community**: https://github.com/paperless-ngx/paperless-ngx/discussions
 
 ## ❤️ PROVIDED WITH LOVE
-This app is provided with love by the Paperless-ngx community for digital document management and organization.
 
----
-
-For any questions or issues, open an issue on the official GitHub repositories.
+Paperless-ngx integration for Tipi by the community.
+Original application developed by Daniel Quinn, Jonas Winkler, and the Paperless-ngx team.

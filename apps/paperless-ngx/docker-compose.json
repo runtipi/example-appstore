@@ -1,126 +1,164 @@
 {
-    "services": [
+  "services": [
+    {
+      "name": "paperless-ngx",
+      "image": "ghcr.io/paperless-ngx/paperless-ngx:2.16.2",
+      "isMain": true,
+      "internalPort": 8000,
+      "environment": {
+        "COMPOSE_PROJECT_NAME": "${APP_ID}",
+        "USERMAP_UID": "1000",
+        "USERMAP_GID": "1000",
+        "PAPERLESS_REDIS": "redis://paperless-ngx-broker:6379",
+        "PAPERLESS_DBHOST": "paperless-ngx-db",
+        "PAPERLESS_ADMIN_USER": "${PAPERLESS_ADMIN_USERNAME}",
+        "PAPERLESS_ADMIN_PASSWORD": "${PAPERLESS_ADMIN_PASSWORD}",
+        "PAPERLESS_TIKA_ENABLED": "${PAPERLESS_TIKA_ENABLED:-false}",
+        "PAPERLESS_TIKA_GOTENBERG_ENDPOINT": "http://paperless-ngx-gotenberg:3000",
+        "PAPERLESS_TIKA_ENDPOINT": "http://paperless-ngx-tika:9998",
+        "PAPERLESS_URL": "${APP_PROTOCOL:-http}://${APP_DOMAIN}",
+        "PAPERLESS_TIME_ZONE": "${PAPERLESS_TIME_ZONE:-UTC}",
+        "PAPERLESS_OCR_LANGUAGE": "${PAPERLESS_OCR_LANGUAGE:-eng}",
+        "PAPERLESS_OCR_LANGUAGES": "${PAPERLESS_OCR_LANGUAGES:-eng}",
+        "PAPERLESS_OCR_DESKEW": "${PAPERLESS_OCR_DESKEW:-true}",
+        "PAPERLESS_OCR_CLEAN": "${PAPERLESS_OCR_CLEAN:-clean}",
+        "PAPERLESS_OCR_USER_ARGS": "${PAPERLESS_OCR_USER_ARGS:-{\"invalidate_digital_signatures\": true}}",
+        "PAPERLESS_CONSUMER_ENABLE_BARCODES": "${PAPERLESS_CONSUMER_ENABLE_BARCODES:-false}",
+        "PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE": "${PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE:-false}",
+        "PAPERLESS_CONSUMER_ASN_BARCODE_PREFIX": "${PAPERLESS_CONSUMER_ASN_BARCODE_PREFIX:-ASN}",
+        "PAPERLESS_CONSUMER_BARCODE_STRING": "${PAPERLESS_CONSUMER_BARCODE_STRING:-PATCHT}",
+        "PAPERLESS_CONSUMER_POLLING": "${PAPERLESS_CONSUMER_POLLING:-5}",
+        "PAPERLESS_CONSUMER_DELETE_DUPLICATES": "${PAPERLESS_CONSUMER_DELETE_DUPLICATES:-true}",
+        "PAPERLESS_CONSUMER_RECURSIVE": "${PAPERLESS_CONSUMER_RECURSIVE:-true}",
+        "PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS": "${PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS:-false}",
+        "PAPERLESS_CONSUMER_IGNORE_PATTERNS": "${PAPERLESS_CONSUMER_IGNORE_PATTERNS:-[\".DS_STORE/*\", \"._*\", \".stfolder/*\", \".stversions/*\", \".localized/*\", \"desktop.ini\", \"@eaDir/*\", \"*_paperless_write_test_*\"]}",
+        "PAPERLESS_TASK_WORKERS": "${PAPERLESS_TASK_WORKERS:-2}",
+        "PAPERLESS_THREADS_PER_WORKER": "${PAPERLESS_THREADS_PER_WORKER:-4}",
+        "PAPERLESS_ENABLE_UPDATE_CHECK": "${PAPERLESS_ENABLE_UPDATE_CHECK:-true}",
+        "PAPERLESS_FILENAME_FORMAT_REMOVE_NONE": "${PAPERLESS_FILENAME_FORMAT_REMOVE_NONE:-true}",
+        "PAPERLESS_TRASH_DIR": "../trash/",
+        "PAPERLESS_SECRET_KEY": "${PAPERLESS_SECRET_KEY:-}",
+        "PAPERLESS_CSRF_TRUSTED_ORIGINS": "https://${APP_ID}.${LOCAL_DOMAIN},https://${APP_DOMAIN},http://${INTERNAL_IP}:${APP_PORT}",
+        "PAPERLESS_ALLOWED_HOSTS": "${APP_ID}.${LOCAL_DOMAIN},${APP_DOMAIN},${INTERNAL_IP}"
+      },
+      "dependsOn": [
+        "paperless-ngx-db",
+        "paperless-ngx-broker",
+        "paperless-ngx-gotenberg",
+        "paperless-ngx-tika"
+      ],
+      "healthCheck": {
+        "test": "curl -fs -S --max-time 2 http://localhost:8000 || exit 1",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5,
+        "startPeriod": "30s"
+      },
+      "volumes": [
         {
-            "name": "paperless-redis",
-            "image": "11notes/redis:7.4.2",
-            "environment": {
-                "REDIS_PASSWORD": "${REDIS_PASSWORD-paperless_redis}",
-                "TZ": "${TZ}"
-            },
-            "volumes": [
-                {
-                    "hostPath": "${APP_DATA_DIR}/data/redis-etc",
-                    "containerPath": "/redis/etc"
-                },
-                {
-                    "hostPath": "${APP_DATA_DIR}/data/redis-var",
-                    "containerPath": "/redis/var"
-                }
-            ],
-            "healthCheck": {
-                "test": "redis-cli ping",
-                "interval": "30s",
-                "timeout": "10s",
-                "retries": 3
-            }
+          "hostPath": "${APP_DATA_DIR}/data/paperless_data",
+          "containerPath": "/usr/src/paperless/data"
         },
         {
-            "name": "paperless-db",
-            "image": "11notes/postgres:16",
-            "environment": {
-                "POSTGRES_PASSWORD": "paperless",
-                "TZ": "${TZ}"
-            },
-            "volumes": [
-                {
-                    "hostPath": "${APP_DATA_DIR}/data/postgres",
-                    "containerPath": "/postgres/var"
-                }
-            ],
-            "healthCheck": {
-                "test": "pg_isready -U postgres -d postgres",
-                "interval": "30s",
-                "timeout": "10s",
-                "retries": 5
-            }
+          "hostPath": "${APP_DATA_DIR}/data/paperless_media",
+          "containerPath": "/usr/src/paperless/media"
         },
         {
-            "name": "paperless-ngx",
-            "image": "11notes/paperless-ngx:2.13",
-            "isMain": true,
-            "internalPort": "8000",
-            "environment": {
-                "TZ": "${TZ}",
-                "PAPERLESS_REDIS": "redis://:${REDIS_PASSWORD-paperless_redis}@paperless-redis:6379",
-                "PAPERLESS_DBHOST": "paperless-db",
-                "PAPERLESS_DBNAME": "postgres",
-                "PAPERLESS_DBUSER": "postgres",
-                "PAPERLESS_DBPASS": "paperless",
-                "PAPERLESS_ADMIN_USER": "${PAPERLESS_ADMIN_USER}",
-                "PAPERLESS_ADMIN_PASSWORD": "${PAPERLESS_ADMIN_PASSWORD}",
-                "PAPERLESS_ADMIN_MAIL": "${PAPERLESS_ADMIN_MAIL}",
-                "PAPERLESS_SECRET_KEY": "${PAPERLESS_SECRET_KEY}",
-                "PAPERLESS_URL": "${PAPERLESS_URL}",
-                "PAPERLESS_TIME_ZONE": "${TZ}",
-                "PAPERLESS_OCR_LANGUAGE": "${PAPERLESS_OCR_LANGUAGE-eng}",
-                "PAPERLESS_OCR_LANGUAGES": "${PAPERLESS_OCR_LANGUAGES-eng}",
-                "PAPERLESS_OCR_SKIP_ARCHIVE_FILE": "${PAPERLESS_OCR_SKIP_ARCHIVE_FILE-never}",
-                "PAPERLESS_CONSUMER_POLLING": "${PAPERLESS_CONSUMER_POLLING-60}",
-                "PAPERLESS_CONSUMER_POLLING_DELAY": "${PAPERLESS_CONSUMER_POLLING_DELAY-30}",
-                "PAPERLESS_CONSUMER_POLLING_RETRY_COUNT": "${PAPERLESS_CONSUMER_POLLING_RETRY_COUNT-3}",
-                "PAPERLESS_CONSUMER_RECURSIVE": "${PAPERLESS_CONSUMER_RECURSIVE-false}",
-                "PAPERLESS_AUDIT_LOG_ENABLED": "${PAPERLESS_AUDIT_LOG_ENABLED-true}",
-                "PAPERLESS_DOCUMENTS_PER_PAGE": "${PAPERLESS_DOCUMENTS_PER_PAGE-25}",
-                "PAPERLESS_ENABLE_FLOWER": "${PAPERLESS_ENABLE_FLOWER-false}",
-                "DJANGO_SETTINGS_MODULE": "paperless.settings_ldap",
-                "PAPERLESS_AD_AUTH_URL": "${PAPERLESS_AD_AUTH_URL}",
-                "PAPERLESS_AD_DOMAIN": "${PAPERLESS_AD_DOMAIN}",
-                "PAPERLESS_AD_UPN_DOMAIN": "${PAPERLESS_AD_UPN_DOMAIN}",
-                "PAPERLESS_AD_AUTH_SEARCH_BASE": "${PAPERLESS_AD_AUTH_SEARCH_BASE}",
-                "PAPERLESS_AD_AUTH_USER": "${PAPERLESS_AD_AUTH_USER}",
-                "PAPERLESS_AD_AUTH_PASSWORD": "${PAPERLESS_AD_AUTH_PASSWORD}",
-                "PAPERLESS_AD_USER_GROUP_CN": "${PAPERLESS_AD_USER_GROUP_CN}",
-                "PAPERLESS_AD_ADMIN_GROUP_CN": "${PAPERLESS_AD_ADMIN_GROUP_CN}",
-                "USERMAP_UID": "${USERMAP_UID-1000}",
-                "USERMAP_GID": "${USERMAP_GID-1000}"
-            },
-            "dependsOn": [
-                "paperless-redis",
-                "paperless-db"
-            ],
-            "volumes": [
-                {
-                    "hostPath": "${APP_DATA_DIR}/data/consume",
-                    "containerPath": "/usr/src/paperless/consume"
-                },
-                {
-                    "hostPath": "${APP_DATA_DIR}/data/originals",
-                    "containerPath": "/usr/src/paperless/media/documents/originals"
-                },
-                {
-                    "hostPath": "${APP_DATA_DIR}/data/archive",
-                    "containerPath": "/usr/src/paperless/media/documents/archive"
-                },
-                {
-                    "hostPath": "${APP_DATA_DIR}/data/data",
-                    "containerPath": "/usr/src/paperless/data"
-                },
-                {
-                    "hostPath": "${APP_DATA_DIR}/data/export",
-                    "containerPath": "/usr/src/paperless/export"
-                },
-                {
-                    "hostPath": "${APP_DATA_DIR}/data/thumbnails",
-                    "containerPath": "/usr/src/paperless/media/documents/thumbnails"
-                }
-            ],
-            "healthCheck": {
-                "test": "curl -f http://localhost:8000/ || exit 1",
-                "interval": "60s",
-                "timeout": "30s",
-                "retries": 5,
-                "startPeriod": "120s"
-            }
+          "hostPath": "${APP_DATA_DIR}/data/paperless_export",
+          "containerPath": "/usr/src/paperless/export"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/paperless_consume",
+          "containerPath": "/usr/src/paperless/consume"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/paperless_trash",
+          "containerPath": "/usr/src/paperless/trash"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/paperless_postprocessor",
+          "containerPath": "/usr/src/paperless/postprocessor"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/paperless_scripts",
+          "containerPath": "/custom-cont-init.d",
+          "readOnly": true
         }
-    ]
+      ]
+    },
+    {
+      "name": "paperless-ngx-broker",
+      "image": "redis:8.0.2-alpine",
+      "command": [
+        "redis-server",
+        "--appendonly",
+        "yes"
+      ],
+      "healthCheck": {
+        "test": "redis-cli ping || exit 1",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5,
+        "startPeriod": "30s"
+      },
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/redis",
+          "containerPath": "/data"
+        }
+      ]
+    },
+    {
+      "name": "paperless-ngx-db",
+      "image": "postgres:17.5-alpine",
+      "environment": {
+        "POSTGRES_DB": "paperless",
+        "POSTGRES_USER": "paperless",
+        "POSTGRES_PASSWORD": "paperless"
+      },
+      "healthCheck": {
+        "test": "pg_isready -d paperless -U paperless || exit 1",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5,
+        "startPeriod": "30s"
+      },
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/postgres",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ]
+    },
+    {
+      "name": "paperless-ngx-gotenberg",
+      "image": "gotenberg/gotenberg:8.21.1-cloudrun",
+      "command": [
+        "gotenberg",
+        "--chromium-disable-routes=true",
+        "--chromium-allow-list=file:///tmp/.*",
+        "--api-timeout=30s",
+        "--libreoffice-restart-after=5",
+        "--libreoffice-start-timeout=10s"
+      ],
+      "healthCheck": {
+        "test": "timeout 5s bash -c ':> /dev/tcp/127.0.0.1/3000' || exit 1",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5,
+        "startPeriod": "30s"
+      }
+    },
+    {
+      "name": "paperless-ngx-tika",
+      "image": "apache/tika:3.2.0.0-full",
+      "healthCheck": {
+        "test": "timeout 5s bash -c ':> /dev/tcp/127.0.0.1/9998' || exit 1",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5,
+        "startPeriod": "30s"
+      }
+    }
+  ]
 }
