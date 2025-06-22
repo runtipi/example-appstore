@@ -16,12 +16,15 @@ Add the **{{APPLICATION_NAME}}** application (link to documentation/official sit
 
 ### 🔧 Technical validations
 - **Docker Image**: Verify official image, correct tags, WITHOUT "v" prefix
-- **Environment variables**: Check PUID/PGID support via official documentation
-- **tipi_version**: Always 1 for a new application
+- **Image preference**: Prefer GitHub Container Registry (ghcr.io) over Docker Hub when available
+- **Environment variables**: Check PUID/PGID support via official documentation AND docker-compose.yml
+- **Variable prefixing**: Always prefix env_variables with APP_NAME (e.g., PAPERLESS_AI_*)
+- **tipi_version**: Always 1 for a new application, increment by +1 before each commit to GitHub
 - **Timestamps**: Use https://currentmillis.com for `created_at` and `updated_at`
-- **uid/gid**: Remove from config.json if PUID/PGID not supported by image
+- **uid/gid**: Add to config.json ONLY if PUID/PGID supported by image
 - **Schema compliance**: Follow official Runtipi schemas (app-info.json, dynamic-compose.json)
 - **Volume structure**: Use `${APP_DATA_DIR}/data` for single volume, `${APP_DATA_DIR}/data/<folder>` for multiple volumes
+- **Documentation verification**: Always check wiki/documentation for missing features (webhooks, API keys, etc.)
 
 ### 📝 config.json configuration
 ```json
@@ -59,11 +62,13 @@ Add the **{{APPLICATION_NAME}}** application (link to documentation/official sit
 ```
 
 **Form field best practices:**
+- **Variable naming**: Always prefix with APP_NAME (e.g., PAPERLESS_AI_API_URL)
 - Use native data types: `true`/`false` for booleans, `8` for numbers, not strings
 - Include `min`/`max` validation for number fields
 - Provide helpful `hint` for each field
 - Group related fields with consistent labeling (e.g., "DNS Settings >", "Security >")
 - Use `options` array for predefined choices
+- **Short descriptions**: Keep short_desc concise (e.g., "AI document analyzer")
 ```
 
 ### 🐳 docker-compose.json configuration
@@ -112,15 +117,20 @@ Short description.
 - [ ] Use VS Code with schema validation enabled
 
 ### 2. Docker Image
+- [ ] **Prefer GitHub Container Registry (ghcr.io) packages over Docker Hub when available**
 - [ ] Verify image existence on official registry
 - [ ] Confirm available versions/tags
 - [ ] Verify absence of "v" prefix in tags
 - [ ] Test supported environment variables
-- [ ] Check for PUID/PGID support in documentation
+- [ ] **Check PUID/PGID support in BOTH documentation AND original docker-compose.yml**
+- [ ] **Examine original .env.example for additional variables**
 
 ### 3. Environment variables
+- [ ] **Always prefix ALL variables with APP_NAME (e.g., PAPERLESS_AI_*)**
 - [ ] Read official documentation thoroughly
+- [ ] **Check wiki/documentation for advanced features (webhooks, API keys, system prompts)**
 - [ ] Verify PUID/PGID support (often not supported)
+- [ ] **Examine original .env.example file for comprehensive variable list**
 - [ ] List all configurable variables
 - [ ] Define appropriate default values
 - [ ] Use native data types in form_fields
@@ -171,9 +181,12 @@ This provides real-time validation and IntelliSense for both config.json and doc
 
 1. **Preliminary research**
    - Analyze official documentation and GitHub repository
+   - **Check for GitHub Container Registry packages (ghcr.io) first, then Docker Hub**
+   - **Check wiki/documentation for ALL features (webhooks, integrations, API endpoints)**
    - Identify official Docker image and verify tags
+   - **Examine original docker-compose.yml AND .env.example files**
    - List environment variables and their types
-   - Check PUID/PGID support in documentation
+   - Check PUID/PGID support in documentation AND docker files
    - Review health check possibilities
 
 2. **Schema validation setup**
@@ -183,7 +196,9 @@ This provides real-time validation and IntelliSense for both config.json and doc
 
 3. **Structure creation**
    - Create `apps/[app-name]` and `metadata/` folders
+   - **Generate config.json with ALL variables prefixed with APP_NAME**
    - Generate config.json with complete form_fields using native types
+   - **Add uid/gid ONLY if PUID/PGID supported (verify in original docker-compose.yml)**
    - Create optimized docker-compose.json with health checks
    - Follow volume naming conventions
 
@@ -201,8 +216,52 @@ This provides real-time validation and IntelliSense for both config.json and doc
 6. **Final validation**
    - Run schema validation tools
    - Test environment variables consistency
+   - **Verify ALL environment variables are prefixed with APP_NAME**
+   - **Check description.md is updated with correct variable names**
    - Validate complete structure
    - Verify all native data types are used correctly
+
+7. **Pre-commit preparation**
+   - **Increment tipi_version by +1 before committing to GitHub**
+   - Update `updated_at` timestamp with current millis
+   - Final schema validation check
+   - **Create feature branch for new app: `feat/add-[app-name]`**
+   - Follow commit standards (see commit-app.prompt.md)
+   - Push to repository and create Pull Request
+
+## 🔄 Git workflow for new applications
+
+```bash
+# New application workflow:
+1. Create feature branch: git checkout -b feat/add-[app-name]
+2. Make all changes for the new app
+3. Test functionality locally
+4. Before committing:
+   - Increment tipi_version to 1 in config.json
+   - Update updated_at timestamp
+   - Run final validations
+5. Follow commit message standards from commit-app.prompt.md
+6. Push branch and create Pull Request for review
+
+# Example workflow:
+git checkout -b feat/add-paperless-ai
+# ... make all changes ...
+git add apps/paperless-ai/
+git commit -m "🎉 Added: paperless-ai application to tipi-store"
+git commit -m "✨ Added: comprehensive configuration options for paperless-ai"
+git commit -m "📚 Docs: add complete paperless-ai documentation"
+git push origin feat/add-paperless-ai
+# Create Pull Request
+```
+
+### 📝 Commit message standards (see commit-app.prompt.md)
+
+For detailed commit standards, branch management, and automated workflows, refer to the dedicated **commit-app.prompt.md** file which covers:
+- Branch strategy for new apps vs. modifications
+- Complete Gitmoji + Keep a Changelog mapping
+- Pre-commit checklists and validation
+- Automated commit scripts
+- Pull Request workflow
 
 ## 🎯 Objective
 
@@ -215,8 +274,12 @@ This provides real-time validation and IntelliSense for both config.json and doc
 
 ## ⚠️ Important constraints
 
+- **Docker image preference**: Always prefer GitHub Container Registry (ghcr.io) over Docker Hub when available
+- **Environment variable prefixing**: ALWAYS prefix ALL env_variables with APP_NAME (e.g., PAPERLESS_AI_*)
+- **PUID/PGID verification**: Check original docker-compose.yml, add uid/gid ONLY if supported
+- **Documentation completeness**: Always verify wiki/docs for missing features (API keys, webhooks, etc.)
 - **Never uid/gid** in config.json if PUID/PGID not supported
-- **tipi_version always 1** for new apps
+- **tipi_version always 1** for new apps, **increment by +1** before each commit to GitHub
 - **Current timestamps** via currentmillis.com
 - **Verified Docker image** and correct tags
 - **Standardized documentation** according to established format
@@ -226,6 +289,7 @@ This provides real-time validation and IntelliSense for both config.json and doc
 - **Schema compliance**: All files must validate against official Runtipi schemas
 - **Health checks**: Add when applicable for better monitoring
 - **Port management**: Use `addPorts` for external service ports (not web UI)
+- **Final documentation check**: Ensure description.md reflects ALL configuration options
 
 ## 📚 Valid categories
 
@@ -252,6 +316,31 @@ When choosing categories for your application, use only these valid values:
 
 ## 🎯 Common patterns and examples
 
+### MANDATORY verification checklist (based on paperless-ai experience)
+1. **Check for GitHub Container Registry (ghcr.io) packages first**
+2. **Check original docker-compose.yml for PUID/PGID support**
+3. **Examine .env.example for complete variable list**
+4. **Review wiki/documentation for advanced features**
+5. **Prefix ALL variables with APP_NAME**
+6. **Verify documentation matches final configuration**
+
+### Variable naming pattern
+```json
+// CORRECT - Always prefix with app name
+{
+  "env_variable": "PAPERLESS_AI_API_URL",
+  "env_variable": "PAPERLESS_AI_CUSTOM_MODEL",
+  "env_variable": "PAPERLESS_AI_SCAN_INTERVAL"
+}
+
+// INCORRECT - No prefix
+{
+  "env_variable": "API_URL",
+  "env_variable": "CUSTOM_MODEL", 
+  "env_variable": "SCAN_INTERVAL"
+}
+```
+
 ### Volume patterns
 ```json
 // Single volume
@@ -273,6 +362,49 @@ When choosing categories for your application, use only these valid values:
     "containerPath": "/app/logs"
   }
 ]
+```
+
+### PUID/PGID verification examples
+```yaml
+# If found in original docker-compose.yml:
+environment:
+  - PUID=1000
+  - PGID=1000
+# Then ADD to config.json: "uid": 1000, "gid": 1000
+
+# If NOT found in original docker-compose.yml:
+# Then DO NOT add uid/gid to config.json
+```
+
+### Advanced features detection
+```bash
+# Always check these sources:
+1. /wiki documentation for webhooks, API keys
+2. .env.example for complete variable list  
+3. Original docker-compose.yml for PUID/PGID
+4. Dockerfile for exposed ports and volumes
+```
+
+### Docker image preference examples
+```json
+// PREFERRED - GitHub Container Registry
+{
+  "image": "ghcr.io/linuxserver/plex:latest",
+  "image": "ghcr.io/paperless-ngx/paperless-ngx:latest",
+  "image": "ghcr.io/sct/overseerr:latest"
+}
+
+// ACCEPTABLE - Docker Hub (when ghcr.io not available)
+{
+  "image": "linuxserver/plex:latest",
+  "image": "clusterzx/paperless-ai:latest",
+  "image": "hotio/sonarr:latest"
+}
+
+// How to verify GitHub packages:
+// 1. Check repository /packages tab
+// 2. Look for "Container registry" section
+// 3. Verify ghcr.io/[owner]/[repo] format
 ```
 
 ### Health check examples
