@@ -11,7 +11,7 @@
         "featured"
     ],
     "description": "Paperless-ngx is a document management system that transforms your physical documents into a searchable online archive so you can keep, well, less paper. This enhanced version includes Active Directory authentication support via LDAP, making it perfect for enterprise environments. It features automatic OCR processing, full-text search, tags and metadata organization, machine learning powered suggestions, and a modern web interface. Perfect for digitizing and organizing invoices, receipts, contracts, and any paper documents with enterprise-grade authentication.",
-    "tipi_version": 2,
+    "tipi_version": 3,
     "version": "2.13",
     "source": "https://github.com/11notes/docker-paperless-ngx",
     "exposable": true,
@@ -22,6 +22,8 @@
     "created_at": 1750584909618,
     "updated_at": 1750584909618,
     "dynamic_config": true,
+    "uid": 1000,
+    "gid": 1000,
     "form_fields": [
         {
             "type": "text",

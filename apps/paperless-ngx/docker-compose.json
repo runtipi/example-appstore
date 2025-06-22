@@ -81,8 +81,8 @@
                 "PAPERLESS_AD_AUTH_PASSWORD": "${PAPERLESS_AD_AUTH_PASSWORD}",
                 "PAPERLESS_AD_USER_GROUP_CN": "${PAPERLESS_AD_USER_GROUP_CN}",
                 "PAPERLESS_AD_ADMIN_GROUP_CN": "${PAPERLESS_AD_ADMIN_GROUP_CN}",
-                "USERMAP_UID": "1000",
-                "USERMAP_GID": "1000"
+                "USERMAP_UID": "${USERMAP_UID-1000}",
+                "USERMAP_GID": "${USERMAP_GID-1000}"
             },
             "dependsOn": [
                 "paperless-redis",
