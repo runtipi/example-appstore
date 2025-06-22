@@ -4,6 +4,7 @@ on:
   push:
     branches: [main, master]
   pull_request:
+    types: [opened, reopened, synchronize]
     branches: [main, master]
   workflow_dispatch:
 
@@ -32,7 +33,17 @@ jobs:
     if: >
       github.event_name == 'pull_request' && 
       (github.actor == 'renovate[bot]' || contains(github.event.pull_request.user.login, 'renovate')) &&
-      !contains(github.event.head_commit.message, 'ci: update config.json after renovate docker-compose update')
+      (
+        contains(github.event.pull_request.title, 'Update') ||
+        contains(github.event.pull_request.title, 'chore(deps)') ||
+        contains(github.event.pull_request.title, 'fix(deps)')
+      ) &&
+      !contains(github.event.pull_request.title, 'ci: update config.json') &&
+      (
+        github.event.action == 'opened' ||
+        github.event.action == 'reopened' ||
+        (github.event.action == 'synchronize' && github.event.sender.login != 'github-actions[bot]')
+      )
     needs: debug-context
     permissions:
       contents: write
@@ -42,7 +53,7 @@ jobs:
         with:
           fetch-depth: 0
           ssh-key: ${{ secrets.DEPLOY_KEY }}
-      
+
       - name: Get list of apps changed in the PR
         id: changed_apps
         uses: tj-actions/changed-files@v46
