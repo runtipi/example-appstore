@@ -10,8 +10,7 @@
         "ai",
         "utilities"
     ],
-    "description": "Paperless-AI is an automated document analyzer for Paperless-ngx that uses AI (OpenAI API, Ollama, DeepSeek, and other compatible services) to automatically analyze and tag your documents. It features automated document management, AI-powered analysis for precise metadata assignment, a manual mode with modern web interface, and an interactive RAG-powered chat functionality to query your documents with AI. It supports multiple AI providers including Ollama, OpenAI, DeepSeek, OpenRouter, Perplexity, Together.ai, VLLM, LiteLLM, Fastchat, and Gemini.",
-    "tipi_version": 2,
+    "description": "Paperless-AI is an automated document analyzer for Paperless-ngx that uses AI (OpenAI API, Ollama, DeepSeek, and other compatible services) to automatically analyze and tag your documents. It features automated document management, AI-powered analysis for precise metadata assignment, a manual mode with modern web interface, and an interactive RAG-powered chat functionality to query your documents with AI. It supports multiple AI providers including Ollama, OpenAI, DeepSeek, OpenRouter, Perplexity, Together.ai, VLLM, LiteLLM, Fastchat, and Gemini.",    "tipi_version": 3,
     "version": "3.0.7",
     "source": "https://github.com/clusterzx/paperless-ai",
     "exposable": true,
@@ -20,7 +19,7 @@
         "amd64"
     ],
     "created_at": 1750631551000,
-    "updated_at": 1750634903260,
+    "updated_at": 1750636629495,
     "dynamic_config": true,
     "uid": 1000,
     "gid": 1000,
@@ -31,11 +30,12 @@
             "required": true,
             "env_variable": "PAPERLESS_AI_PAPERLESS_API_URL",
             "default": "http://localhost:8000/api"
-        },
-        {
+        },        {
             "type": "password",
             "label": "Paperless-ngx API Token",
             "hint": "API token from your Paperless-ngx instance (Settings > API)",
+            "min": 20,
+            "max": 100,
             "required": true,
             "env_variable": "PAPERLESS_AI_API_TOKEN"
         },
@@ -71,11 +71,12 @@
             "required": true,
             "env_variable": "PAPERLESS_AI_PROVIDER",
             "default": "ollama"
-        },
-        {
+        },        {
             "type": "password",
             "label": "OpenAI API Key",
             "hint": "Your OpenAI API key (required if using OpenAI provider)",
+            "min": 20,
+            "max": 100,
             "required": false,
             "env_variable": "PAPERLESS_AI_OPENAI_API_KEY"
         },
@@ -102,11 +103,12 @@
             "required": false,
             "env_variable": "PAPERLESS_AI_OLLAMA_MODEL",
             "default": "llama3.2"
-        },
-        {
+        },        {
             "type": "password",
             "label": "Custom API Key",
             "hint": "API key for custom provider (DeepSeek, OpenRouter, etc.)",
+            "min": 20,
+            "max": 100,
             "required": false,
             "env_variable": "PAPERLESS_AI_CUSTOM_API_KEY"
         },
@@ -196,11 +198,12 @@
             "required": false,
             "env_variable": "PAPERLESS_AI_RAG_SERVICE_ENABLED",
             "default": true
-        },
-        {
+        },        {
             "type": "password",
             "label": "API Key",
             "hint": "API key for webhook access (leave empty for auto-generation)",
+            "min": 16,
+            "max": 64,
             "required": false,
             "env_variable": "PAPERLESS_AI_API_KEY"
         },
