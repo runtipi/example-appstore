@@ -28,23 +28,19 @@ jobs:
           echo "Base ref: ${{ github.base_ref }}"
           echo "Head ref: ${{ github.head_ref }}"
           echo "Is Renovate bot: ${{ github.actor == 'renovate[bot]' }}"
-
   # Job for Renovate PRs - handles automatic updates and merging
   update-and-validate-configs-renovate:
     runs-on: ubuntu-latest
     if: >
       github.event_name == 'pull_request' && 
-      (github.actor == 'renovate[bot]' || contains(github.event.pull_request.user.login, 'renovate')) &&
-      (
-        contains(github.event.pull_request.title, 'Update') ||
-        contains(github.event.pull_request.title, 'chore(deps)') ||
-        contains(github.event.pull_request.title, 'fix(deps)')
-      ) &&
-      !contains(github.event.pull_request.title, 'ci: update config.json') &&
+      github.actor == 'renovate[bot]' &&
+      github.event.sender.login == 'renovate[bot]' &&
       (
         github.event.action == 'opened' ||
-        github.event.action == 'reopened' ||
-        (github.event.action == 'synchronize' && github.event.sender.login != 'github-actions[bot]')
+        github.event.action == 'reopened'
+      ) &&
+      (
+        contains(github.event.pull_request.title, 'chore(deps)')
       )
     needs: debug-context
     permissions:
