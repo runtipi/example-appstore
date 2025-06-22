@@ -39,6 +39,10 @@ apps/
 - **[Homebox](./homebox/)** - Inventory and organization system for the home
 - **[LubeLogger](./lubelogger/)** - Vehicle service and maintenance tracker
 
+### 📄 Document Management
+- **[Paperless-ngx](./paperless-ngx/)** - Document management system with OCR and full-text search
+- **[Paperless-AI](./paperless-ai/)** - AI-powered document analyzer for Paperless-ngx with automated tagging and RAG chat
+
 ### 📊 Monitoring & Analytics
 - **[Beszel](./beszel/)** - Lightweight server monitoring with web interface
 - **[Beszel Agent](./beszel-agent/)** - Data collection agent for Beszel monitoring
@@ -193,7 +197,7 @@ ls -la metadata/
 
 ## 📊 Statistics
 
-**Total Applications:** 16  
+**Total Applications:** 20  
 **Categories:** Media Management, Download Management, Utilities, Monitoring, Search  
 **Supported Architectures:** amd64, arm64  
 **Update Frequency:** Automated via Renovate (hourly checks)
