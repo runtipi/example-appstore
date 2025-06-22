@@ -1,0 +1,113 @@
+{
+    "services": [
+        {
+            "name": "paperless-redis",
+            "image": "11notes/redis:7.4.0",
+            "environment": {
+                "TZ": "${TZ}"
+            },
+            "volumes": [
+                {
+                    "hostPath": "${APP_DATA_DIR}/data/redis",
+                    "containerPath": "/redis/var"
+                }
+            ],
+            "healthCheck": {
+                "test": "redis-cli ping",
+                "interval": "30s",
+                "timeout": "10s",
+                "retries": 3
+            }
+        },
+        {
+            "name": "paperless-db",
+            "image": "11notes/postgres:16",
+            "environment": {
+                "POSTGRES_PASSWORD": "paperless",
+                "TZ": "${TZ}"
+            },
+            "volumes": [
+                {
+                    "hostPath": "${APP_DATA_DIR}/data/postgres",
+                    "containerPath": "/postgres/var"
+                }
+            ],
+            "healthCheck": {
+                "test": "pg_isready -U postgres -d postgres",
+                "interval": "30s",
+                "timeout": "10s",
+                "retries": 5
+            }
+        },
+        {
+            "name": "paperless-ngx",
+            "image": "11notes/paperless-ngx:2.13",
+            "isMain": true,
+            "internalPort": "8000",
+            "environment": {
+                "TZ": "${TZ}",
+                "PAPERLESS_REDIS": "redis://paperless-redis:6379",
+                "PAPERLESS_DBHOST": "paperless-db",
+                "PAPERLESS_DBNAME": "postgres",
+                "PAPERLESS_DBUSER": "postgres",
+                "PAPERLESS_DBPASS": "paperless",
+                "PAPERLESS_ADMIN_USER": "${PAPERLESS_ADMIN_USER}",
+                "PAPERLESS_ADMIN_PASSWORD": "${PAPERLESS_ADMIN_PASSWORD}",
+                "PAPERLESS_ADMIN_MAIL": "${PAPERLESS_ADMIN_MAIL}",
+                "PAPERLESS_SECRET_KEY": "${PAPERLESS_SECRET_KEY}",
+                "PAPERLESS_URL": "${PAPERLESS_URL}",
+                "PAPERLESS_TIME_ZONE": "${TZ}",
+                "PAPERLESS_OCR_LANGUAGE": "${PAPERLESS_OCR_LANGUAGE-eng}",
+                "PAPERLESS_OCR_LANGUAGES": "${PAPERLESS_OCR_LANGUAGES-eng}",
+                "PAPERLESS_OCR_SKIP_ARCHIVE_FILE": "${PAPERLESS_OCR_SKIP_ARCHIVE_FILE-never}",
+                "PAPERLESS_CONSUMER_POLLING": "${PAPERLESS_CONSUMER_POLLING-60}",
+                "PAPERLESS_CONSUMER_POLLING_DELAY": "${PAPERLESS_CONSUMER_POLLING_DELAY-30}",
+                "PAPERLESS_CONSUMER_POLLING_RETRY_COUNT": "${PAPERLESS_CONSUMER_POLLING_RETRY_COUNT-3}",
+                "PAPERLESS_CONSUMER_RECURSIVE": "${PAPERLESS_CONSUMER_RECURSIVE-false}",
+                "PAPERLESS_AUDIT_LOG_ENABLED": "${PAPERLESS_AUDIT_LOG_ENABLED-true}",
+                "PAPERLESS_DOCUMENTS_PER_PAGE": "${PAPERLESS_DOCUMENTS_PER_PAGE-25}",
+                "PAPERLESS_ENABLE_FLOWER": "${PAPERLESS_ENABLE_FLOWER-false}",
+                "DJANGO_SETTINGS_MODULE": "paperless.settings_ldap",
+                "PAPERLESS_AD_AUTH_URL": "${PAPERLESS_AD_AUTH_URL}",
+                "PAPERLESS_AD_DOMAIN": "${PAPERLESS_AD_DOMAIN}",
+                "PAPERLESS_AD_UPN_DOMAIN": "${PAPERLESS_AD_UPN_DOMAIN}",
+                "PAPERLESS_AD_AUTH_SEARCH_BASE": "${PAPERLESS_AD_AUTH_SEARCH_BASE}",
+                "PAPERLESS_AD_AUTH_USER": "${PAPERLESS_AD_AUTH_USER}",
+                "PAPERLESS_AD_AUTH_PASSWORD": "${PAPERLESS_AD_AUTH_PASSWORD}",
+                "PAPERLESS_AD_USER_GROUP_CN": "${PAPERLESS_AD_USER_GROUP_CN}",
+                "PAPERLESS_AD_ADMIN_GROUP_CN": "${PAPERLESS_AD_ADMIN_GROUP_CN}",
+                "USERMAP_UID": "1000",
+                "USERMAP_GID": "1000"
+            },
+            "dependsOn": [
+                "paperless-redis",
+                "paperless-db"
+            ],
+            "volumes": [
+                {
+                    "hostPath": "${APP_DATA_DIR}/data/data",
+                    "containerPath": "/usr/src/paperless/data"
+                },
+                {
+                    "hostPath": "${APP_DATA_DIR}/data/media",
+                    "containerPath": "/usr/src/paperless/media"
+                },
+                {
+                    "hostPath": "${APP_DATA_DIR}/data/export",
+                    "containerPath": "/usr/src/paperless/export"
+                },
+                {
+                    "hostPath": "${APP_DATA_DIR}/data/consume",
+                    "containerPath": "/usr/src/paperless/consume"
+                }
+            ],
+            "healthCheck": {
+                "test": "curl -f http://localhost:8000/ || exit 1",
+                "interval": "60s",
+                "timeout": "30s",
+                "retries": 5,
+                "startPeriod": "120s"
+            }
+        }
+    ]
+}
