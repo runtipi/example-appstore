@@ -93,11 +93,15 @@ Paperless-ngx is a powerful document management system designed to help you orga
 - **Tika Server**: Enable for Office document support (.doc, .xlsx, .odt)
 - **Timezone**: Application timezone (e.g., Europe/Paris)
 - **OCR Languages**: Multiple language support (e.g., fra+eng+deu)
-- **OCR Settings**: Deskewing, cleaning, and advanced options
+- **OCR Settings**: Mode, output type, rotation, page limits
+- **OCR Advanced**: Deskewing, cleaning, PDF/A conversion
 - **Barcode Processing**: Enable document processing via barcodes
+- **Barcode Advanced**: TIFF support, tag assignment, DPI settings
 - **ASN Barcodes**: Archive Serial Number barcode support
-- **Performance**: Task workers, threads, and polling intervals
+- **Performance**: Task workers, threads, memory limits, timeouts
 - **Consumer Settings**: Recursive processing, duplicate deletion
+- **Trash Management**: Retention period for deleted documents
+- **Scheduled Tasks**: Email checking, training, indexing frequencies
 - **Security**: Custom secret key for enhanced security
 
 ### 🌐 Language Support
@@ -132,14 +136,38 @@ Available OCR languages:
 - Regular backups of the `${APP_DATA_DIR}` directory
 - Keep the application updated for security patches
 
-### 📂 Document Consumption
+### 🤖 OCR Features
 
-- Place documents in the `consume` folder for automatic processing
-- Supported formats: PDF, PNG, JPG, TIFF, GIF, WebP
-- Office documents require Tika server to be enabled
-- Barcode processing for automated document routing
-- Recursive subdirectory processing available
-- Automatic duplicate detection and removal
+- **Multiple OCR modes**: Skip, Redo, Force for different document types
+- **PDF/A conversion**: Long-term archival format support
+- **Automatic rotation**: Correct 90°, 180°, 270° rotations
+- **Page limits**: Process only first N pages for performance
+- **Archive control**: Skip archived versions for documents with text
+- **Language combinations**: Multiple languages (e.g., fra+eng+deu)
+- **Quality optimization**: Deskewing and cleaning options
+
+### 🔍 Advanced Barcode Features
+
+- **TIFF support**: Process barcodes in TIFF images
+- **Tag assignment**: Automatic tag creation from barcodes
+- **DPI configuration**: Adjustable resolution for small barcodes
+- **Upscaling**: Enhance barcode detection quality
+- **ASN processing**: Archive Serial Number workflows
+- **Custom patterns**: Configurable barcode recognition
+
+### 🗑️ Trash & Maintenance
+
+- **Configurable retention**: 1-365 days for deleted documents
+- **Automatic cleanup**: Scheduled trash emptying
+- **Recovery options**: Documents recoverable before permanent deletion
+- **Scheduled tasks**: Configurable email, training, and indexing
+
+### ⚡ Performance Tuning
+
+- **Worker configuration**: Adjustable task workers and threads
+- **Memory limits**: Prevent resource exhaustion on large documents
+- **Timeout settings**: Extended processing time for weak hardware
+- **Cron scheduling**: Customizable background task frequencies
 
 ## 💾 SOURCE
 

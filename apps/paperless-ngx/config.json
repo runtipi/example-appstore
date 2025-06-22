@@ -101,12 +101,96 @@
       "env_variable": "PAPERLESS_OCR_LANGUAGE"
     },
     {
+      "type": "text",
+      "label": "OCR Mode",
+      "hint": "OCR processing mode for documents",
+      "required": false,
+      "options": [
+        {
+          "label": "Skip - OCR only pages without text",
+          "value": "skip"
+        },
+        {
+          "label": "Redo - OCR all pages and replace text",
+          "value": "redo"
+        },
+        {
+          "label": "Force - Rasterize and OCR all pages",
+          "value": "force"
+        }
+      ],
+      "default": "skip",
+      "env_variable": "PAPERLESS_OCR_MODE"
+    },
+    {
+      "type": "text",
+      "label": "OCR Output Type",
+      "hint": "Type of PDF documents to produce",
+      "required": false,
+      "options": [
+        {
+          "label": "PDF - Minimal modification",
+          "value": "pdf"
+        },
+        {
+          "label": "PDF/A - Long-term storage format",
+          "value": "pdfa"
+        },
+        {
+          "label": "PDF/A-1",
+          "value": "pdfa-1"
+        },
+        {
+          "label": "PDF/A-2",
+          "value": "pdfa-2"
+        },
+        {
+          "label": "PDF/A-3",
+          "value": "pdfa-3"
+        }
+      ],
+      "default": "pdfa",
+      "env_variable": "PAPERLESS_OCR_OUTPUT_TYPE"
+    },
+    {
       "type": "boolean",
-      "label": "OCR Deskew",
-      "hint": "Enable automatic deskewing of scanned documents",
+      "label": "OCR Rotate Pages",
+      "hint": "Automatically correct page rotation (90°, 180°, 270°)",
       "required": false,
       "default": true,
-      "env_variable": "PAPERLESS_OCR_DESKEW"
+      "env_variable": "PAPERLESS_OCR_ROTATE_PAGES"
+    },
+    {
+      "type": "number",
+      "label": "OCR Pages Limit",
+      "hint": "Limit OCR to specified number of pages (0 = all pages)",
+      "required": false,
+      "min": 0,
+      "max": 100,
+      "default": 0,
+      "env_variable": "PAPERLESS_OCR_PAGES"
+    },
+    {
+      "type": "text",
+      "label": "Skip Archive File",
+      "hint": "When to skip creating archived versions",
+      "required": false,
+      "options": [
+        {
+          "label": "Never - Always create archived version",
+          "value": "never"
+        },
+        {
+          "label": "With Text - Skip for documents with embedded text",
+          "value": "with_text"
+        },
+        {
+          "label": "Always - Never create archived version",
+          "value": "always"
+        }
+      ],
+      "default": "never",
+      "env_variable": "PAPERLESS_OCR_SKIP_ARCHIVE_FILE"
     },
     {
       "type": "text",
@@ -151,12 +235,40 @@
       "env_variable": "PAPERLESS_CONSUMER_ASN_BARCODE_PREFIX"
     },
     {
-      "type": "text",
-      "label": "Barcode String",
-      "hint": "String to identify documents for barcode processing",
+      "type": "boolean",
+      "label": "TIFF Barcode Support",
+      "hint": "Enable barcode scanning in TIFF images",
       "required": false,
-      "default": "PATCHT",
-      "env_variable": "PAPERLESS_CONSUMER_BARCODE_STRING"
+      "default": false,
+      "env_variable": "PAPERLESS_CONSUMER_BARCODE_TIFF_SUPPORT"
+    },
+    {
+      "type": "boolean",
+      "label": "Enable Tag Barcodes",
+      "hint": "Enable automatic tag assignment via barcodes",
+      "required": false,
+      "default": false,
+      "env_variable": "PAPERLESS_CONSUMER_ENABLE_TAG_BARCODE"
+    },
+    {
+      "type": "number",
+      "label": "Barcode DPI",
+      "hint": "DPI for barcode detection (higher for small barcodes)",
+      "required": false,
+      "min": 150,
+      "max": 1200,
+      "default": 300,
+      "env_variable": "PAPERLESS_CONSUMER_BARCODE_DPI"
+    },
+    {
+      "type": "number",
+      "label": "Barcode Upscale Factor",
+      "hint": "Upscale factor for better barcode detection (0 = disabled)",
+      "required": false,
+      "min": 0,
+      "max": 3,
+      "default": 0,
+      "env_variable": "PAPERLESS_CONSUMER_BARCODE_UPSCALE"
     },
     {
       "type": "number",
@@ -221,12 +333,58 @@
       "env_variable": "PAPERLESS_ENABLE_UPDATE_CHECK"
     },
     {
-      "type": "boolean",
-      "label": "Remove None from Filename",
-      "hint": "Remove 'None' values from generated filenames",
+      "type": "number",
+      "label": "Trash Retention Days",
+      "hint": "Number of days to keep deleted documents in trash",
       "required": false,
-      "default": true,
-      "env_variable": "PAPERLESS_FILENAME_FORMAT_REMOVE_NONE"
+      "min": 1,
+      "max": 365,
+      "default": 30,
+      "env_variable": "PAPERLESS_EMPTY_TRASH_DELAY"
+    },
+    {
+      "type": "number",
+      "label": "Worker Timeout",
+      "hint": "Timeout in seconds for document processing workers",
+      "required": false,
+      "min": 300,
+      "max": 7200,
+      "default": 1800,
+      "env_variable": "PAPERLESS_WORKER_TIMEOUT"
+    },
+    {
+      "type": "number",
+      "label": "Memory Limit (MB)",
+      "hint": "Memory limit for image conversion (0 = unlimited)",
+      "required": false,
+      "min": 0,
+      "max": 2048,
+      "default": 0,
+      "env_variable": "PAPERLESS_CONVERT_MEMORY_LIMIT"
+    },
+    {
+      "type": "text",
+      "label": "Email Task Cron",
+      "hint": "Cron expression for email checking frequency",
+      "required": false,
+      "default": "*/10 * * * *",
+      "env_variable": "PAPERLESS_EMAIL_TASK_CRON"
+    },
+    {
+      "type": "text",
+      "label": "Training Task Cron",
+      "hint": "Cron expression for automatic classifier training",
+      "required": false,
+      "default": "5 */1 * * *",
+      "env_variable": "PAPERLESS_TRAIN_TASK_CRON"
+    },
+    {
+      "type": "text",
+      "label": "Index Task Cron",
+      "hint": "Cron expression for search index updates",
+      "required": false,
+      "default": "0 0 * * *",
+      "env_variable": "PAPERLESS_INDEX_TASK_CRON"
     },
     {
       "type": "password",
