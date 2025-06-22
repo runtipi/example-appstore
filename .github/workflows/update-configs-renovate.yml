@@ -18,7 +18,9 @@ jobs:
         run: |
           echo "🔍 Debugging workflow execution context"
           echo "Event name: ${{ github.event_name }}"
+          echo "Event action: ${{ github.event.action }}"
           echo "Actor: ${{ github.actor }}"
+          echo "Sender login: ${{ github.event.sender.login }}"
           echo "Repository: ${{ github.repository }}"
           echo "PR number: ${{ github.event.pull_request.number }}"
           echo "PR title: ${{ github.event.pull_request.title }}"
@@ -42,7 +44,7 @@ jobs:
       (
         github.event.action == 'opened' ||
         github.event.action == 'reopened' ||
-        (github.event.action == 'synchronize' && github.actor != 'github-actions[bot]')
+        (github.event.action == 'synchronize' && github.event.sender.login != 'github-actions[bot]')
       )
     needs: debug-context
     permissions:
