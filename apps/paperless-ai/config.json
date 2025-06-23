@@ -10,7 +10,7 @@
         "ai",
         "utilities"
     ],
-    "description": "Paperless-AI is an automated document analyzer for Paperless-ngx that uses AI (OpenAI API, Ollama, DeepSeek, and other compatible services) to automatically analyze and tag your documents. It features automated document management, AI-powered analysis for precise metadata assignment, a manual mode with modern web interface, and an interactive RAG-powered chat functionality to query your documents with AI. It supports multiple AI providers including Ollama, OpenAI, DeepSeek, OpenRouter, Perplexity, Together.ai, VLLM, LiteLLM, Fastchat, and Gemini.",    "tipi_version": 3,
+    "description": "Paperless-AI is an automated document analyzer for Paperless-ngx that uses AI (OpenAI API, Ollama, DeepSeek, and other compatible services) to automatically analyze and tag your documents. It features automated document management, AI-powered analysis for precise metadata assignment, a manual mode with modern web interface, and an interactive RAG-powered chat functionality to query your documents with AI. It supports multiple AI providers including Ollama, OpenAI, DeepSeek, OpenRouter, Perplexity, Together.ai, VLLM, LiteLLM, Fastchat, and Gemini.",    "tipi_version": 4,
     "version": "3.0.7",
     "source": "https://github.com/clusterzx/paperless-ai",
     "exposable": true,
@@ -19,7 +19,7 @@
         "amd64"
     ],
     "created_at": 1750631551000,
-    "updated_at": 1750636629495,
+    "updated_at": 1750636900299,
     "dynamic_config": true,
     "uid": 1000,
     "gid": 1000,
@@ -76,7 +76,7 @@
             "label": "OpenAI API Key",
             "hint": "Your OpenAI API key (required if using OpenAI provider)",
             "min": 20,
-            "max": 100,
+            "max": 200,
             "required": false,
             "env_variable": "PAPERLESS_AI_OPENAI_API_KEY"
         },
@@ -108,7 +108,7 @@
             "label": "Custom API Key",
             "hint": "API key for custom provider (DeepSeek, OpenRouter, etc.)",
             "min": 20,
-            "max": 100,
+            "max": 200,
             "required": false,
             "env_variable": "PAPERLESS_AI_CUSTOM_API_KEY"
         },
