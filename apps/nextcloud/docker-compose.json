@@ -21,18 +21,18 @@
                 }
             ],
             "extraLabels": {
-                "traefik.http.middlewares.nextcloud_jigsaw-nextcloud-1.headers.browserXSSFilter": "true",
-                "traefik.http.middlewares.nextcloud_jigsaw-nextcloud-1.headers.contentTypeNosniff": "true",
-                "traefik.http.middlewares.nextcloud_jigsaw-nextcloud-1.headers.stsIncludeSubdomains": "true",
-                "traefik.http.middlewares.nextcloud_jigsaw-nextcloud-1.headers.stsPreload": "true",
-                "traefik.http.middlewares.nextcloud_jigsaw-nextcloud-1.headers.stsSeconds": "155520011",
-                "traefik.http.middlewares.nextcloud_jigsaw-nextcloud-1_redirect.redirectregex.permanent": "true",
-                "traefik.http.middlewares.nextcloud_jigsaw-nextcloud-1_redirect.redirectregex.regex": "https://(.*)/.well-known/(card|cal)dav",
-                "traefik.http.middlewares.nextcloud_jigsaw-nextcloud-1_redirect.redirectregex.replacement": "https://$${1}/remote.php/dav/",
-                "traefik.http.routers.nextcloud_jigsaw-nextcloud-1.middlewares": "nextcloud_jigsaw-nextcloud-1,nextcloud_jigsaw-nextcloud-1_redirect,nextcloud_jigsaw-nextcloud-1-https",
-                "traefik.http.middlewares.nextcloud_jigsaw-nextcloud-1.headers.customRequestHeaders.X-Forwarded-Proto": "https",
-                "traefik.http.middlewares.nextcloud_jigsaw-nextcloud-1-https.redirectscheme.scheme": "https",
-                "traefik.http.routers.nextcloud_jigsaw-nextcloud-1-http.middlewares": "nextcloud_jigsaw-nextcloud-1-https@docker"
+                "traefik.http.middlewares.nextcloud-jigsaw.headers.browserXSSFilter": "true",
+                "traefik.http.middlewares.nextcloud-jigsaw.headers.contentTypeNosniff": "true",
+                "traefik.http.middlewares.nextcloud-jigsaw.headers.stsIncludeSubdomains": "true",
+                "traefik.http.middlewares.nextcloud-jigsaw.headers.stsPreload": "true",
+                "traefik.http.middlewares.nextcloud-jigsaw.headers.stsSeconds": "155520011",
+                "traefik.http.middlewares.nextcloud-jigsaw_redirect.redirectregex.permanent": "true",
+                "traefik.http.middlewares.nextcloud-jigsaw_redirect.redirectregex.regex": "https://(.*)/.well-known/(card|cal)dav",
+                "traefik.http.middlewares.nextcloud-jigsaw_redirect.redirectregex.replacement": "https://$${1}/remote.php/dav/",
+                "traefik.http.routers.nextcloud-jigsaw.middlewares": "nextcloud-jigsaw,nextcloud-jigsaw_redirect,nextcloud-jigsaw-https",
+                "traefik.http.middlewares.nextcloud-jigsaw.headers.customRequestHeaders.X-Forwarded-Proto": "https",
+                "traefik.http.middlewares.nextcloud-jigsaw-https.redirectscheme.scheme": "https",
+                "traefik.http.routers.nextcloud-jigsaw-http.middlewares": "nextcloud-jigsaw-https@docker"
             }
         }
     ]
