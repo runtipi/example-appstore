@@ -10,7 +10,7 @@
         "media"
     ],
     "description": "A secure, self-hosted content collaboration platform with file sync, real-time document editing, video chat & groupware on mobile, desktop and web.",
-    "tipi_version": 3,
+    "tipi_version": 4,
     "version": "31.0.6",
     "source": "https://github.com/nextcloud/server",
     "website": "https://nextcloud.com",
@@ -20,7 +20,7 @@
         "arm64"
     ],
     "created_at": 1751122900824,
-    "updated_at": 1751126422457,
+    "updated_at": 1751127074553,
     "dynamic_config": true,
     "uid": 1000,
     "gid": 1000,
