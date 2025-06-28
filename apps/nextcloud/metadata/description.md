@@ -51,7 +51,7 @@ This app uses the official LinuxServer.io Nextcloud Docker image:
 
 | Parameter | Default Value | Description |
 |---|---|---|
-| **Port** | `443` | HTTPS web interface port |
+| **Port** | `8443` | HTTPS web interface port |
 | **PUID** | `1000` | User ID for file permissions |
 | **PGID** | `1000` | Group ID for file permissions |
 | **TZ** | `${TZ}` | Timezone setting (managed by Tipi) |
@@ -63,7 +63,7 @@ No additional environment variables are required. Nextcloud will automatically u
 ## ⚠️ IMPORTANT
 
 ### Initial Setup
-1. After installation, access Nextcloud via your configured domain/IP on port 443 (HTTPS)
+1. After installation, access Nextcloud via your configured domain/IP on port 8443 (HTTPS)
 2. Follow the setup wizard to create your administrator account
 3. Configure your database (SQLite is fine for small installations, PostgreSQL/MySQL recommended for larger deployments)
 4. Start uploading and syncing your files!
