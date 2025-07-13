@@ -41,9 +41,13 @@ git push origin main
 
 ## 📋 Pre-commit checklist
 
+### ⚠️ **CRITICAL: tipi_version and timestamp management**
+> **Remember**: Every configuration change MUST increment tipi_version and update timestamp
+> **Common mistake**: Forgetting to bump tipi_version after Docker image fixes or config changes
+
 ### ✅ Mandatory verifications before any commit
-- [ ] **tipi_version incremented** (+1 from previous version)
-- [ ] **updated_at timestamp** updated to current millis
+- [ ] **tipi_version incremented** (+1 from previous version) - **NEVER SKIP THIS**
+- [ ] **updated_at timestamp** updated to current millis - **ALWAYS UPDATE**
 - [ ] **Schema validation** passed (config.json + docker-compose.json)
 - [ ] **Environment variables** correctly prefixed with APP_NAME_*
 - [ ] **Documentation updated** to reflect configuration changes
@@ -55,6 +59,62 @@ git push origin main
 - [ ] **README files updated** (main README.md + apps/README.md)
 - [ ] **Official image verified** and ghcr.io preferred when available
 - [ ] **PUID/PGID support** properly validated against original docker-compose.yml
+
+## 🎓 Lessons learned and best practices
+
+### 🚨 **Common pitfalls to avoid**
+1. **Forgetting tipi_version bump**: Always increment after ANY configuration change
+2. **Incorrect Docker image tags**: Verify upstream tags (e.g., `3.6.1` vs `v3.6.1`)
+3. **Mixed commits**: Keep commits atomic - one logical change per commit
+4. **Incomplete staging**: Only stage files related to the specific change
+5. **Missing timestamp updates**: Always update `updated_at` with tipi_version
+
+### 📈 **Improved workflow pattern**
+```bash
+# 1. Make technical changes first
+git add apps/[app-name]/docker-compose.json
+git commit -m "🔧 Fixed: correct Docker image tag from 3.6.1 to v3.6.1 for [app-name]"
+
+# 2. THEN increment version (separate atomic commit)
+git add apps/[app-name]/config.json
+git commit -m "🔧 Fixed: increment tipi_version for [app-name] Docker image corrections"
+
+# 3. Finally push all changes
+git push origin main
+```
+
+### 💡 **Enhanced commit message templates**
+```bash
+# Docker image fixes
+🔧 Fixed: correct Docker image tag from [old-tag] to [new-tag] for [app-name]
+
+# Version management (always separate commit)
+🔧 Fixed: increment tipi_version for [app-name] [change-description]
+
+# Configuration improvements
+🔄 Changed: prefix all environment variables with [APP_NAME]_ in [app-name]
+🐛 Fixed: correct boolean types in [app-name] form fields
+🩹 Fixed: schema validation errors in [app-name] config
+
+# Documentation updates
+📚 Docs: update [app-name] environment variables section
+📝 Docs: add [feature] usage notes to [app-name] description
+```
+
+### 🔄 **Atomic commit examples for common scenarios**
+```bash
+# Scenario: Docker image tag correction + version bump
+git commit -m "🔧 Fixed: correct Docker image tag from 3.6.1 to v3.6.1 for tinyauth"
+git commit -m "🔧 Fixed: increment tipi_version for tinyauth Docker image corrections"
+
+# Scenario: Environment variable prefixing + version bump
+git commit -m "🔄 Changed: prefix all environment variables with SONARR_ in sonarr"
+git commit -m "🔧 Fixed: increment tipi_version for sonarr variable prefixing"
+
+# Scenario: Schema compliance + version bump
+git commit -m "🩹 Fixed: schema validation errors in prowlarr config"
+git commit -m "🔧 Fixed: increment tipi_version for prowlarr schema compliance"
+```
 
 ## 🎨 Commit message standards
 
@@ -224,6 +284,42 @@ git commit -m "🔧 Fixed: increment tipi_version for overseerr improvements"
 ```
 
 ## 🎯 Enhanced workflow summary
+
+### 🔧 **Quick validation commands**
+```bash
+# Validate JSON syntax before commit
+Get-Content 'apps/[app-name]/config.json' | ConvertFrom-Json | Out-Null
+Get-Content 'apps/[app-name]/docker-compose.json' | ConvertFrom-Json | Out-Null
+
+# Check current tipi_version
+grep -o '"tipi_version": [0-9]*' apps/[app-name]/config.json
+
+# Generate current timestamp (Unix milliseconds)
+[DateTimeOffset]::Now.ToUnixTimeMilliseconds()
+```
+
+### 🚀 **Streamlined commit workflow**
+```bash
+# 1. Make and validate changes
+# 2. Stage specific files
+git add apps/[app-name]/[specific-file]
+# 3. Commit with proper message
+git commit -m "[gitmoji] [category]: [description] for [app-name]"
+# 4. Repeat for each logical change
+# 5. ALWAYS end with version bump if config changed
+git add apps/[app-name]/config.json
+git commit -m "🔧 Fixed: increment tipi_version for [app-name] [change-summary]"
+```
+
+### 📝 **Mandatory version bump scenarios**
+- Docker image tag changes
+- Environment variable modifications
+- Configuration schema updates
+- Health check adjustments
+- Volume mount changes
+- Port modifications
+- Any docker-compose.json changes
+- Any config.json form field updates
 
 ---
 
