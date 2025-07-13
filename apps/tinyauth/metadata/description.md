@@ -14,11 +14,12 @@ TinyAuth is the simplest way to secure your apps with a login screen. It's a lig
 
 ## ✨ MAIN FEATURES
 
-- **Multiple Authentication Methods**: Basic login with username/password and OAuth (Google, GitHub, custom providers)
+- **Multiple Authentication Methods**: Basic login with username/password, OAuth (Google, GitHub, custom providers), and LDAP integration
 - **Reverse Proxy Support**: Works with Traefik, Nginx, Caddy, and other popular proxies
 - **Lightweight & Stateless**: Single binary with no dependencies, completely stateless design
 - **Easy Configuration**: Environment variables only, no complex configuration files
 - **OAuth Whitelist**: Restrict access to specific email domains
+- **LDAP Integration**: Native LDAP support for enterprise authentication
 - **Session Management**: Configurable session expiry and security settings
 - **Custom Branding**: Customize login page with custom title, background image, and messages
 - **Security Features**: Login timeout, max retries, secure cookies, and TOTP support
@@ -53,10 +54,10 @@ TinyAuth is the simplest way to secure your apps with a login screen. It's a lig
 |-----------|---------|-------------|
 | Port | 3000 | Internal application port |
 | Address | 0.0.0.0 | Bind address for the server |
-| Session Expiry | 7200 | Session duration in seconds (2 hours) |
+| Session Expiry | 86400 | Session duration in seconds (24 hours) |
 | Login Timeout | 300 | Maximum time for login attempts in seconds |
 | Max Retries | 5 | Maximum failed login attempts before lockout |
-| Log Level | 0 | Logging level (0=Info, 1=Debug, 2=Warn, 3=Error) |
+| Log Level | 1 | Logging level (-1=Trace, 0=Debug, 1=Info, 2=Warn, 3=Error, 4=Fatal, 5=Panic, 6=Disabled) |
 
 ## 📝 ENVIRONMENT
 
@@ -88,6 +89,12 @@ TinyAuth is the simplest way to secure your apps with a login screen. It's a lig
 | `TINYAUTH_LOGIN_MAX_RETRIES` | Number | No | Maximum failed login attempts |
 | `TINYAUTH_LOG_LEVEL` | Number | No | Application logging level |
 | `TINYAUTH_GENERIC_SKIP_SSL` | Boolean | No | Skip SSL verification for custom OAuth |
+| `TINYAUTH_LDAP_ADDRESS` | URL | No | LDAP server address (e.g. ldap://localhost:389) |
+| `TINYAUTH_LDAP_BIND_DN` | String | No | LDAP bind DN for authentication |
+| `TINYAUTH_LDAP_BIND_PASSWORD` | Password | No | Password for LDAP bind DN |
+| `TINYAUTH_LDAP_BASE_DN` | String | No | LDAP base DN for user searches |
+| `TINYAUTH_LDAP_INSECURE` | Boolean | No | Skip SSL verification for LDAP server |
+| `TINYAUTH_LDAP_SEARCH_FILTER` | String | No | LDAP search filter for user lookup |
 
 ## ⚠️ IMPORTANT
 
@@ -95,6 +102,7 @@ TinyAuth is the simplest way to secure your apps with a login screen. It's a lig
 - **HTTPS Recommended**: Always use HTTPS in production with `TINYAUTH_COOKIE_SECURE=true`
 - **Secret Security**: Use a strong 32-character secret key for session encryption
 - **OAuth Setup**: Configure OAuth applications in GitHub/Google before using OAuth features
+- **LDAP Integration**: Configure LDAP server settings for enterprise authentication
 - **Password Hashing**: Use bcrypt to hash passwords for basic authentication
 - **Domain Whitelist**: Use `TINYAUTH_OAUTH_WHITELIST` to restrict OAuth access to specific domains
 
