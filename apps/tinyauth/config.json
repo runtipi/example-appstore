@@ -10,7 +10,7 @@
         "utilities"
     ],
     "description": "TinyAuth is a simple authentication middleware that adds a login screen or OAuth (Google, GitHub, and custom providers) to all your Docker applications. It supports popular reverse proxies like Traefik, Nginx, and Caddy, providing an easy way to secure your self-hosted services with minimal configuration.",
-    "tipi_version": 3,
+    "tipi_version": 4,
     "version": "3.6.1",
     "source": "https://github.com/steveiliop56/tinyauth",
     "website": "https://tinyauth.app",
@@ -20,7 +20,7 @@
         "amd64"
     ],
     "created_at": 1752360920000,
-    "updated_at": 1752364200000,
+    "updated_at": 1752365000000,
     "dynamic_config": true,
     "form_fields": [
         {
@@ -64,7 +64,7 @@
             "max": 86400,
             "required": false,
             "env_variable": "TINYAUTH_SESSION_EXPIRY",
-            "default": 7200
+            "default": 86400
         },
         {
             "type": "boolean",
@@ -229,12 +229,12 @@
         {
             "type": "number",
             "label": "Log Level",
-            "hint": "Logging verbosity level (0=Info, 1=Debug, 2=Warn, 3=Error)",
-            "min": 0,
-            "max": 3,
+            "hint": "Logging verbosity level (-1=Trace, 0=Debug, 1=Info, 2=Warn, 3=Error, 4=Fatal, 5=Panic, 6=Disabled)",
+            "min": -1,
+            "max": 6,
             "required": false,
             "env_variable": "TINYAUTH_LOG_LEVEL",
-            "default": 0
+            "default": 1
         },
         {
             "type": "boolean",
@@ -243,6 +243,56 @@
             "required": false,
             "env_variable": "TINYAUTH_GENERIC_SKIP_SSL",
             "default": false
+        },
+        {
+            "type": "url",
+            "label": "LDAP Server Address",
+            "hint": "LDAP server address (e.g. ldap://localhost:389 or ldaps://localhost:636)",
+            "placeholder": "ldap://localhost:389",
+            "required": false,
+            "env_variable": "TINYAUTH_LDAP_ADDRESS"
+        },
+        {
+            "type": "text",
+            "label": "LDAP Bind DN",
+            "hint": "LDAP bind DN for authentication (e.g. uid=admin,dc=example,dc=com)",
+            "placeholder": "uid=admin,dc=example,dc=com",
+            "required": false,
+            "env_variable": "TINYAUTH_LDAP_BIND_DN"
+        },
+        {
+            "type": "password",
+            "label": "LDAP Bind Password",
+            "hint": "Password for LDAP bind DN authentication",
+            "min": 1,
+            "max": 200,
+            "required": false,
+            "env_variable": "TINYAUTH_LDAP_BIND_PASSWORD"
+        },
+        {
+            "type": "text",
+            "label": "LDAP Base DN",
+            "hint": "LDAP base DN for user searches (e.g. dc=example,dc=com)",
+            "placeholder": "dc=example,dc=com",
+            "required": false,
+            "env_variable": "TINYAUTH_LDAP_BASE_DN"
+        },
+        {
+            "type": "boolean",
+            "label": "LDAP Skip SSL Verification",
+            "hint": "Skip certificate verification for LDAP server (not recommended)",
+            "required": false,
+            "env_variable": "TINYAUTH_LDAP_INSECURE",
+            "default": false
+        },
+        {
+            "type": "text",
+            "label": "LDAP Search Filter",
+            "hint": "LDAP search filter for user lookup (%s will be replaced with username)",
+            "placeholder": "(uid=%s)",
+            "required": false,
+            "env_variable": "TINYAUTH_LDAP_SEARCH_FILTER",
+            "default": "(uid=%s)"
         }
     ]
 }
