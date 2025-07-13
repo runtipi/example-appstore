@@ -32,7 +32,13 @@
                 "LOGIN_TIMEOUT": "${TINYAUTH_LOGIN_TIMEOUT}",
                 "LOGIN_MAX_RETRIES": "${TINYAUTH_LOGIN_MAX_RETRIES}",
                 "LOG_LEVEL": "${TINYAUTH_LOG_LEVEL}",
-                "GENERIC_SKIP_SSL": "${TINYAUTH_GENERIC_SKIP_SSL}"
+                "GENERIC_SKIP_SSL": "${TINYAUTH_GENERIC_SKIP_SSL}",
+                "LDAP_ADDRESS": "${TINYAUTH_LDAP_ADDRESS}",
+                "LDAP_BIND_DN": "${TINYAUTH_LDAP_BIND_DN}",
+                "LDAP_BIND_PASSWORD": "${TINYAUTH_LDAP_BIND_PASSWORD}",
+                "LDAP_BASE_DN": "${TINYAUTH_LDAP_BASE_DN}",
+                "LDAP_INSECURE": "${TINYAUTH_LDAP_INSECURE}",
+                "LDAP_SEARCH_FILTER": "${TINYAUTH_LDAP_SEARCH_FILTER}"
             },
             "volumes": [
                 {
@@ -41,7 +47,7 @@
                 }
             ],
             "healthCheck": {
-                "test": "curl -f http://localhost:3000/api/health || exit 1",
+                "test": "curl -f http://localhost:3000/api/healthcheck || exit 1",
                 "interval": "30s",
                 "timeout": "10s",
                 "retries": 3,
